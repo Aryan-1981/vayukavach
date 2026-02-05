@@ -477,17 +477,20 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Live Dashboard Section */}
+      {/* Purification Performance Section */}
       <section id="dashboard" className="min-h-screen py-24 relative">
         <div className="max-w-7xl mx-auto px-6">
           <div className="flex flex-col md:flex-row justify-between items-end mb-12">
             <div>
-              <h2 className="text-3xl md:text-4xl font-bold mb-2">Live Atmosphere</h2>
-              <p className="text-gray-400">Real-time particulate matter analysis from your sensor.</p>
+              <span className="px-4 py-1.5 rounded-full border border-green-500/30 bg-green-500/10 text-green-400 text-sm font-medium tracking-wide backdrop-blur-sm inline-block mb-4">
+                LIVE FROM PM7003 SENSOR
+              </span>
+              <h2 className="text-3xl md:text-4xl font-bold mb-2">Purification Performance</h2>
+              <p className="text-gray-400">Real-time measurement from sensor at purifier outlet showing cleaned air quality.</p>
             </div>
             <div className="flex items-center gap-2 text-sm text-gray-400 mt-4 md:mt-0 glass-panel px-3 py-1 rounded-full">
               <span className="w-2 h-2 rounded-full bg-green-500 animate-pulse" />
-              Updating every 30s
+              Live sensor data • Updates every 30s
             </div>
           </div>
 
@@ -495,47 +498,52 @@ export default function Home() {
             {/* Status Card - Large with Animated Counter */}
             <div className={`col-span-1 md:col-span-2 lg:col-span-2 glass-card rounded-3xl p-8 relative overflow-hidden bg-gradient-to-br ${status.bg} border-0 card-lift`}>
               <div className="relative z-10">
-                <div className="text-sm uppercase tracking-wider opacity-70 mb-1">Air Quality Index</div>
+                <div className="text-sm uppercase tracking-wider opacity-70 mb-1">Output Air Quality (After Purification)</div>
                 <div className={`text-6xl md:text-7xl font-bold mb-2 ${status.color} text-glow count-up`}>
                   {aqiCount}
                 </div>
                 <div className={`text-3xl md:text-4xl font-bold mb-4 ${status.color}`}>{status.text}</div>
                 <p className="text-lg opacity-90 max-w-md">{status.desc}</p>
+                <div className="mt-4 text-xs text-gray-500">
+                  📍 Measured by PM7003 at purifier outlet
+                </div>
               </div>
               <CloudIcon className="absolute top-0 right-0 w-64 h-64 text-white/5 -translate-y-12 translate-x-12 animate-float" />
             </div>
 
-            {/* PM2.5 Card */}
+            {/* PM2.5 Card - After Purification */}
             <div className="glass-card rounded-3xl p-6 flex flex-col justify-between group card-lift">
               <div className="flex justify-between items-start">
-                <div className="text-sm text-gray-400">PM2.5</div>
-                <div className="p-2 rounded-full bg-orange-500/10 text-orange-400 group-hover:scale-110 transition-transform">
-                  <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" /></svg>
+                <div className="text-sm text-gray-400">PM2.5 (After)</div>
+                <div className="p-2 rounded-full bg-green-500/10 text-green-400 group-hover:scale-110 transition-transform">
+                  <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
                 </div>
               </div>
               <div>
                 <div className="text-4xl font-bold mb-1">{latestData ? latestData.pm2_5.toFixed(1) : '--'}</div>
                 <div className="text-xs text-gray-500">Fine Particles (µg/m³)</div>
+                <div className="text-xs text-green-400 mt-1">✓ Purified</div>
               </div>
               <div className="mt-4 h-1 bg-gray-800 rounded-full overflow-hidden">
-                <div className="h-full bg-orange-500 transition-all duration-1000" style={{ width: `${Math.min(((latestData?.pm2_5 || 0) / 100) * 100, 100)}%` }}></div>
+                <div className="h-full bg-green-500 transition-all duration-1000" style={{ width: `${Math.min(((latestData?.pm2_5 || 0) / 100) * 100, 100)}%` }}></div>
               </div>
             </div>
 
-            {/* PM10 Card */}
+            {/* PM10 Card - After Purification */}
             <div className="glass-card rounded-3xl p-6 flex flex-col justify-between group card-lift">
               <div className="flex justify-between items-start">
-                <div className="text-sm text-gray-400">PM10</div>
-                <div className="p-2 rounded-full bg-blue-500/10 text-blue-400 group-hover:scale-110 transition-transform">
-                  <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19.428 15.428a2 2 0 00-1.022-.547l-2.384-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z" /></svg>
+                <div className="text-sm text-gray-400">PM10 (After)</div>
+                <div className="p-2 rounded-full bg-cyan-500/10 text-cyan-400 group-hover:scale-110 transition-transform">
+                  <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
                 </div>
               </div>
               <div>
                 <div className="text-4xl font-bold mb-1">{latestData ? latestData.pm10.toFixed(1) : '--'}</div>
                 <div className="text-xs text-gray-500">Coarse Particles (µg/m³)</div>
+                <div className="text-xs text-cyan-400 mt-1">✓ Purified</div>
               </div>
               <div className="mt-4 h-1 bg-gray-800 rounded-full overflow-hidden">
-                <div className="h-full bg-blue-500 transition-all duration-1000" style={{ width: `${Math.min(((latestData?.pm10 || 0) / 100) * 100, 100)}%` }}></div>
+                <div className="h-full bg-cyan-500 transition-all duration-1000" style={{ width: `${Math.min(((latestData?.pm10 || 0) / 100) * 100, 100)}%` }}></div>
               </div>
             </div>
           </div>
@@ -544,7 +552,7 @@ export default function Home() {
           <div className="glass-panel rounded-3xl p-6 md:p-8">
             <h3 className="text-xl font-semibold mb-6 flex items-center gap-2">
               <span className="w-1 h-6 bg-green-500 rounded-full" />
-              Historical Trends
+              Purification Trends (Output Air Quality Over Time)
             </h3>
             <div className="h-[350px] w-full">
               <ResponsiveContainer width="100%" height="100%">
