@@ -709,9 +709,36 @@ export default function Home() {
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
             {/* Impact 1: Active Purification */}
-            <div className="glass-card p-8 rounded-3xl text-center card-lift group">
-              <div className="w-20 h-20 rounded-full bg-green-500/10 flex items-center justify-center mb-6 mx-auto group-hover:scale-110 transition-transform duration-300">
-                <svg className="w-10 h-10 text-green-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <div className="glass-card p-8 rounded-3xl text-center feature-card-hover group">
+              <div className="w-20 h-20 rounded-full bg-green-500/10 flex items-center justify-center mb-6 mx-auto group-hover:scale-110 transition-transform duration-300 relative animate-periodic-pulse">
+                {/* Circular airflow particles */}
+                <svg className="absolute inset-0 w-full h-full" viewBox="0 0 80 80">
+                  {/* Particle 1 */}
+                  <g className="animate-airflow-particle" style={{ transformOrigin: '40px 40px' }}>
+                    <circle cx="40" cy="15" r="2.5" fill="#22c55e" opacity="0.8">
+                      <animate attributeName="opacity" values="0.8;1;0.8" dur="2s" repeatCount="indefinite"/>
+                    </circle>
+                  </g>
+                  {/* Particle 2 */}
+                  <g className="animate-airflow-particle-delayed-1" style={{ transformOrigin: '40px 40px' }}>
+                    <circle cx="40" cy="15" r="2" fill="#34d399" opacity="0.7">
+                      <animate attributeName="opacity" values="0.7;1;0.7" dur="2s" repeatCount="indefinite"/>
+                    </circle>
+                  </g>
+                  {/* Particle 3 */}
+                  <g className="animate-airflow-particle-delayed-2" style={{ transformOrigin: '40px 40px' }}>
+                    <circle cx="40" cy="15" r="2.5" fill="#10b981" opacity="0.6">
+                      <animate attributeName="opacity" values="0.6;1;0.6" dur="2s" repeatCount="indefinite"/>
+                    </circle>
+                  </g>
+                  {/* Particle 4 */}
+                  <g className="animate-airflow-particle-delayed-3" style={{ transformOrigin: '40px 40px' }}>
+                    <circle cx="40" cy="15" r="2" fill="#6ee7b7" opacity="0.5">
+                      <animate attributeName="opacity" values="0.5;0.9;0.5" dur="2s" repeatCount="indefinite"/>
+                    </circle>
+                  </g>
+                </svg>
+                <svg className="w-10 h-10 text-green-400 relative z-10" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
                 </svg>
               </div>
@@ -723,27 +750,34 @@ export default function Home() {
             </div>
 
             {/* Impact 2: Smart Urban Impact */}
-            <div className="glass-card p-8 rounded-3xl text-center card-lift group">
-              <div className="w-20 h-20 rounded-full bg-blue-500/10 flex items-center justify-center mb-6 mx-auto group-hover:scale-110 transition-transform duration-300 relative">
-                {/* Animated air flow particles around icon */}
-                <svg className="absolute inset-0 w-full h-full" viewBox="0 0 80 80">
-                  <circle cx="10" cy="40" r="2" fill="#3b82f6" opacity="0.6">
-                    <animate attributeName="cx" values="10;70;10" dur="3s" repeatCount="indefinite"/>
-                    <animate attributeName="opacity" values="0.6;0.2;0.6" dur="3s" repeatCount="indefinite"/>
+            <div className="glass-card p-8 rounded-3xl text-center feature-card-hover group animate-urban-move">
+              <div className="w-20 h-20 rounded-full bg-blue-500/10 flex items-center justify-center mb-6 mx-auto group-hover:scale-110 transition-transform duration-300 relative overflow-visible">
+                {/* Enhanced animated air flow particles - pollution entering and fading */}
+                <svg className="absolute inset-0 w-full h-full overflow-visible" viewBox="0 0 80 80">
+                  {/* Particle entering from left, shrinking and fading */}
+                  <circle cx="15" cy="40" r="2.5" fill="#ef4444" opacity="0.8">
+                    <animate attributeName="cx" values="15;25;40;55;70" dur="3s" repeatCount="indefinite"/>
+                    <animate attributeName="r" values="2.5;2.2;1.5;1;0.5" dur="3s" repeatCount="indefinite"/>
+                    <animate attributeName="opacity" values="0.8;0.7;0.4;0.2;0" dur="3s" repeatCount="indefinite"/>
+                    <animate attributeName="fill" values="#ef4444;#f87171;#3b82f6;#60a5fa;#93c5fd" dur="3s" repeatCount="indefinite"/>
                   </circle>
-                  <circle cx="70" cy="20" r="1.5" fill="#60a5fa" opacity="0.5">
-                    <animate attributeName="cx" values="70;10;70" dur="3.5s" repeatCount="indefinite"/>
-                    <animate attributeName="cy" values="20;60;20" dur="3.5s" repeatCount="indefinite"/>
-                    <animate attributeName="opacity" values="0.5;0.1;0.5" dur="3.5s" repeatCount="indefinite"/>
+                  <circle cx="10" cy="30" r="2" fill="#f87171" opacity="0.7">
+                    <animate attributeName="cx" values="10;20;35;50;65" dur="3.5s" repeatCount="indefinite" begin="0.5s"/>
+                    <animate attributeName="r" values="2;1.8;1.2;0.8;0.4" dur="3.5s" repeatCount="indefinite" begin="0.5s"/>
+                    <animate attributeName="opacity" values="0.7;0.6;0.3;0.15;0" dur="3.5s" repeatCount="indefinite" begin="0.5s"/>
+                    <animate attributeName="fill" values="#f87171;#fca5a5;#3b82f6;#60a5fa;#93c5fd" dur="3.5s" repeatCount="indefinite" begin="0.5s"/>
                   </circle>
-                  <circle cx="40" cy="10" r="1.5" fill="#93c5fd" opacity="0.4">
-                    <animate attributeName="cy" values="10;70;10" dur="4s" repeatCount="indefinite"/>
-                    <animate attributeName="opacity" values="0.4;0.1;0.4" dur="4s" repeatCount="indefinite"/>
+                  <circle cx="12" cy="50" r="2.2" fill="#dc2626" opacity="0.75">
+                    <animate attributeName="cx" values="12;22;37;52;67" dur="3.2s" repeatCount="indefinite" begin="1s"/>
+                    <animate attributeName="r" values="2.2;2;1.4;0.9;0.4" dur="3.2s" repeatCount="indefinite" begin="1s"/>
+                    <animate attributeName="opacity" values="0.75;0.65;0.35;0.18;0" dur="3.2s" repeatCount="indefinite" begin="1s"/>
+                    <animate attributeName="fill" values="#dc2626;#f87171;#3b82f6;#60a5fa;#93c5fd" dur="3.2s" repeatCount="indefinite" begin="1s"/>
                   </circle>
-                  <circle cx="15" cy="60" r="2" fill="#3b82f6" opacity="0.5">
-                    <animate attributeName="cx" values="15;65;15" dur="3.2s" repeatCount="indefinite"/>
-                    <animate attributeName="cy" values="60;25;60" dur="3.2s" repeatCount="indefinite"/>
-                    <animate attributeName="opacity" values="0.5;0.15;0.5" dur="3.2s" repeatCount="indefinite"/>
+                  <circle cx="8" cy="45" r="1.8" fill="#fca5a5" opacity="0.6">
+                    <animate attributeName="cx" values="8;18;33;48;63" dur="3.8s" repeatCount="indefinite" begin="1.5s"/>
+                    <animate attributeName="r" values="1.8;1.6;1.1;0.7;0.3" dur="3.8s" repeatCount="indefinite" begin="1.5s"/>
+                    <animate attributeName="opacity" values="0.6;0.5;0.25;0.12;0" dur="3.8s" repeatCount="indefinite" begin="1.5s"/>
+                    <animate attributeName="fill" values="#fca5a5;#fecaca;#60a5fa;#93c5fd;#bfdbfe" dur="3.8s" repeatCount="indefinite" begin="1.5s"/>
                   </circle>
                 </svg>
                 <svg className="w-10 h-10 text-blue-400 relative z-10" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -758,9 +792,32 @@ export default function Home() {
             </div>
 
             {/* Impact 3: Verified Results */}
-            <div className="glass-card p-8 rounded-3xl text-center card-lift group">
-              <div className="w-20 h-20 rounded-full bg-purple-500/10 flex items-center justify-center mb-6 mx-auto group-hover:scale-110 transition-transform duration-300">
-                <svg className="w-10 h-10 text-purple-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <div className="glass-card p-8 rounded-3xl text-center feature-card-hover group">
+              <div className="w-20 h-20 rounded-full bg-purple-500/10 flex items-center justify-center mb-6 mx-auto group-hover:scale-110 transition-transform duration-300 relative">
+                {/* Animated chart bars representing live sensor data */}
+                <svg className="absolute inset-0 w-full h-full" viewBox="0 0 80 80">
+                  <g transform="translate(20, 50)">
+                    {/* Bar 1 */}
+                    <rect x="5" y="0" width="8" rx="2" fill="#a855f7" opacity="0.7" className="animate-chart-bar-1">
+                      <animate attributeName="height" values="12;24;18;28;12" dur="3s" repeatCount="indefinite"/>
+                      <animate attributeName="y" values="18;6;12;2;18" dur="3s" repeatCount="indefinite"/>
+                      <animate attributeName="opacity" values="0.7;1;0.8;1;0.7" dur="3s" repeatCount="indefinite"/>
+                    </rect>
+                    {/* Bar 2 */}
+                    <rect x="17" y="0" width="8" rx="2" fill="#c084fc" opacity="0.8" className="animate-chart-bar-2">
+                      <animate attributeName="height" values="20;14;30;22;20" dur="3s" repeatCount="indefinite" begin="0.3s"/>
+                      <animate attributeName="y" values="10;16;0;8;10" dur="3s" repeatCount="indefinite" begin="0.3s"/>
+                      <animate attributeName="opacity" values="0.8;0.7;1;0.9;0.8" dur="3s" repeatCount="indefinite" begin="0.3s"/>
+                    </rect>
+                    {/* Bar 3 */}
+                    <rect x="29" y="0" width="8" rx="2" fill="#d8b4fe" opacity="1" className="animate-chart-bar-3">
+                      <animate attributeName="height" values="26;20;16;32;26" dur="3s" repeatCount="indefinite" begin="0.6s"/>
+                      <animate attributeName="y" values="4;10;14;-2;4" dur="3s" repeatCount="indefinite" begin="0.6s"/>
+                      <animate attributeName="opacity" values="1;0.8;0.7;1;1" dur="3s" repeatCount="indefinite" begin="0.6s"/>
+                    </rect>
+                  </g>
+                </svg>
+                <svg className="w-10 h-10 text-purple-400 relative z-10" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
                 </svg>
               </div>
@@ -768,13 +825,60 @@ export default function Home() {
               <p className="text-gray-400 leading-relaxed mb-4">
                 <span className="text-purple-400 font-bold">100% real-time proof</span> via PM7003 sensor—no guesswork, just data
               </p>
-              <div className="text-4xl font-bold text-purple-400 count-up">100%</div>
+              <div className="text-4xl font-bold text-purple-400 animate-count-up">100%</div>
             </div>
 
             {/* Impact 4: Scalable Network */}
-            <div className="glass-card p-8 rounded-3xl text-center card-lift group">
-              <div className="w-20 h-20 rounded-full bg-orange-500/10 flex items-center justify-center mb-6 mx-auto group-hover:scale-110 transition-transform duration-300">
-                <svg className="w-10 h-10 text-orange-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <div className="glass-card p-8 rounded-3xl text-center feature-card-hover group">
+              <div className="w-20 h-20 rounded-full bg-orange-500/10 flex items-center justify-center mb-6 mx-auto group-hover:scale-110 transition-transform duration-300 relative overflow-visible">
+                {/* Network dots spreading outward with connecting lines */}
+                <svg className="absolute inset-0 w-full h-full overflow-visible" viewBox="0 0 80 80">
+                  {/* Center hub */}
+                  <circle cx="40" cy="40" r="3" fill="#fb923c" opacity="0.9">
+                    <animate attributeName="opacity" values="0.9;1;0.9" dur="2s" repeatCount="indefinite"/>
+                  </circle>
+                  
+                  {/* Network nodes spreading out */}
+                  {/* Node 1 - Top */}
+                  <circle cx="40" cy="40" r="2" fill="#fdba74" className="animate-network-dot" style={{ '--spread-x': '0px', '--spread-y': '-25px' }}>
+                    <animate attributeName="r" values="0;2;1.5;1" dur="4s" repeatCount="indefinite"/>
+                  </circle>
+                  {/* Node 2 - Top Right */}
+                  <circle cx="40" cy="40" r="2" fill="#fb923c" className="animate-network-dot" style={{ '--spread-x': '18px', '--spread-y': '-18px', animationDelay: '0.5s' }}>
+                    <animate attributeName="r" values="0;2;1.5;1" dur="4s" repeatCount="indefinite" begin="0.5s"/>
+                  </circle>
+                  {/* Node 3 - Right */}
+                  <circle cx="40" cy="40" r="2" fill="#fdba74" className="animate-network-dot" style={{ '--spread-x': '25px', '--spread-y': '0px', animationDelay: '1s' }}>
+                    <animate attributeName="r" values="0;2;1.5;1" dur="4s" repeatCount="indefinite" begin="1s"/>
+                  </circle>
+                  {/* Node 4 - Bottom Right */}
+                  <circle cx="40" cy="40" r="2" fill="#fb923c" className="animate-network-dot" style={{ '--spread-x': '18px', '--spread-y': '18px', animationDelay: '1.5s' }}>
+                    <animate attributeName="r" values="0;2;1.5;1" dur="4s" repeatCount="indefinite" begin="1.5s"/>
+                  </circle>
+                  {/* Node 5 - Bottom */}
+                  <circle cx="40" cy="40" r="2" fill="#fdba74" className="animate-network-dot" style={{ '--spread-x': '0px', '--spread-y': '25px', animationDelay: '2s' }}>
+                    <animate attributeName="r" values="0;2;1.5;1" dur="4s" repeatCount="indefinite" begin="2s"/>
+                  </circle>
+                  {/* Node 6 - Bottom Left */}
+                  <circle cx="40" cy="40" r="2" fill="#fb923c" className="animate-network-dot" style={{ '--spread-x': '-18px', '--spread-y': '18px', animationDelay: '2.5s' }}>
+                    <animate attributeName="r" values="0;2;1.5;1" dur="4s" repeatCount="indefinite" begin="2.5s"/>
+                  </circle>
+                  {/* Node 7 - Left */}
+                  <circle cx="40" cy="40" r="2" fill="#fdba74" className="animate-network-dot" style={{ '--spread-x': '-25px', '--spread-y': '0px', animationDelay: '3s' }}>
+                    <animate attributeName="r" values="0;2;1.5;1" dur="4s" repeatCount="indefinite" begin="3s"/>
+                  </circle>
+                  {/* Node 8 - Top Left */}
+                  <circle cx="40" cy="40" r="2" fill="#fb923c" className="animate-network-dot" style={{ '--spread-x': '-18px', '--spread-y': '-18px', animationDelay: '3.5s' }}>
+                    <animate attributeName="r" values="0;2;1.5;1" dur="4s" repeatCount="indefinite" begin="3.5s"/>
+                  </circle>
+
+                  {/* Connection lines */}
+                  <line x1="40" y1="40" x2="40" y2="15" stroke="#fb923c" strokeWidth="1" className="animate-network-line" opacity="0.4"/>
+                  <line x1="40" y1="40" x2="58" y2="22" stroke="#fb923c" strokeWidth="1" className="animate-network-line" opacity="0.4" style={{ animationDelay: '0.5s' }}/>
+                  <line x1="40" y1="40" x2="65" y2="40" stroke="#fb923c" strokeWidth="1" className="animate-network-line" opacity="0.4" style={{ animationDelay: '1s' }}/>
+                  <line x1="40" y1="40" x2="58" y2="58" stroke="#fb923c" strokeWidth="1" className="animate-network-line" opacity="0.4" style={{ animationDelay: '1.5s' }}/>
+                </svg>
+                <svg className="w-10 h-10 text-orange-400 relative z-10" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7h12m0 0l-4-4m4 4l-4 4m0 6H4m0 0l4 4m-4-4l4-4" />
                 </svg>
               </div>
