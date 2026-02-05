@@ -33,6 +33,26 @@ const BirdIcon = ({ className, style }) => (
   </svg>
 );
 
+const EarthIcon = ({ className, style }) => (
+  <svg viewBox="0 0 100 100" className={className} style={style}>
+    <circle cx="50" cy="50" r="45" fill="none" stroke="currentColor" strokeWidth="1" opacity="0.2"/>
+    <circle cx="50" cy="50" r="40" fill="url(#earthGradient)" opacity="0.9"/>
+    <defs>
+      <linearGradient id="earthGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+        <stop offset="0%" stopColor="#22c55e" stopOpacity="0.3"/>
+        <stop offset="50%" stopColor="#059669" stopOpacity="0.5"/>
+        <stop offset="100%" stopColor="#047857" stopOpacity="0.4"/>
+      </linearGradient>
+    </defs>
+    <path d="M30,25 Q35,30 40,25 T50,20 T60,25" stroke="#10b981" strokeWidth="2" fill="none" opacity="0.6"/>
+    <path d="M20,45 Q30,40 40,45 T60,40 T80,45" stroke="#10b981" strokeWidth="2" fill="none" opacity="0.6"/>
+    <path d="M25,65 Q40,60 55,65 T75,60" stroke="#10b981" strokeWidth="2" fill="none" opacity="0.6"/>
+    <circle cx="35" cy="35" r="3" fill="#22c55e" opacity="0.7"/>
+    <circle cx="65" cy="55" r="4" fill="#22c55e" opacity="0.7"/>
+    <circle cx="50" cy="70" r="2" fill="#22c55e" opacity="0.7"/>
+  </svg>
+);
+
 // --- Particle Background Component ---
 const ParticleBackground = () => {
   return (
@@ -286,6 +306,11 @@ export default function Home() {
         <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-green-500/20 rounded-full blur-[100px] animate-pulse" />
         <div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-blue-500/20 rounded-full blur-[100px] animate-pulse delay-1000" />
 
+        {/* Rotating Earth */}
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 opacity-10">
+          <EarthIcon className="w-[600px] h-[600px] text-green-500 rotate-earth" />
+        </div>
+
         <div className="relative z-10 text-center px-4 max-w-4xl mx-auto">
           <div className="reveal-up animation-delay-100 mb-6 flex justify-center">
             <span className="px-4 py-1.5 rounded-full border border-green-500/30 bg-green-500/10 text-green-400 text-sm font-medium tracking-wide backdrop-blur-sm">
@@ -301,10 +326,10 @@ export default function Home() {
             Invisible data made visible for a healthier tomorrow.
           </p>
           <div className="reveal-up animation-delay-400 flex flex-col sm:flex-row gap-4 justify-center">
-            <a href="#dashboard" className="px-8 py-4 bg-green-600 hover:bg-green-500 text-white rounded-full font-medium transition-all duration-300 hover:shadow-[0_0_20px_rgba(34,197,94,0.4)] transform hover:-translate-y-1">
+            <a href="#dashboard" className="px-8 py-4 bg-green-600 hover:bg-green-500 text-white rounded-full font-medium transition-all duration-300 hover:shadow-[0_0_20px_rgba(34,197,94,0.4)] transform hover:-translate-y-1 btn-float">
               View Live Dashboard
             </a>
-            <a href="#about" className="px-8 py-4 bg-white/5 hover:bg-white/10 text-white border border-white/10 rounded-full font-medium transition-all backdrop-blur-md">
+            <a href="#about" className="px-8 py-4 bg-white/5 hover:bg-white/10 text-white border border-white/10 rounded-full font-medium transition-all backdrop-blur-md btn-float">
               Learn More
             </a>
           </div>
