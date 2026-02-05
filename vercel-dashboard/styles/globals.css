@@ -160,3 +160,53 @@ html {
   transform: scale(1.05) rotate(2deg);
   filter: drop-shadow(0 0 10px rgba(74, 222, 128, 0.4));
 }
+
+/* Floating Button Effect */
+@keyframes floatButton {
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(-5px); }
+}
+
+.btn-float:hover {
+  animation: floatButton 2s ease-in-out infinite;
+}
+
+/* Card Lift Effect */
+.card-lift {
+  transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.4s;
+}
+
+.card-lift:hover {
+  transform: translateY(-10px);
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+}
+
+/* Count Up Animation */
+@keyframes countUp {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.count-up {
+  animation: countUp 0.8s cubic-bezier(0.19, 1, 0.22, 1) forwards;
+}
+
+/* Pulse Glow Effect */
+@keyframes pulseGlow {
+  0%, 100% { box-shadow: 0 0 20px rgba(74, 222, 128, 0.4); }
+  50% { box-shadow: 0 0 40px rgba(74, 222, 128, 0.8); }
+}
+
+.pulse-glow {
+  animation: pulseGlow 3s ease-in-out infinite;
+}
+
+/* Rotating Earth */
+@keyframes rotateEarth {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+.rotate-earth {
+  animation: rotateEarth 60s linear infinite;
+}

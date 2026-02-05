@@ -72,38 +72,90 @@ const ParticleBackground = () => {
 // --- Parallax Background Component ---
 const ParallaxNature = () => {
   const [offset, setOffset] = useState(0);
+  const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
+  const [plantGrowth, setPlantGrowth] = useState(0);
 
   useEffect(() => {
-    const handleScroll = () => setOffset(window.scrollY);
+    const handleScroll = () => {
+      const scrollY = window.scrollY;
+      setOffset(scrollY);
+      // Plants grow as user scrolls (0 to 1 scale)
+      const growth = Math.min(scrollY / 2000, 1);
+      setPlantGrowth(growth);
+    };
+
+    const handleMouseMove = (e) => {
+      setMousePos({
+        x: (e.clientX - window.innerWidth / 2) / 50,
+        y: (e.clientY - window.innerHeight / 2) / 50
+      });
+    };
+
     window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
+    window.addEventListener('mousemove', handleMouseMove);
+    
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+      window.removeEventListener('mousemove', handleMouseMove);
+    };
   }, []);
 
   return (
     <div className="fixed inset-0 pointer-events-none z-0 overflow-hidden transition-opacity duration-1000">
-      {/* Layer 1: Distant Background (Slowest) */}
+      {/* Layer 1: Distant Hills (Slowest) */}
       <div 
-          className="absolute -bottom-20 left-0 w-full h-1/2 bg-gradient-to-t from-green-900/10 to-transparent"
+          className="absolute -bottom-20 left-0 w-full h-1/2 bg-gradient-to-t from-green-900/10 via-green-800/5 to-transparent"
           style={{ transform: `translateY(${offset * 0.1}px)` }}
       />
       
-      {/* Layer 2: Mid-ground Hills (Medium Speed) */}
+      {/* Layer 2: Mid-ground Trees (Medium Speed + Mouse Parallax) */}
       <div 
           className="absolute bottom-0 left-0 w-full flex justify-between opacity-20"
-          style={{ transform: `translateY(${offset * 0.2}px)` }}
+          style={{ 
+            transform: `translateY(${offset * 0.2}px) translateX(${mousePos.x * 2}px)` 
+          }}
       >
-           <TreeIcon className="w-64 h-64 text-green-800 transform -translate-x-12 translate-y-12 blur-[2px]" />
-           <TreeIcon className="w-80 h-80 text-green-900 transform translate-x-20 translate-y-20 blur-[1px]" />
+           <TreeIcon className="w-64 h-64 text-green-800 transform -translate-x-12 translate-y-12 blur-[2px] animate-sway-gentle" />
+           <TreeIcon className="w-80 h-80 text-green-900 transform translate-x-20 translate-y-20 blur-[1px] animate-sway" style={{ animationDelay: '1s' }} />
+           <TreeIcon className="w-56 h-56 text-green-700 transform translate-y-16 blur-[2px] animate-sway-gentle" style={{ animationDelay: '2s' }} />
       </div>
 
       {/* Layer 3: Foreground Plants (Fastest & Interactive) */}
       <div 
           className="absolute bottom-0 left-0 w-full flex justify-between items-end px-10 pointer-events-auto"
-          style={{ transform: `translateY(-${offset * 0.05}px)` }}
+          style={{ 
+            transform: `translateY(-${offset * 0.05}px) translateX(${mousePos.x * 4}px)`,
+            opacity: 0.3 + plantGrowth * 0.2
+          }}
       >
-           <PlantIcon className="w-16 h-16 text-green-500/20 animate-grow animate-sway-gentle hover-nature cursor-pointer" style={{ animationDelay: '0.5s' }} />
-           <PlantIcon className="w-24 h-24 text-green-400/20 animate-grow animate-sway hover-nature cursor-pointer" style={{ animationDelay: '1s' }} />
-           <PlantIcon className="w-20 h-20 text-emerald-500/20 animate-grow animate-sway-gentle hover-nature cursor-pointer" style={{ animationDelay: '1.5s' }} />
+           <PlantIcon 
+             className="w-16 h-16 text-green-500/30 animate-grow animate-sway-gentle hover-nature cursor-pointer transition-all duration-300" 
+             style={{ 
+               animationDelay: '0.5s',
+               transform: `scale(${0.8 + plantGrowth * 0.4}) rotate(${mousePos.x * 0.5}deg)`
+             }} 
+           />
+           <PlantIcon 
+             className="w-24 h-24 text-green-400/30 animate-grow animate-sway hover-nature cursor-pointer transition-all duration-300" 
+             style={{ 
+               animationDelay: '1s',
+               transform: `scale(${0.8 + plantGrowth * 0.4}) rotate(${mousePos.x * -0.3}deg)`
+             }} 
+           />
+           <PlantIcon 
+             className="w-20 h-20 text-emerald-500/30 animate-grow animate-sway-gentle hover-nature cursor-pointer transition-all duration-300" 
+             style={{ 
+               animationDelay: '1.5s',
+               transform: `scale(${0.8 + plantGrowth * 0.4}) rotate(${mousePos.x * 0.4}deg)`
+             }} 
+           />
+           <PlantIcon 
+             className="w-18 h-18 text-green-600/25 animate-grow animate-sway hover-nature cursor-pointer transition-all duration-300" 
+             style={{ 
+               animationDelay: '2s',
+               transform: `scale(${0.8 + plantGrowth * 0.4}) rotate(${mousePos.x * -0.2}deg)`
+             }} 
+           />
       </div>
     </div>
   );
