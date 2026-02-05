@@ -418,19 +418,19 @@ export default function Home() {
         </div>
       </section>
 
-      {/* The Problem Section - Emotional Impact */}
+      {/* The Problem Section - Urban Vehicle Pollution */}
       <section id="problem" className="min-h-screen py-24 relative bg-gradient-to-b from-[#0a0a0a] to-[#0d0d0d]">
         <div className="max-w-7xl mx-auto px-6">
           <div className="text-center mb-16">
             <span className="px-4 py-1.5 rounded-full border border-red-500/30 bg-red-500/10 text-red-400 text-sm font-medium tracking-wide backdrop-blur-sm inline-block mb-6">
-              THE INVISIBLE THREAT
+              THE URBAN CHALLENGE
             </span>
             <h2 className="text-4xl md:text-6xl font-bold mb-6 text-white">
-              Every Breath <span className="text-red-400">Matters</span>
+              Vehicles: From <span className="text-red-400">Polluters</span> to <span className="text-green-400">Purifiers</span>
             </h2>
             <p className="text-xl text-gray-400 max-w-3xl mx-auto leading-relaxed">
-              Air pollution kills <span className="text-red-400 font-bold">7 million people</span> globally each year. 
-              Yet it remains invisible, odorless, and ignored—until it's too late.
+              Urban vehicles contribute <span className="text-red-400 font-bold">72%</span> of city air pollution. 
+              What if every vehicle could actively clean the air instead of just polluting it?
             </p>
           </div>
 
@@ -439,12 +439,12 @@ export default function Home() {
             <div className="glass-card p-8 rounded-3xl card-lift">
               <div className="w-16 h-16 rounded-2xl bg-red-500/10 flex items-center justify-center mb-6 mx-auto pulse-glow">
                 <svg className="w-8 h-8 text-red-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7h12m0 0l-4-4m4 4l-4 4m0 6H4m0 0l4 4m-4-4l4-4" />
                 </svg>
               </div>
-              <h3 className="text-2xl font-bold text-center mb-4">91% Breathe Toxic Air</h3>
+              <h3 className="text-2xl font-bold text-center mb-4">Traffic Exhaust Zones</h3>
               <p className="text-gray-400 text-center leading-relaxed">
-                Over 9 out of 10 people worldwide breathe air containing high levels of pollutants every single day.
+                Drivers and passengers breathe concentrated pollution directly from surrounding vehicles and traffic jams.
               </p>
             </div>
 
@@ -452,12 +452,12 @@ export default function Home() {
             <div className="glass-card p-8 rounded-3xl card-lift" style={{ animationDelay: '0.1s' }}>
               <div className="w-16 h-16 rounded-2xl bg-orange-500/10 flex items-center justify-center mb-6 mx-auto pulse-glow">
                 <svg className="w-8 h-8 text-orange-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
                 </svg>
               </div>
-              <h3 className="text-2xl font-bold text-center mb-4">Chronic Diseases Rising</h3>
+              <h3 className="text-2xl font-bold text-center mb-4">Passive Air Intake</h3>
               <p className="text-gray-400 text-center leading-relaxed">
-                PM2.5 particles penetrate deep into lungs and bloodstream, causing heart disease, stroke, and lung cancer.
+                Standard vehicle ventilation systems simply circulate polluted air without any filtration or purification.
               </p>
             </div>
 
@@ -465,12 +465,12 @@ export default function Home() {
             <div className="glass-card p-8 rounded-3xl card-lift" style={{ animationDelay: '0.2s' }}>
               <div className="w-16 h-16 rounded-2xl bg-yellow-500/10 flex items-center justify-center mb-6 mx-auto pulse-glow">
                 <svg className="w-8 h-8 text-yellow-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
                 </svg>
               </div>
-              <h3 className="text-2xl font-bold text-center mb-4">Cities Under Siege</h3>
+              <h3 className="text-2xl font-bold text-center mb-4">Wasted Rooftop Space</h3>
               <p className="text-gray-400 text-center leading-relaxed">
-                Urban areas face 5-10x higher pollution levels than safe limits, affecting billions of lives daily.
+                Vehicle rooftops remain unused—perfect real estate for active air purification technology.
               </p>
             </div>
           </div>
