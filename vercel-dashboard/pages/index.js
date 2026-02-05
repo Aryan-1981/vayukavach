@@ -654,6 +654,104 @@ export default function Home() {
         </div>
       </section>
 
+      {/* Smart City Vision Section */}
+      <section id="future" className="py-24 relative bg-gradient-to-b from-[#0d0d0d] to-[#0a0a0a] overflow-hidden">
+        <div className="max-w-7xl mx-auto px-6">
+          <div className="text-center mb-16">
+            <span className="px-4 py-1.5 rounded-full border border-cyan-500/30 bg-cyan-500/10 text-cyan-400 text-sm font-medium tracking-wide backdrop-blur-sm inline-block mb-6">
+              COMING SOON
+            </span>
+            <h2 className="text-4xl md:text-6xl font-bold mb-6">
+              Smart City Air <span className="text-cyan-400">Network</span>
+            </h2>
+            <p className="text-xl text-gray-400 max-w-3xl mx-auto leading-relaxed">
+              Imagine a city where every rooftop monitors air quality in real-time. 
+              VayuKavach is building the foundation for intelligent, breathable urban spaces.
+            </p>
+          </div>
+
+          {/* City Map Visualization */}
+          <div className="relative max-w-4xl mx-auto">
+            <div className="aspect-video rounded-3xl bg-gradient-to-br from-gray-900/50 to-black/50 border border-white/10 p-8 backdrop-blur-sm relative overflow-hidden">
+              {/* Grid Background */}
+              <div className="absolute inset-0 opacity-20">
+                <div className="absolute inset-0" style={{
+                  backgroundImage: 'linear-gradient(rgba(74, 222, 128, 0.1) 1px, transparent 1px), linear-gradient(90deg, rgba(74, 222, 128, 0.1) 1px, transparent 1px)',
+                  backgroundSize: '50px 50px'
+                }}></div>
+              </div>
+
+              {/* Buildings/Sensor Points */}
+              <div className="relative h-full flex items-end justify-around px-8">
+                {/* Building 1 */}
+                <div className="flex flex-col items-center animate-grow" style={{ animationDelay: '0.2s' }}>
+                  <div className="w-3 h-3 rounded-full bg-green-500 pulse-glow mb-2"></div>
+                  <div className="w-16 h-32 bg-gradient-to-t from-green-500/20 to-green-500/5 rounded-t-lg border border-green-500/30"></div>
+                  <div className="text-xs text-green-400 mt-2">Good</div>
+                </div>
+
+                {/* Building 2 */}
+                <div className="flex flex-col items-center animate-grow" style={{ animationDelay: '0.4s' }}>
+                  <div className="w-3 h-3 rounded-full bg-yellow-500 pulse-glow mb-2"></div>
+                  <div className="w-20 h-48 bg-gradient-to-t from-yellow-500/20 to-yellow-500/5 rounded-t-lg border border-yellow-500/30"></div>
+                  <div className="text-xs text-yellow-400 mt-2">Moderate</div>
+                </div>
+
+                {/* Building 3 */}
+                <div className="flex flex-col items-center animate-grow" style={{ animationDelay: '0.6s' }}>
+                  <div className="w-3 h-3 rounded-full bg-green-500 pulse-glow mb-2"></div>
+                  <div className="w-16 h-40 bg-gradient-to-t from-green-500/20 to-green-500/5 rounded-t-lg border border-green-500/30"></div>
+                  <div className="text-xs text-green-400 mt-2">Good</div>
+                </div>
+
+                {/* Building 4 */}
+                <div className="flex flex-col items-center animate-grow" style={{ animationDelay: '0.8s' }}>
+                  <div className="w-3 h-3 rounded-full bg-orange-500 pulse-glow mb-2"></div>
+                  <div className="w-24 h-56 bg-gradient-to-t from-orange-500/20 to-orange-500/5 rounded-t-lg border border-orange-500/30"></div>
+                  <div className="text-xs text-orange-400 mt-2">Sensitive</div>
+                </div>
+
+                {/* Building 5 */}
+                <div className="flex flex-col items-center animate-grow" style={{ animationDelay: '1s' }}>
+                  <div className="w-3 h-3 rounded-full bg-green-500 pulse-glow mb-2"></div>
+                  <div className="w-16 h-36 bg-gradient-to-t from-green-500/20 to-green-500/5 rounded-t-lg border border-green-500/30"></div>
+                  <div className="text-xs text-green-400 mt-2">Good</div>
+                </div>
+              </div>
+
+              {/* Network Lines */}
+              <svg className="absolute inset-0 w-full h-full pointer-events-none" style={{ zIndex: 1 }}>
+                <line x1="20%" y1="50%" x2="40%" y2="40%" stroke="rgba(74, 222, 128, 0.3)" strokeWidth="2" strokeDasharray="5,5">
+                  <animate attributeName="stroke-dashoffset" from="0" to="10" dur="1s" repeatCount="indefinite"/>
+                </line>
+                <line x1="40%" y1="40%" x2="60%" y2="45%" stroke="rgba(74, 222, 128, 0.3)" strokeWidth="2" strokeDasharray="5,5">
+                  <animate attributeName="stroke-dashoffset" from="0" to="10" dur="1s" repeatCount="indefinite"/>
+                </line>
+                <line x1="60%" y1="45%" x2="80%" y2="35%" stroke="rgba(74, 222, 128, 0.3)" strokeWidth="2" strokeDasharray="5,5">
+                  <animate attributeName="stroke-dashoffset" from="0" to="10" dur="1s" repeatCount="indefinite"/>
+                </line>
+              </svg>
+            </div>
+
+            {/* Stats */}
+            <div className="grid grid-cols-3 gap-6 mt-8">
+              <div className="glass-card p-6 rounded-2xl text-center">
+                <div className="text-3xl font-bold text-cyan-400 mb-2">100+</div>
+                <div className="text-sm text-gray-400">Sensors Planned</div>
+              </div>
+              <div className="glass-card p-6 rounded-2xl text-center">
+                <div className="text-3xl font-bold text-green-400 mb-2">Real-time</div>
+                <div className="text-sm text-gray-400">Data Updates</div>
+              </div>
+              <div className="glass-card p-6 rounded-2xl text-center">
+                <div className="text-3xl font-bold text-purple-400 mb-2">AI-Driven</div>
+                <div className="text-sm text-gray-400">Predictions</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
       {/* Team Section */}
       <section id="team" className="py-24">
         <div className="max-w-7xl mx-auto px-6 text-center">
