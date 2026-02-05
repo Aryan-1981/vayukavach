@@ -120,3 +120,43 @@ html {
 .animate-fly {
   animation: fly 20s linear infinite;
 }
+
+/* Plant Growth Animation */
+@keyframes growUp {
+  from { transform: scaleY(0); opacity: 0; transform-origin: bottom; }
+  to { transform: scaleY(1); opacity: 1; transform-origin: bottom; }
+}
+
+.animate-grow {
+  animation: growUp 1.5s cubic-bezier(0.19, 1, 0.22, 1) forwards;
+}
+
+/* Gentle Wind Sway (More subtle) */
+@keyframes gentleSway {
+  0%, 100% { transform: rotate(-3deg); }
+  50% { transform: rotate(3deg); }
+}
+
+.animate-sway-gentle {
+  animation: gentleSway 6s ease-in-out infinite alternate;
+}
+
+/* Wind Flow Lines */
+@keyframes windFlow {
+  0% { transform: translateX(-100%) translateY(0) scaleX(0.5); opacity: 0; }
+  50% { opacity: 0.5; }
+  100% { transform: translateX(200%) translateY(20px) scaleX(1); opacity: 0; }
+}
+
+.animate-wind {
+  animation: windFlow 8s linear infinite;
+}
+
+/* Interactive Hover for Plants */
+.hover-nature {
+  transition: transform 0.5s cubic-bezier(0.34, 1.56, 0.64, 1), filter 0.3s;
+}
+.hover-nature:hover {
+  transform: scale(1.05) rotate(2deg);
+  filter: drop-shadow(0 0 10px rgba(74, 222, 128, 0.4));
+}

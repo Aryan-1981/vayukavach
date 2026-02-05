@@ -9,6 +9,18 @@ const LeafIcon = ({ className }) => (
   </svg>
 );
 
+const PlantIcon = ({ className, style }) => (
+  <svg viewBox="0 0 24 24" fill="currentColor" className={className} style={style}>
+    <path d="M12 2C8 2 6 6 6 10c0 4 3 7 3 9v3h6v-3c0-2 3-5 3-9C18 6 16 2 12 2zM12 22v-2c-1 0-2-1-2-2 0-3 2-5 2-8 0 3 2 5 2 8C14 21 13 22 12 22z" />
+  </svg>
+);
+
+const TreeIcon = ({ className, style }) => (
+  <svg viewBox="0 0 24 24" fill="currentColor" className={className} style={style}>
+    <path d="M12 2L3 16h6v6h6v-6h6L12 2z" opacity="0.8"/>
+  </svg>
+);
+
 const CloudIcon = ({ className }) => (
   <svg viewBox="0 0 24 24" fill="currentColor" className={className}>
     <path d="M18.5,12c-0.3,0-0.6,0.1-0.9,0.2c-0.3-2.9-2.8-5.2-5.7-5.2c-2.3,0-4.4,1.4-5.2,3.6c-0.4-0.2-0.8-0.3-1.3-0.3 c-2.4,0-4.3,1.9-4.3,4.3C1,17,2.9,19,5.3,19h13.2c1.9,0,3.5-1.6,3.5-3.5S20.4,12,18.5,12z" opacity="0.8"/>
@@ -25,6 +37,14 @@ const BirdIcon = ({ className, style }) => (
 const ParticleBackground = () => {
   return (
     <div className="fixed inset-0 pointer-events-none z-0 overflow-hidden">
+      {/* Wind Flow Lines */}
+      {[...Array(5)].map((_, i) => (
+         <div 
+           key={`wind-${i}`}
+           className="absolute h-px bg-gradient-to-r from-transparent via-white/10 to-transparent w-full animate-wind"
+           style={{ top: `${Math.random() * 100}%`, animationDelay: `${Math.random() * 5}s`, animationDuration: `${5 + Math.random() * 5}s` }}
+         />
+      ))}
       {[...Array(15)].map((_, i) => (
         <div
           key={i}
@@ -44,6 +64,46 @@ const ParticleBackground = () => {
         <BirdIcon className="w-12 h-12 text-white/10 animate-fly" style={{ top: '10%', animationDuration: '25s' }} />
         <BirdIcon className="w-8 h-8 text-white/5 animate-fly animation-delay-1000" style={{ top: '20%', animationDuration: '30s' }} />
         <BirdIcon className="w-6 h-6 text-white/5 animate-fly animation-delay-500" style={{ top: '15%', animationDuration: '28s', animationDelay: '5s' }} />
+      </div>
+    </div>
+  );
+};
+
+// --- Parallax Background Component ---
+const ParallaxNature = () => {
+  const [offset, setOffset] = useState(0);
+
+  useEffect(() => {
+    const handleScroll = () => setOffset(window.scrollY);
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+
+  return (
+    <div className="fixed inset-0 pointer-events-none z-0 overflow-hidden transition-opacity duration-1000">
+      {/* Layer 1: Distant Background (Slowest) */}
+      <div 
+          className="absolute -bottom-20 left-0 w-full h-1/2 bg-gradient-to-t from-green-900/10 to-transparent"
+          style={{ transform: `translateY(${offset * 0.1}px)` }}
+      />
+      
+      {/* Layer 2: Mid-ground Hills (Medium Speed) */}
+      <div 
+          className="absolute bottom-0 left-0 w-full flex justify-between opacity-20"
+          style={{ transform: `translateY(${offset * 0.2}px)` }}
+      >
+           <TreeIcon className="w-64 h-64 text-green-800 transform -translate-x-12 translate-y-12 blur-[2px]" />
+           <TreeIcon className="w-80 h-80 text-green-900 transform translate-x-20 translate-y-20 blur-[1px]" />
+      </div>
+
+      {/* Layer 3: Foreground Plants (Fastest & Interactive) */}
+      <div 
+          className="absolute bottom-0 left-0 w-full flex justify-between items-end px-10 pointer-events-auto"
+          style={{ transform: `translateY(-${offset * 0.05}px)` }}
+      >
+           <PlantIcon className="w-16 h-16 text-green-500/20 animate-grow animate-sway-gentle hover-nature cursor-pointer" style={{ animationDelay: '0.5s' }} />
+           <PlantIcon className="w-24 h-24 text-green-400/20 animate-grow animate-sway hover-nature cursor-pointer" style={{ animationDelay: '1s' }} />
+           <PlantIcon className="w-20 h-20 text-emerald-500/20 animate-grow animate-sway-gentle hover-nature cursor-pointer" style={{ animationDelay: '1.5s' }} />
       </div>
     </div>
   );
@@ -140,8 +200,9 @@ export default function Home() {
   const status = latestData ? getAQIStatus(latestData.pm2_5) : { text: '--', color: 'text-gray-400', bg: 'from-gray-800 to-gray-900', desc: 'Loading data...' };
 
   return (
-    <div className="bg-[#0a0a0a] text-white font-sans min-h-screen selection:bg-green-500/30">
+    <div className="bg-[#0a0a0a] text-white font-sans min-h-screen selection:bg-green-500/30 overflow-x-hidden">
       <ParticleBackground />
+      <ParallaxNature />
       
       {/* Navigation */}
       <nav className={`fixed w-full z-50 transition-all duration-500 ${scrolled ? 'bg-black/80 backdrop-blur-lg border-b border-white/10 py-4' : 'bg-transparent py-6'}`}>
