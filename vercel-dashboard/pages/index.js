@@ -343,6 +343,65 @@ export default function Home() {
         </div>
       </section>
 
+      {/* The Problem Section - Emotional Impact */}
+      <section id="problem" className="min-h-screen py-24 relative bg-gradient-to-b from-[#0a0a0a] to-[#0d0d0d]">
+        <div className="max-w-7xl mx-auto px-6">
+          <div className="text-center mb-16">
+            <span className="px-4 py-1.5 rounded-full border border-red-500/30 bg-red-500/10 text-red-400 text-sm font-medium tracking-wide backdrop-blur-sm inline-block mb-6">
+              THE INVISIBLE THREAT
+            </span>
+            <h2 className="text-4xl md:text-6xl font-bold mb-6 text-white">
+              Every Breath <span className="text-red-400">Matters</span>
+            </h2>
+            <p className="text-xl text-gray-400 max-w-3xl mx-auto leading-relaxed">
+              Air pollution kills <span className="text-red-400 font-bold">7 million people</span> globally each year. 
+              Yet it remains invisible, odorless, and ignored—until it's too late.
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+            {/* Problem Card 1 */}
+            <div className="glass-card p-8 rounded-3xl card-lift">
+              <div className="w-16 h-16 rounded-2xl bg-red-500/10 flex items-center justify-center mb-6 mx-auto pulse-glow">
+                <svg className="w-8 h-8 text-red-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
+                </svg>
+              </div>
+              <h3 className="text-2xl font-bold text-center mb-4">91% Breathe Toxic Air</h3>
+              <p className="text-gray-400 text-center leading-relaxed">
+                Over 9 out of 10 people worldwide breathe air containing high levels of pollutants every single day.
+              </p>
+            </div>
+
+            {/* Problem Card 2 */}
+            <div className="glass-card p-8 rounded-3xl card-lift" style={{ animationDelay: '0.1s' }}>
+              <div className="w-16 h-16 rounded-2xl bg-orange-500/10 flex items-center justify-center mb-6 mx-auto pulse-glow">
+                <svg className="w-8 h-8 text-orange-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
+                </svg>
+              </div>
+              <h3 className="text-2xl font-bold text-center mb-4">Chronic Diseases Rising</h3>
+              <p className="text-gray-400 text-center leading-relaxed">
+                PM2.5 particles penetrate deep into lungs and bloodstream, causing heart disease, stroke, and lung cancer.
+              </p>
+            </div>
+
+            {/* Problem Card 3 */}
+            <div className="glass-card p-8 rounded-3xl card-lift" style={{ animationDelay: '0.2s' }}>
+              <div className="w-16 h-16 rounded-2xl bg-yellow-500/10 flex items-center justify-center mb-6 mx-auto pulse-glow">
+                <svg className="w-8 h-8 text-yellow-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
+                </svg>
+              </div>
+              <h3 className="text-2xl font-bold text-center mb-4">Cities Under Siege</h3>
+              <p className="text-gray-400 text-center leading-relaxed">
+                Urban areas face 5-10x higher pollution levels than safe limits, affecting billions of lives daily.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
       {/* Live Dashboard Section */}
       <section id="dashboard" className="min-h-screen py-24 relative">
         <div className="max-w-7xl mx-auto px-6">
