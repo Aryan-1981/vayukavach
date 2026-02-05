@@ -191,6 +191,7 @@ export default function Home() {
   const [historicalData, setHistoricalData] = useState([]);
   const [scrolled, setScrolled] = useState(false);
   const [activeSection, setActiveSection] = useState('home');
+  const [aqiCount, setAqiCount] = useState(0);
 
   // --- Data Fetching Logic (Preserved) ---
   useEffect(() => {
@@ -243,6 +244,28 @@ export default function Home() {
       .limit(1);
     if (data && data.length > 0) setLatestData(data[0]);
   }
+
+  // Smooth counter animation for AQI
+  useEffect(() => {
+    if (latestData && latestData.pm2_5) {
+      const target = Math.round(latestData.pm2_5);
+      const duration = 2000;
+      const startTime = Date.now();
+      
+      const animate = () => {
+        const elapsed = Date.now() - startTime;
+        const progress = Math.min(elapsed / duration, 1);
+        const easeOut = 1 - Math.pow(1 - progress, 3);
+        setAqiCount(Math.round(easeOut * target));
+        
+        if (progress < 1) {
+          requestAnimationFrame(animate);
+        }
+      };
+      
+      animate();
+    }
+  }, [latestData]);
 
   async function fetchHistoricalData() {
     const { data } = await supabase
@@ -417,18 +440,21 @@ export default function Home() {
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-12">
-            {/* Status Card - Large */}
-            <div className={`col-span-1 md:col-span-2 lg:col-span-2 glass-card rounded-3xl p-8 relative overflow-hidden bg-gradient-to-br ${status.bg} border-0`}>
+            {/* Status Card - Large with Animated Counter */}
+            <div className={`col-span-1 md:col-span-2 lg:col-span-2 glass-card rounded-3xl p-8 relative overflow-hidden bg-gradient-to-br ${status.bg} border-0 card-lift`}>
               <div className="relative z-10">
                 <div className="text-sm uppercase tracking-wider opacity-70 mb-1">Air Quality Index</div>
-                <div className={`text-4xl md:text-5xl font-bold mb-4 ${status.color} text-glow`}>{status.text}</div>
+                <div className={`text-6xl md:text-7xl font-bold mb-2 ${status.color} text-glow count-up`}>
+                  {aqiCount}
+                </div>
+                <div className={`text-3xl md:text-4xl font-bold mb-4 ${status.color}`}>{status.text}</div>
                 <p className="text-lg opacity-90 max-w-md">{status.desc}</p>
               </div>
               <CloudIcon className="absolute top-0 right-0 w-64 h-64 text-white/5 -translate-y-12 translate-x-12 animate-float" />
             </div>
 
             {/* PM2.5 Card */}
-            <div className="glass-card rounded-3xl p-6 flex flex-col justify-between group">
+            <div className="glass-card rounded-3xl p-6 flex flex-col justify-between group card-lift">
               <div className="flex justify-between items-start">
                 <div className="text-sm text-gray-400">PM2.5</div>
                 <div className="p-2 rounded-full bg-orange-500/10 text-orange-400 group-hover:scale-110 transition-transform">
@@ -445,7 +471,7 @@ export default function Home() {
             </div>
 
             {/* PM10 Card */}
-            <div className="glass-card rounded-3xl p-6 flex flex-col justify-between group">
+            <div className="glass-card rounded-3xl p-6 flex flex-col justify-between group card-lift">
               <div className="flex justify-between items-start">
                 <div className="text-sm text-gray-400">PM10</div>
                 <div className="p-2 rounded-full bg-blue-500/10 text-blue-400 group-hover:scale-110 transition-transform">
