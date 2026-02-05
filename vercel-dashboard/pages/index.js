@@ -364,29 +364,45 @@ export default function Home() {
       <section id="team" className="py-24">
         <div className="max-w-7xl mx-auto px-6 text-center">
           <h2 className="text-3xl md:text-4xl font-bold mb-12">The Minds Behind VayuKavach</h2>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+          <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-5 gap-6">
              {/* Team Member 1 */}
              <div className="glass-card p-6 rounded-3xl hover:-translate-y-2 transition-transform duration-300">
-                <div className="w-24 h-24 rounded-full bg-gradient-to-tr from-gray-700 to-gray-600 mx-auto mb-4 border-2 border-white/10" />
-                <h3 className="text-xl font-semibold">Tanishk Kalani</h3>
-                <p className="text-green-400 text-sm mb-4">Lead Developer & Hardware</p>
-                <p className="text-gray-500 text-sm">Architecting the ESP32 firmware and sensor integration for precision monitoring.</p>
+                <div className="w-20 h-20 rounded-full bg-gradient-to-tr from-green-700 to-green-600 mx-auto mb-4 border-2 border-white/10" />
+                <h3 className="text-lg font-semibold">Aryan Kumar Bhargava</h3>
+                <p className="text-green-400 text-xs uppercase tracking-wider mb-2 font-bold">Web & ESP32 Lead</p>
+                <p className="text-gray-400 text-sm leading-relaxed">Handling full-stack website development and ESP32 firmware integration.</p>
              </div>
              
              {/* Team Member 2 */}
              <div className="glass-card p-6 rounded-3xl hover:-translate-y-2 transition-transform duration-300">
-                <div className="w-24 h-24 rounded-full bg-gradient-to-tr from-gray-700 to-gray-600 mx-auto mb-4 border-2 border-white/10" />
-                <h3 className="text-xl font-semibold">Parth Patel</h3>
-                <p className="text-blue-400 text-sm mb-4">Frontend Engineer</p>
-                <p className="text-gray-500 text-sm">Crafting the immersive user interface and visualization logic.</p>
+                <div className="w-20 h-20 rounded-full bg-gradient-to-tr from-blue-700 to-blue-600 mx-auto mb-4 border-2 border-white/10" />
+                <h3 className="text-lg font-semibold">Tejaswa Rana</h3>
+                <p className="text-blue-400 text-xs uppercase tracking-wider mb-2 font-bold">Hardware Specialist</p>
+                <p className="text-gray-400 text-sm leading-relaxed">Expert in sensor calibration, hardware configuration, and circuit design.</p>
              </div>
 
              {/* Team Member 3 */}
              <div className="glass-card p-6 rounded-3xl hover:-translate-y-2 transition-transform duration-300">
-                <div className="w-24 h-24 rounded-full bg-gradient-to-tr from-gray-700 to-gray-600 mx-auto mb-4 border-2 border-white/10" />
-                <h3 className="text-xl font-semibold">Krishiv Garg</h3>
-                <p className="text-purple-400 text-sm mb-4">Data Analyst</p>
-                <p className="text-gray-500 text-sm">Ensuring data accuracy and developing insight algorithms.</p>
+                <div className="w-20 h-20 rounded-full bg-gradient-to-tr from-purple-700 to-purple-600 mx-auto mb-4 border-2 border-white/10" />
+                <h3 className="text-lg font-semibold">Vansh Shrivastav</h3>
+                <p className="text-purple-400 text-xs uppercase tracking-wider mb-2 font-bold">Innovation Lead</p>
+                <p className="text-gray-400 text-sm leading-relaxed">Driving project ideation and overseeing practical hardware implementation.</p>
+             </div>
+
+             {/* Team Member 4 */}
+             <div className="glass-card p-6 rounded-3xl hover:-translate-y-2 transition-transform duration-300">
+                <div className="w-20 h-20 rounded-full bg-gradient-to-tr from-orange-700 to-orange-600 mx-auto mb-4 border-2 border-white/10" />
+                <h3 className="text-lg font-semibold">Yuvraj Yadav</h3>
+                <p className="text-orange-400 text-xs uppercase tracking-wider mb-2 font-bold">Design Expert</p>
+                <p className="text-gray-400 text-sm leading-relaxed">Crafting the visual identity and ensuring an intuitive user experience.</p>
+             </div>
+
+             {/* Team Member 5 */}
+             <div className="glass-card p-6 rounded-3xl hover:-translate-y-2 transition-transform duration-300">
+                <div className="w-20 h-20 rounded-full bg-gradient-to-tr from-pink-700 to-pink-600 mx-auto mb-4 border-2 border-white/10" />
+                <h3 className="text-lg font-semibold">Vansh Trivedi</h3>
+                <p className="text-pink-400 text-xs uppercase tracking-wider mb-2 font-bold">Comm & Hardware</p>
+                <p className="text-gray-400 text-sm leading-relaxed">Managing communications and assisting with hardware assembly.</p>
              </div>
           </div>
         </div>
