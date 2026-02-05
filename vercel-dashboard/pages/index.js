@@ -1,6 +1,53 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { createClient } from '@supabase/supabase-js';
-import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
+import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, AreaChart, Area } from 'recharts';
+
+// --- Assets (Inline SVGs) ---
+const LeafIcon = ({ className }) => (
+  <svg viewBox="0 0 24 24" fill="currentColor" className={className}>
+    <path d="M17.4,6.7C17,3.5,14.6,1,11.3,0.3c-0.2,0-0.4,0-0.5,0.1C10.6,0.5,10.5,0.7,10.6,1c1.2,3,0.3,6.3-2.1,8.6 c-2.6,2.5-6.6,2.8-9.4,0.6C-1.3,9.8-1.2,10.2,0.6,12.2c1.7,2,4,3.1,6.6,3.1c0.1,0,0.3,0,0.4,0c2.8-0.1,5.4-1.3,7.4-3.5 C16.9,9.8,17.6,8.3,17.4,6.7z M3.6,10.3c2.4,1.4,5.4,1,7.5-1c2-1.9,2.8-4.6,2.1-7.2C13.8,2.8,14.2,3.4,14.5,4 c-0.1,1.8-0.9,3.4-2.2,4.8c-2,2-4.5,3.1-7.2,3C4.6,11.7,4.1,11.1,3.6,10.3z" />
+  </svg>
+);
+
+const CloudIcon = ({ className }) => (
+  <svg viewBox="0 0 24 24" fill="currentColor" className={className}>
+    <path d="M18.5,12c-0.3,0-0.6,0.1-0.9,0.2c-0.3-2.9-2.8-5.2-5.7-5.2c-2.3,0-4.4,1.4-5.2,3.6c-0.4-0.2-0.8-0.3-1.3-0.3 c-2.4,0-4.3,1.9-4.3,4.3C1,17,2.9,19,5.3,19h13.2c1.9,0,3.5-1.6,3.5-3.5S20.4,12,18.5,12z" opacity="0.8"/>
+  </svg>
+);
+
+const BirdIcon = ({ className, style }) => (
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className} style={style}>
+    <path d="M2 12s5-3 9-3 9 3 9 3" />
+  </svg>
+);
+
+// --- Particle Background Component ---
+const ParticleBackground = () => {
+  return (
+    <div className="fixed inset-0 pointer-events-none z-0 overflow-hidden">
+      {[...Array(15)].map((_, i) => (
+        <div
+          key={i}
+          className="particle absolute text-white/20"
+          style={{
+            left: `${Math.random() * 100}%`,
+            top: `${Math.random() * 100}%`,
+            fontSize: `${Math.random() * 20 + 10}px`,
+            animationDelay: `${Math.random() * 10}s`,
+            animationDuration: `${Math.random() * 20 + 10}s`
+          }}
+        >
+          {i % 3 === 0 ? '●' : i % 3 === 1 ? '☁' : '✦'}
+        </div>
+      ))}
+      <div className="absolute top-20 left-0 w-full h-full pointer-events-none">
+        <BirdIcon className="w-12 h-12 text-white/10 animate-fly" style={{ top: '10%', animationDuration: '25s' }} />
+        <BirdIcon className="w-8 h-8 text-white/5 animate-fly animation-delay-1000" style={{ top: '20%', animationDuration: '30s' }} />
+        <BirdIcon className="w-6 h-6 text-white/5 animate-fly animation-delay-500" style={{ top: '15%', animationDuration: '28s', animationDelay: '5s' }} />
+      </div>
+    </div>
+  );
+};
 
 const supabase = createClient(
   process.env.NEXT_PUBLIC_SUPABASE_URL,
@@ -10,15 +57,14 @@ const supabase = createClient(
 export default function Home() {
   const [latestData, setLatestData] = useState(null);
   const [historicalData, setHistoricalData] = useState([]);
-  const [loading, setLoading] = useState(true);
-  const [darkMode, setDarkMode] = useState(false);
-  const [showFullChart, setShowFullChart] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
+  const [activeSection, setActiveSection] = useState('home');
 
+  // --- Data Fetching Logic (Preserved) ---
   useEffect(() => {
     fetchLatestData();
     fetchHistoricalData();
 
-    // Subscribe to real-time updates
     const subscription = supabase
       .channel('sensor_data_changes')
       .on('postgres_changes', 
@@ -30,42 +76,51 @@ export default function Home() {
       )
       .subscribe();
 
-    // Refresh every 30 seconds
     const interval = setInterval(() => {
       fetchLatestData();
       fetchHistoricalData();
     }, 30000);
 
+    const handleScroll = () => {
+      setScrolled(window.scrollY > 50);
+      
+      // Determine active section
+      const sections = ['home', 'dashboard', 'about', 'team'];
+      for (const section of sections) {
+        const el = document.getElementById(section);
+        if (el && window.scrollY >= el.offsetTop - 300) {
+          setActiveSection(section);
+        }
+      }
+    };
+
+    window.addEventListener('scroll', handleScroll);
+
     return () => {
       subscription.unsubscribe();
       clearInterval(interval);
+      window.removeEventListener('scroll', handleScroll);
     };
   }, []);
 
   async function fetchLatestData() {
-    const { data, error } = await supabase
+    const { data } = await supabase
       .from('sensor_data')
       .select('*')
       .order('created_at', { ascending: false })
       .limit(1);
-
-    if (data && data.length > 0) {
-      setLatestData(data[0]);
-    }
-    setLoading(false);
+    if (data && data.length > 0) setLatestData(data[0]);
   }
 
   async function fetchHistoricalData() {
-    const { data, error } = await supabase
+    const { data } = await supabase
       .from('sensor_data')
       .select('*')
       .order('created_at', { ascending: false })
-      .limit(50);
-
+      .limit(20); // Reduced for cleaner chart
     if (data) {
-      // Reverse to show oldest to newest
       const formattedData = data.reverse().map(item => ({
-        time: new Date(item.created_at).toLocaleTimeString(),
+        time: new Date(item.created_at).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
         PM1: item.pm1_0,
         PM2_5: item.pm2_5,
         PM10: item.pm10
@@ -74,319 +129,298 @@ export default function Home() {
     }
   }
 
-  function getAirQualityStatus(pm25) {
-    if (pm25 <= 12) return { text: 'Good', color: 'bg-green-500' };
-    if (pm25 <= 35) return { text: 'Moderate', color: 'bg-yellow-500' };
-    if (pm25 <= 55) return { text: 'Unhealthy for Sensitive', color: 'bg-orange-500' };
-    if (pm25 <= 150) return { text: 'Unhealthy', color: 'bg-red-500' };
-    if (pm25 <= 250) return { text: 'Very Unhealthy', color: 'bg-purple-500' };
-    return { text: 'Hazardous', color: 'bg-red-900' };
+  function getAQIStatus(pm25) {
+    if (pm25 <= 12) return { text: 'Pristine', color: 'text-green-400', bg: 'from-green-500/20 to-green-900/20', desc: 'Perfect for outdoor activities.' };
+    if (pm25 <= 35) return { text: 'Moderate', color: 'text-yellow-400', bg: 'from-yellow-500/20 to-yellow-900/20', desc: 'Acceptable air quality.' };
+    if (pm25 <= 55) return { text: 'Unhealthy for Sensitive', color: 'text-orange-400', bg: 'from-orange-500/20 to-orange-900/20', desc: 'Sensitive groups should reduce outdoor exertion.' };
+    if (pm25 <= 150) return { text: 'Unhealthy', color: 'text-red-400', bg: 'from-red-500/20 to-red-900/20', desc: 'Everyone may begin to experience health effects.' };
+    return { text: 'Hazardous', color: 'text-purple-400', bg: 'from-purple-500/20 to-purple-900/20', desc: 'Health warnings of emergency conditions.' };
   }
 
-  if (loading) {
-    return (
-      <div className={`min-h-screen ${darkMode ? 'bg-gray-900' : 'bg-gradient-to-br from-blue-500 to-purple-600'} flex items-center justify-center transition-all duration-500 px-4`}>
-        <div className="text-center">
-          <div className="animate-spin rounded-full h-24 w-24 sm:h-32 sm:w-32 border-t-4 border-b-4 border-white mx-auto mb-4"></div>
-          <div className="text-white text-xl sm:text-2xl animate-pulse">Loading Air Quality Data...</div>
-        </div>
-      </div>
-    );
-  }
-
-  const status = latestData ? getAirQualityStatus(latestData.pm2_5) : { text: 'No Data', color: 'bg-gray-500' };
+  const status = latestData ? getAQIStatus(latestData.pm2_5) : { text: '--', color: 'text-gray-400', bg: 'from-gray-800 to-gray-900', desc: 'Loading data...' };
 
   return (
-    <div className={`min-h-screen transition-all duration-700 ${
-      darkMode 
-        ? 'bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900' 
-        : 'bg-gradient-to-br from-blue-500 via-purple-500 to-pink-500'
-    } p-3 sm:p-4 md:p-6`}>
-      <div className="max-w-7xl mx-auto">
-        {/* Header with Dark Mode Toggle */}
-        <header className="text-center text-white mb-6 sm:mb-8 pt-4 sm:pt-8 animate-fade-in relative">
-          {/* Dark Mode Toggle Button - Mobile Optimized */}
-          <button
-            onClick={() => setDarkMode(!darkMode)}
-            className={`fixed top-4 right-4 sm:absolute sm:top-0 sm:right-4 p-3 sm:p-4 rounded-full transition-all duration-500 transform active:scale-95 hover:scale-110 hover:rotate-12 ${
-              darkMode ? 'bg-yellow-400 text-gray-900' : 'bg-gray-800 text-yellow-300'
-            } shadow-2xl z-50 touch-manipulation`}
-            aria-label="Toggle dark mode"
-          >
-            <div className="text-2xl sm:text-3xl animate-bounce-slow">
-              {darkMode ? '☀️' : '🌙'}
-            </div>
-          </button>
+    <div className="bg-[#0a0a0a] text-white font-sans min-h-screen selection:bg-green-500/30">
+      <ParticleBackground />
+      
+      {/* Navigation */}
+      <nav className={`fixed w-full z-50 transition-all duration-500 ${scrolled ? 'bg-black/80 backdrop-blur-lg border-b border-white/10 py-4' : 'bg-transparent py-6'}`}>
+        <div className="max-w-7xl mx-auto px-6 flex justify-between items-center">
+          <div className="flex items-center gap-2">
+            <LeafIcon className="w-6 h-6 text-green-400 animate-sway" />
+            <span className="text-xl font-bold tracking-tight">Vayu<span className="text-green-400">Kavach</span></span>
+          </div>
+          <div className="hidden md:flex gap-8 text-sm font-medium text-white/80">
+            {['Home', 'Dashboard', 'About', 'Team'].map((item) => (
+              <a 
+                key={item} 
+                href={`#${item.toLowerCase()}`}
+                className={`transition-colors hover:text-green-400 ${activeSection === item.toLowerCase() ? 'text-green-400' : ''}`}
+              >
+                {item}
+              </a>
+            ))}
+          </div>
+        </div>
+      </nav>
 
-          <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold mb-2 animate-slide-down px-4">
-            🌬️ VayuKavach
-          </h1>
-          <p className="text-base sm:text-lg md:text-xl lg:text-2xl opacity-90 animate-slide-up px-4">
-            वायु कवच - Air Quality Monitor
-          </p>
-          <div className="mt-3 sm:mt-4 inline-block">
-            <span className="animate-pulse bg-white bg-opacity-20 px-3 sm:px-4 py-1.5 sm:py-2 rounded-full text-xs sm:text-sm">
-              🔴 Live Monitoring
+      {/* Hero Section */}
+      <section id="home" className="relative h-screen flex items-center justify-center overflow-hidden">
+        {/* Background Gradient */}
+        <div className="absolute inset-0 bg-gradient-to-b from-[#0a0a0a] via-[#112211] to-[#0a0a0a] z-0" />
+        
+        {/* Animated Orbs */}
+        <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-green-500/20 rounded-full blur-[100px] animate-pulse" />
+        <div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-blue-500/20 rounded-full blur-[100px] animate-pulse delay-1000" />
+
+        <div className="relative z-10 text-center px-4 max-w-4xl mx-auto">
+          <div className="reveal-up animation-delay-100 mb-6 flex justify-center">
+            <span className="px-4 py-1.5 rounded-full border border-green-500/30 bg-green-500/10 text-green-400 text-sm font-medium tracking-wide backdrop-blur-sm">
+              LIVE AIR QUALITY MONITORING
             </span>
           </div>
-        </header>
-
-        {/* Current Data Cards - Mobile Optimized */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 mb-6 sm:mb-8">
-          {/* PM1.0 Card */}
-          <div className={`${
-            darkMode ? 'bg-gray-800 text-white' : 'bg-white'
-          } rounded-2xl shadow-2xl p-6 sm:p-8 transform active:scale-95 sm:hover:scale-105 sm:hover:-rotate-1 transition-all duration-300 animate-fade-in-up delay-100 touch-manipulation`}>
-            <div className={`${darkMode ? 'text-gray-400' : 'text-gray-500'} text-xs sm:text-sm uppercase tracking-wide mb-2 sm:mb-3 flex items-center justify-between`}>
-              <span>PM1.0 Particles</span>
-              <span className="text-xl sm:text-2xl animate-pulse">💨</span>
-            </div>
-            <div className="text-4xl sm:text-5xl md:text-6xl font-bold text-green-500 mb-2 animate-number-pop">
-              {latestData ? latestData.pm1_0.toFixed(1) : '--'}
-            </div>
-            <div className={`${darkMode ? 'text-gray-500' : 'text-gray-400'} text-xs sm:text-sm`}>µg/m³</div>
-            <div className="mt-3 sm:mt-4 h-2 bg-gray-200 dark:bg-gray-700 rounded-full overflow-hidden">
-              <div 
-                className="h-full bg-green-500 animate-progress transition-all duration-1000"
-                style={{ width: `${Math.min((latestData?.pm1_0 || 0) / 50 * 100, 100)}%` }}
-              ></div>
-            </div>
-          </div>
-
-          {/* PM2.5 Card */}
-          <div className={`${
-            darkMode ? 'bg-gray-800 text-white' : 'bg-white'
-          } rounded-2xl shadow-2xl p-6 sm:p-8 transform active:scale-95 sm:hover:scale-105 sm:hover:rotate-1 transition-all duration-300 animate-fade-in-up delay-200 touch-manipulation sm:col-span-2 lg:col-span-1`}>
-            <div className={`${darkMode ? 'text-gray-400' : 'text-gray-500'} text-xs sm:text-sm uppercase tracking-wide mb-2 sm:mb-3 flex items-center justify-between`}>
-              <span>PM2.5 Particles</span>
-              <span className="text-xl sm:text-2xl animate-bounce">⚠️</span>
-            </div>
-            <div className="text-4xl sm:text-5xl md:text-6xl font-bold text-orange-500 mb-2 animate-number-pop">
-              {latestData ? latestData.pm2_5.toFixed(1) : '--'}
-            </div>
-            <div className={`${darkMode ? 'text-gray-500' : 'text-gray-400'} text-xs sm:text-sm mb-3 sm:mb-4`}>µg/m³</div>
-            <div className={`${status.color} text-white px-4 py-2 rounded-lg text-center font-bold text-sm sm:text-base transform active:scale-95 sm:hover:scale-105 transition-transform touch-manipulation`}>
-              {status.text}
-            </div>
-          </div>
-
-          {/* PM10 Card */}
-          <div className={`${
-            darkMode ? 'bg-gray-800 text-white' : 'bg-white'
-          } rounded-2xl shadow-2xl p-6 sm:p-8 transform active:scale-95 sm:hover:scale-105 sm:hover:-rotate-1 transition-all duration-300 animate-fade-in-up delay-300 touch-manipulation sm:col-span-2 lg:col-span-1`}>
-            <div className={`${darkMode ? 'text-gray-400' : 'text-gray-500'} text-xs sm:text-sm uppercase tracking-wide mb-2 sm:mb-3 flex items-center justify-between`}>
-              <span>PM10 Particles</span>
-              <span className="text-xl sm:text-2xl animate-pulse">🔴</span>
-            </div>
-            <div className="text-4xl sm:text-5xl md:text-6xl font-bold text-red-500 mb-2 animate-number-pop">
-              {latestData ? latestData.pm10.toFixed(1) : '--'}
-            </div>
-            <div className={`${darkMode ? 'text-gray-500' : 'text-gray-400'} text-xs sm:text-sm`}>µg/m³</div>
-            <div className="mt-3 sm:mt-4 h-2 bg-gray-200 dark:bg-gray-700 rounded-full overflow-hidden">
-              <div 
-                className="h-full bg-red-500 animate-progress transition-all duration-1000"
-                style={{ width: `${Math.min((latestData?.pm10 || 0) / 100 * 100, 100)}%` }}
-              ></div>
-            </div>
-          </div>
-        </div>
-
-        {/* Historical Chart - Mobile Optimized */}
-        <div className={`${
-          darkMode ? 'bg-gray-800 text-white' : 'bg-white'
-        } rounded-2xl shadow-2xl p-4 sm:p-6 md:p-8 mb-6 sm:mb-8 animate-fade-in-up delay-400`}>
-          <h2 className={`text-lg sm:text-xl md:text-2xl font-bold mb-4 sm:mb-6 ${darkMode ? 'text-white' : 'text-gray-800'}`}>
-            📊 Historical Data
-          </h2>
-          <div className="text-xs sm:text-sm text-gray-500 mb-3 sm:mb-4">Last 50 Readings</div>
-          <ResponsiveContainer width="100%" height={300} className="sm:hidden">
-            <LineChart data={historicalData}>
-              <CartesianGrid strokeDasharray="3 3" stroke={darkMode ? '#374151' : '#e5e7eb'} />
-              <XAxis 
-                dataKey="time" 
-                stroke={darkMode ? '#9ca3af' : '#6b7280'}
-                tick={{ fontSize: 10 }}
-                interval="preserveStartEnd"
-              />
-              <YAxis 
-                stroke={darkMode ? '#9ca3af' : '#6b7280'}
-                tick={{ fontSize: 10 }}
-                width={40}
-              />
-              <Tooltip 
-                contentStyle={{ 
-                  backgroundColor: darkMode ? '#1f2937' : '#ffffff',
-                  border: 'none',
-                  borderRadius: '8px',
-                  color: darkMode ? '#ffffff' : '#000000',
-                  fontSize: '12px'
-                }}
-              />
-              <Line type="monotone" dataKey="PM1" stroke="#10b981" strokeWidth={2} dot={false} />
-              <Line type="monotone" dataKey="PM2_5" stroke="#f59e0b" strokeWidth={2} dot={false} />
-              <Line type="monotone" dataKey="PM10" stroke="#ef4444" strokeWidth={2} dot={false} />
-            </LineChart>
-          </ResponsiveContainer>
-          <ResponsiveContainer width="100%" height={400} className="hidden sm:block">
-            <LineChart data={historicalData}>
-              <CartesianGrid strokeDasharray="3 3" stroke={darkMode ? '#374151' : '#e5e7eb'} />
-              <XAxis dataKey="time" stroke={darkMode ? '#9ca3af' : '#6b7280'} />
-              <YAxis 
-                label={{ value: 'µg/m³', angle: -90, position: 'insideLeft', fill: darkMode ? '#9ca3af' : '#6b7280' }} 
-                stroke={darkMode ? '#9ca3af' : '#6b7280'}
-              />
-              <Tooltip 
-                contentStyle={{ 
-                  backgroundColor: darkMode ? '#1f2937' : '#ffffff',
-                  border: 'none',
-                  borderRadius: '8px',
-                  color: darkMode ? '#ffffff' : '#000000'
-                }}
-              />
-              <Legend />
-              <Line type="monotone" dataKey="PM1" stroke="#10b981" strokeWidth={3} dot={{ r: 4 }} activeDot={{ r: 8 }} />
-              <Line type="monotone" dataKey="PM2_5" stroke="#f59e0b" strokeWidth={3} dot={{ r: 4 }} activeDot={{ r: 8 }} />
-              <Line type="monotone" dataKey="PM10" stroke="#ef4444" strokeWidth={3} dot={{ r: 4 }} activeDot={{ r: 8 }} />
-            </LineChart>
-          </ResponsiveContainer>
-        </div>
-
-        {/* Air Quality Reference - Mobile Optimized */}
-        <div className={`${
-          darkMode ? 'bg-gray-800 text-white' : 'bg-white'
-        } rounded-2xl shadow-2xl p-4 sm:p-6 md:p-8 animate-fade-in-up delay-500`}>
-          <h2 className={`text-lg sm:text-xl md:text-2xl font-bold mb-4 sm:mb-6 ${darkMode ? 'text-white' : 'text-gray-800'}`}>
-            📋 Air Quality Index
-          </h2>
-          <div className="overflow-x-auto -mx-4 sm:mx-0">
-            <table className="w-full min-w-[500px] sm:min-w-0">
-              <thead>
-                <tr className={darkMode ? 'bg-gray-700' : 'bg-gray-100'}>
-                  <th className="px-3 sm:px-4 py-2 sm:py-3 text-left text-xs sm:text-sm">PM2.5 (µg/m³)</th>
-                  <th className="px-3 sm:px-4 py-2 sm:py-3 text-left text-xs sm:text-sm">Quality</th>
-                  <th className="px-3 sm:px-4 py-2 sm:py-3 text-left text-xs sm:text-sm hidden sm:table-cell">Health Impact</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr className={`border-b ${darkMode ? 'border-gray-700' : 'border-gray-200'} active:bg-opacity-10 active:bg-gray-500 sm:hover:bg-opacity-10 sm:hover:bg-gray-500 transition-colors`}>
-                  <td className="px-3 sm:px-4 py-2 sm:py-3 text-xs sm:text-sm">0 - 12</td>
-                  <td className="px-3 sm:px-4 py-2 sm:py-3"><span className="bg-green-500 text-white px-2 sm:px-3 py-1 rounded text-xs sm:text-sm whitespace-nowrap">Good</span></td>
-                  <td className="px-3 sm:px-4 py-2 sm:py-3 text-xs sm:text-sm hidden sm:table-cell">Air quality is satisfactory</td>
-                </tr>
-                <tr className={`border-b ${darkMode ? 'border-gray-700' : 'border-gray-200'} active:bg-opacity-10 active:bg-gray-500 sm:hover:bg-opacity-10 sm:hover:bg-gray-500 transition-colors`}>
-                  <td className="px-3 sm:px-4 py-2 sm:py-3 text-xs sm:text-sm">12 - 35</td>
-                  <td className="px-3 sm:px-4 py-2 sm:py-3"><span className="bg-yellow-500 text-white px-2 sm:px-3 py-1 rounded text-xs sm:text-sm whitespace-nowrap">Moderate</span></td>
-                  <td className="px-3 sm:px-4 py-2 sm:py-3 text-xs sm:text-sm hidden sm:table-cell">Acceptable for most people</td>
-                </tr>
-                <tr className={`border-b ${darkMode ? 'border-gray-700' : 'border-gray-200'} active:bg-opacity-10 active:bg-gray-500 sm:hover:bg-opacity-10 sm:hover:bg-gray-500 transition-colors`}>
-                  <td className="px-3 sm:px-4 py-2 sm:py-3 text-xs sm:text-sm">35 - 55</td>
-                  <td className="px-3 sm:px-4 py-2 sm:py-3"><span className="bg-orange-500 text-white px-2 sm:px-3 py-1 rounded text-xs sm:text-sm whitespace-nowrap">Unhealthy</span></td>
-                  <td className="px-3 sm:px-4 py-2 sm:py-3 text-xs sm:text-sm hidden sm:table-cell">May affect sensitive groups</td>
-                </tr>
-                <tr className={`border-b ${darkMode ? 'border-gray-700' : 'border-gray-200'} active:bg-opacity-10 active:bg-gray-500 sm:hover:bg-opacity-10 sm:hover:bg-gray-500 transition-colors`}>
-                  <td className="px-3 sm:px-4 py-2 sm:py-3 text-xs sm:text-sm">55 - 150</td>
-                  <td className="px-3 sm:px-4 py-2 sm:py-3"><span className="bg-red-500 text-white px-2 sm:px-3 py-1 rounded text-xs sm:text-sm whitespace-nowrap">Unhealthy</span></td>
-                  <td className="px-3 sm:px-4 py-2 sm:py-3 text-xs sm:text-sm hidden sm:table-cell">Everyone may experience effects</td>
-                </tr>
-                <tr className={`border-b ${darkMode ? 'border-gray-700' : 'border-gray-200'} active:bg-opacity-10 active:bg-gray-500 sm:hover:bg-opacity-10 sm:hover:bg-gray-500 transition-colors`}>
-                  <td className="px-3 sm:px-4 py-2 sm:py-3 text-xs sm:text-sm">150 - 250</td>
-                  <td className="px-3 sm:px-4 py-2 sm:py-3"><span className="bg-purple-500 text-white px-2 sm:px-3 py-1 rounded text-xs sm:text-sm whitespace-nowrap">Very Bad</span></td>
-                  <td className="px-3 sm:px-4 py-2 sm:py-3 text-xs sm:text-sm hidden sm:table-cell">Health alert for everyone</td>
-                </tr>
-                <tr className={`active:bg-opacity-10 active:bg-gray-500 sm:hover:bg-opacity-10 sm:hover:bg-gray-500 transition-colors`}>
-                  <td className="px-3 sm:px-4 py-2 sm:py-3 text-xs sm:text-sm">250+</td>
-                  <td className="px-3 sm:px-4 py-2 sm:py-3"><span className="bg-red-900 text-white px-2 sm:px-3 py-1 rounded text-xs sm:text-sm whitespace-nowrap">Hazardous</span></td>
-                  <td className="px-3 sm:px-4 py-2 sm:py-3 text-xs sm:text-sm hidden sm:table-cell">Emergency conditions</td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-        </div>
-
-        {/* Last Update - Mobile Optimized */}
-        <div className="text-center text-white mt-6 sm:mt-8 pb-6 sm:pb-8 animate-fade-in px-4">
-          <p className="text-xs sm:text-sm opacity-75 mb-1">
-            Last updated: {latestData ? new Date(latestData.created_at).toLocaleString() : 'Never'}
+          <h1 className="reveal-up animation-delay-200 text-5xl md:text-7xl lg:text-8xl font-bold tracking-tight mb-8">
+            Breathe <span className="text-transparent bg-clip-text bg-gradient-to-r from-green-400 to-emerald-600">Pure.</span> <br />
+            Live <span className="text-white">Better.</span>
+          </h1>
+          <p className="reveal-up animation-delay-300 text-lg md:text-xl text-gray-400 mb-10 max-w-2xl mx-auto leading-relaxed">
+            Advanced real-time environmental sensing powered by ESP32 technology. 
+            Invisible data made visible for a healthier tomorrow.
           </p>
-          <p className="text-xs opacity-50 mt-2">
-            Made with ❤️ by VayuKavach Team
-          </p>
+          <div className="reveal-up animation-delay-400 flex flex-col sm:flex-row gap-4 justify-center">
+            <a href="#dashboard" className="px-8 py-4 bg-green-600 hover:bg-green-500 text-white rounded-full font-medium transition-all duration-300 hover:shadow-[0_0_20px_rgba(34,197,94,0.4)] transform hover:-translate-y-1">
+              View Live Dashboard
+            </a>
+            <a href="#about" className="px-8 py-4 bg-white/5 hover:bg-white/10 text-white border border-white/10 rounded-full font-medium transition-all backdrop-blur-md">
+              Learn More
+            </a>
+          </div>
         </div>
-      </div>
 
-      {/* Custom CSS for Animations */}
-      <style jsx>{`
-        @keyframes fade-in {
-          from { opacity: 0; }
-          to { opacity: 1; }
-        }
-        
-        @keyframes slide-down {
-          from { transform: translateY(-50px); opacity: 0; }
-          to { transform: translateY(0); opacity: 1; }
-        }
-        
-        @keyframes slide-up {
-          from { transform: translateY(50px); opacity: 0; }
-          to { transform: translateY(0); opacity: 1; }
-        }
-        
-        @keyframes fade-in-up {
-          from { transform: translateY(30px); opacity: 0; }
-          to { transform: translateY(0); opacity: 1; }
-        }
-        
-        @keyframes number-pop {
-          0% { transform: scale(0.8); }
-          50% { transform: scale(1.1); }
-          100% { transform: scale(1); }
-        }
-        
-        @keyframes progress {
-          from { transform: scaleX(0); }
-          to { transform: scaleX(1); }
-        }
-        
-        @keyframes bounce-slow {
-          0%, 100% { transform: translateY(0); }
-          50% { transform: translateY(-10px); }
-        }
-        
-        .animate-fade-in {
-          animation: fade-in 1s ease-out;
-        }
-        
-        .animate-slide-down {
-          animation: slide-down 0.8s ease-out;
-        }
-        
-        .animate-slide-up {
-          animation: slide-up 0.8s ease-out;
-        }
-        
-        .animate-fade-in-up {
-          animation: fade-in-up 0.6s ease-out;
-        }
-        
-        .animate-number-pop {
-          animation: number-pop 0.5s ease-out;
-        }
-        
-        .animate-progress {
-          transform-origin: left;
-          animation: progress 1.5s ease-out;
-        }
-        
-        .animate-bounce-slow {
-          animation: bounce-slow 3s ease-in-out infinite;
-        }
-        
-        .delay-100 { animation-delay: 0.1s; }
-        .delay-200 { animation-delay: 0.2s; }
-        .delay-300 { animation-delay: 0.3s; }
-        .delay-400 { animation-delay: 0.4s; }
-        .delay-500 { animation-delay: 0.5s; }
-      `}</style>
+        {/* Scroll Indicator */}
+        <div className="absolute bottom-10 left-1/2 -translate-x-1/2 animate-bounce">
+          <svg className="w-6 h-6 text-white/50" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 14l-7 7m0 0l-7-7m7 7V3" />
+          </svg>
+        </div>
+      </section>
+
+      {/* Live Dashboard Section */}
+      <section id="dashboard" className="min-h-screen py-24 relative">
+        <div className="max-w-7xl mx-auto px-6">
+          <div className="flex flex-col md:flex-row justify-between items-end mb-12">
+            <div>
+              <h2 className="text-3xl md:text-4xl font-bold mb-2">Live Atmosphere</h2>
+              <p className="text-gray-400">Real-time particulate matter analysis from your sensor.</p>
+            </div>
+            <div className="flex items-center gap-2 text-sm text-gray-400 mt-4 md:mt-0 glass-panel px-3 py-1 rounded-full">
+              <span className="w-2 h-2 rounded-full bg-green-500 animate-pulse" />
+              Updating every 30s
+            </div>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-12">
+            {/* Status Card - Large */}
+            <div className={`col-span-1 md:col-span-2 lg:col-span-2 glass-card rounded-3xl p-8 relative overflow-hidden bg-gradient-to-br ${status.bg} border-0`}>
+              <div className="relative z-10">
+                <div className="text-sm uppercase tracking-wider opacity-70 mb-1">Air Quality Index</div>
+                <div className={`text-4xl md:text-5xl font-bold mb-4 ${status.color} text-glow`}>{status.text}</div>
+                <p className="text-lg opacity-90 max-w-md">{status.desc}</p>
+              </div>
+              <CloudIcon className="absolute top-0 right-0 w-64 h-64 text-white/5 -translate-y-12 translate-x-12 animate-float" />
+            </div>
+
+            {/* PM2.5 Card */}
+            <div className="glass-card rounded-3xl p-6 flex flex-col justify-between group">
+              <div className="flex justify-between items-start">
+                <div className="text-sm text-gray-400">PM2.5</div>
+                <div className="p-2 rounded-full bg-orange-500/10 text-orange-400 group-hover:scale-110 transition-transform">
+                  <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" /></svg>
+                </div>
+              </div>
+              <div>
+                <div className="text-4xl font-bold mb-1">{latestData ? latestData.pm2_5.toFixed(1) : '--'}</div>
+                <div className="text-xs text-gray-500">Fine Particles (µg/m³)</div>
+              </div>
+              <div className="mt-4 h-1 bg-gray-800 rounded-full overflow-hidden">
+                <div className="h-full bg-orange-500 transition-all duration-1000" style={{ width: `${Math.min(((latestData?.pm2_5 || 0) / 100) * 100, 100)}%` }}></div>
+              </div>
+            </div>
+
+            {/* PM10 Card */}
+            <div className="glass-card rounded-3xl p-6 flex flex-col justify-between group">
+              <div className="flex justify-between items-start">
+                <div className="text-sm text-gray-400">PM10</div>
+                <div className="p-2 rounded-full bg-blue-500/10 text-blue-400 group-hover:scale-110 transition-transform">
+                  <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19.428 15.428a2 2 0 00-1.022-.547l-2.384-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z" /></svg>
+                </div>
+              </div>
+              <div>
+                <div className="text-4xl font-bold mb-1">{latestData ? latestData.pm10.toFixed(1) : '--'}</div>
+                <div className="text-xs text-gray-500">Coarse Particles (µg/m³)</div>
+              </div>
+              <div className="mt-4 h-1 bg-gray-800 rounded-full overflow-hidden">
+                <div className="h-full bg-blue-500 transition-all duration-1000" style={{ width: `${Math.min(((latestData?.pm10 || 0) / 100) * 100, 100)}%` }}></div>
+              </div>
+            </div>
+          </div>
+
+          {/* Chart Section */}
+          <div className="glass-panel rounded-3xl p-6 md:p-8">
+            <h3 className="text-xl font-semibold mb-6 flex items-center gap-2">
+              <span className="w-1 h-6 bg-green-500 rounded-full" />
+              Historical Trends
+            </h3>
+            <div className="h-[350px] w-full">
+              <ResponsiveContainer width="100%" height="100%">
+                <AreaChart data={historicalData}>
+                  <defs>
+                    <linearGradient id="colorPM25" x1="0" y1="0" x2="0" y2="1">
+                      <stop offset="5%" stopColor="#f97316" stopOpacity={0.3}/>
+                      <stop offset="95%" stopColor="#f97316" stopOpacity={0}/>
+                    </linearGradient>
+                    <linearGradient id="colorPM1" x1="0" y1="0" x2="0" y2="1">
+                      <stop offset="5%" stopColor="#22c55e" stopOpacity={0.3}/>
+                      <stop offset="95%" stopColor="#22c55e" stopOpacity={0}/>
+                    </linearGradient>
+                  </defs>
+                  <CartesianGrid strokeDasharray="3 3" stroke="#333" vertical={false} />
+                  <XAxis dataKey="time" stroke="#666" tick={{fill: '#666', fontSize: 12}} tickLine={false} axisLine={false} dy={10} />
+                  <YAxis stroke="#666" tick={{fill: '#666', fontSize: 12}} tickLine={false} axisLine={false} dx={-10} />
+                  <Tooltip 
+                    contentStyle={{ backgroundColor: 'rgba(0,0,0,0.8)', backdropFilter: 'blur(10px)', border: '1px solid #333', borderRadius: '12px' }}
+                    itemStyle={{ color: '#fff' }}
+                  />
+                  <Area type="monotone" dataKey="PM2_5" stroke="#f97316" strokeWidth={3} fillOpacity={1} fill="url(#colorPM25)" />
+                  <Area type="monotone" dataKey="PM1" stroke="#22c55e" strokeWidth={3} fillOpacity={1} fill="url(#colorPM1)" />
+                </AreaChart>
+              </ResponsiveContainer>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* About / How it Works Section */}
+      <section id="about" className="py-24 relative bg-[#0d0d0d]">
+        <div className="max-w-7xl mx-auto px-6">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+            <div className="relative">
+              <div className="w-full aspect-square rounded-3xl bg-gradient-to-br from-green-900/20 to-black border border-white/5 overflow-hidden relative">
+                <div className="absolute inset-0 flex items-center justify-center">
+                   <LeafIcon className="w-48 h-48 text-green-500/10 animate-float" />
+                </div>
+                {/* Simulated Device Visualization */}
+                <div className="absolute inset-x-10 bottom-10 top-20 bg-black/40 backdrop-blur-xl rounded-t-2xl border-t border-l border-r border-white/10 p-6">
+                  <div className="flex justify-between items-center mb-6">
+                    <div className="w-12 h-12 rounded-full bg-white/5 flex items-center justify-center">
+                      <div className="w-2 h-2 bg-green-500 rounded-full animate-pulse" />
+                    </div>
+                    <div className="h-2 w-20 bg-white/10 rounded-full" />
+                  </div>
+                  <div className="space-y-3">
+                     <div className="h-2 w-full bg-white/5 rounded-full" />
+                     <div className="h-2 w-3/4 bg-white/5 rounded-full" />
+                     <div className="h-2 w-5/6 bg-white/5 rounded-full" />
+                  </div>
+                </div>
+              </div>
+            </div>
+            
+            <div>
+              <h2 className="text-3xl md:text-5xl font-bold mb-6">Invisible Threats, <br/><span className="text-green-400">Visibly Managed.</span></h2>
+              <p className="text-gray-400 text-lg mb-8 leading-relaxed">
+                We believe that clean air is a fundamental right. VayuKavach combines industrial-grade laser sensors with modern cloud connectivity to give you a complete picture of your environmental health.
+              </p>
+              
+              <div className="space-y-6">
+                <div className="flex gap-4 items-start">
+                  <div className="w-12 h-12 rounded-xl bg-green-500/10 flex items-center justify-center flex-shrink-0 text-green-400 font-bold">1</div>
+                  <div>
+                    <h4 className="text-xl font-medium text-white mb-2">Laser Scattering Technology</h4>
+                    <p className="text-gray-500">The PM7003 sensor detects particles as small as 0.3 micrometers suspended in the air.</p>
+                  </div>
+                </div>
+                <div className="flex gap-4 items-start">
+                  <div className="w-12 h-12 rounded-xl bg-blue-500/10 flex items-center justify-center flex-shrink-0 text-blue-400 font-bold">2</div>
+                  <div>
+                    <h4 className="text-xl font-medium text-white mb-2">Real-time Transmission</h4>
+                    <p className="text-gray-500">Data is processed by ESP32 and beamed securely to our Supabase cloud infrastructure.</p>
+                  </div>
+                </div>
+                <div className="flex gap-4 items-start">
+                  <div className="w-12 h-12 rounded-xl bg-purple-500/10 flex items-center justify-center flex-shrink-0 text-purple-400 font-bold">3</div>
+                  <div>
+                    <h4 className="text-xl font-medium text-white mb-2">Instant Visualization</h4>
+                    <p className="text-gray-500">Monitor trends, get alerts, and take action to protect your lungs.</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Team Section */}
+      <section id="team" className="py-24">
+        <div className="max-w-7xl mx-auto px-6 text-center">
+          <h2 className="text-3xl md:text-4xl font-bold mb-12">The Minds Behind VayuKavach</h2>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+             {/* Team Member 1 */}
+             <div className="glass-card p-6 rounded-3xl hover:-translate-y-2 transition-transform duration-300">
+                <div className="w-24 h-24 rounded-full bg-gradient-to-tr from-gray-700 to-gray-600 mx-auto mb-4 border-2 border-white/10" />
+                <h3 className="text-xl font-semibold">Tanishk Kalani</h3>
+                <p className="text-green-400 text-sm mb-4">Lead Developer & Hardware</p>
+                <p className="text-gray-500 text-sm">Architecting the ESP32 firmware and sensor integration for precision monitoring.</p>
+             </div>
+             
+             {/* Team Member 2 */}
+             <div className="glass-card p-6 rounded-3xl hover:-translate-y-2 transition-transform duration-300">
+                <div className="w-24 h-24 rounded-full bg-gradient-to-tr from-gray-700 to-gray-600 mx-auto mb-4 border-2 border-white/10" />
+                <h3 className="text-xl font-semibold">Parth Patel</h3>
+                <p className="text-blue-400 text-sm mb-4">Frontend Engineer</p>
+                <p className="text-gray-500 text-sm">Crafting the immersive user interface and visualization logic.</p>
+             </div>
+
+             {/* Team Member 3 */}
+             <div className="glass-card p-6 rounded-3xl hover:-translate-y-2 transition-transform duration-300">
+                <div className="w-24 h-24 rounded-full bg-gradient-to-tr from-gray-700 to-gray-600 mx-auto mb-4 border-2 border-white/10" />
+                <h3 className="text-xl font-semibold">Krishiv Garg</h3>
+                <p className="text-purple-400 text-sm mb-4">Data Analyst</p>
+                <p className="text-gray-500 text-sm">Ensuring data accuracy and developing insight algorithms.</p>
+             </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Contact Section */}
+      <section id="contact" className="py-24 relative overflow-hidden">
+        <div className="absolute inset-0 bg-gradient-to-t from-green-900/20 to-transparent pointer-events-none" />
+        <div className="max-w-4xl mx-auto px-6 text-center relative z-10">
+          <h2 className="text-3xl md:text-5xl font-bold mb-8">Join the Movement</h2>
+          <p className="text-xl text-gray-400 mb-10 max-w-2xl mx-auto">
+            Interested in deploying VayuKavach in your community? We are looking for partners to expand our sensing network.
+          </p>
+          <div className="flex flex-col sm:flex-row gap-6 justify-center">
+             <a href="mailto:contact@vayukavach.io" className="px-8 py-4 bg-white text-black font-bold rounded-full hover:bg-gray-200 transition-colors flex items-center justify-center gap-2">
+               <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" /></svg>
+               Contact Team
+             </a>
+             <a href="#" className="px-8 py-4 glass-card rounded-full font-bold hover:bg-white/10 transition-colors flex items-center justify-center gap-2">
+               <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg>
+               GitHub
+             </a>
+          </div>
+        </div>
+      </section>
+
+      {/* Footer */}
+      <footer className="py-12 border-t border-white/10 text-center text-gray-600 text-sm">
+        <div className="flex items-center justify-center gap-2 mb-4">
+           <LeafIcon className="w-4 h-4 text-green-800" />
+           <span>VayuKavach Project</span>
+        </div>
+        <p>&copy; {new Date().getFullYear()} Environmental Monitoring Initiative. All rights reserved.</p>
+      </footer>
     </div>
   );
 }
