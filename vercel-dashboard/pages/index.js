@@ -702,6 +702,153 @@ export default function Home() {
         </div>
       </section>
 
+      {/* Future Vision - Smart City Section */}
+      <section id="future" className="py-24 relative bg-gradient-to-b from-[#0d0d0d] to-[#0a0a0a] overflow-hidden">
+        <div className="max-w-7xl mx-auto px-6">
+          <div className="text-center mb-16">
+            <span className="px-4 py-1.5 rounded-full border border-blue-500/30 bg-blue-500/10 text-blue-400 text-sm font-medium tracking-wide backdrop-blur-sm inline-block mb-6">
+              COMING SOON
+            </span>
+            <h2 className="text-4xl md:text-6xl font-bold mb-6">
+              Smart City <span className="text-blue-400">Air Network</span>
+            </h2>
+            <p className="text-xl text-gray-400 max-w-3xl mx-auto leading-relaxed">
+              Imagine a city where every rooftop monitors air quality in real-time, creating a living map of environmental health.
+            </p>
+          </div>
+
+          {/* City Map Visualization */}
+          <div className="relative max-w-5xl mx-auto">
+            <div className="glass-panel rounded-3xl p-8 md:p-12 relative overflow-hidden">
+              {/* Grid Background */}
+              <div className="absolute inset-0 opacity-10">
+                <div className="grid grid-cols-12 grid-rows-8 h-full w-full">
+                  {[...Array(96)].map((_, i) => (
+                    <div key={i} className="border border-blue-500/20" />
+                  ))}
+                </div>
+              </div>
+
+              {/* City Skyline Silhouette */}
+              <div className="relative z-10 mb-8">
+                <svg viewBox="0 0 800 200" className="w-full h-32 md:h-48 text-blue-400/20">
+                  <rect x="50" y="80" width="60" height="120" fill="currentColor" />
+                  <rect x="130" y="60" width="80" height="140" fill="currentColor" />
+                  <rect x="230" y="100" width="50" height="100" fill="currentColor" />
+                  <rect x="300" y="40" width="90" height="160" fill="currentColor" />
+                  <rect x="410" y="90" width="70" height="110" fill="currentColor" />
+                  <rect x="500" y="70" width="60" height="130" fill="currentColor" />
+                  <rect x="580" y="50" width="85" height="150" fill="currentColor" />
+                  <rect x="685" y="85" width="65" height="115" fill="currentColor" />
+                </svg>
+
+                {/* Sensor Dots - Glowing Points */}
+                <div className="absolute inset-0">
+                  {/* Sensor 1 - Green (Good) */}
+                  <div className="absolute top-[20%] left-[15%] w-3 h-3 bg-green-500 rounded-full pulse-glow animate-pulse" />
+                  <div className="absolute top-[20%] left-[15%] w-6 h-6 bg-green-500/30 rounded-full animate-ping" />
+                  
+                  {/* Sensor 2 - Yellow (Moderate) */}
+                  <div className="absolute top-[15%] left-[30%] w-3 h-3 bg-yellow-500 rounded-full pulse-glow animate-pulse" style={{ animationDelay: '0.5s' }} />
+                  <div className="absolute top-[15%] left-[30%] w-6 h-6 bg-yellow-500/30 rounded-full animate-ping" style={{ animationDelay: '0.5s' }} />
+                  
+                  {/* Sensor 3 - Green (Good) */}
+                  <div className="absolute top-[30%] left-[42%] w-3 h-3 bg-green-500 rounded-full pulse-glow animate-pulse" style={{ animationDelay: '1s' }} />
+                  <div className="absolute top-[30%] left-[42%] w-6 h-6 bg-green-500/30 rounded-full animate-ping" style={{ animationDelay: '1s' }} />
+                  
+                  {/* Sensor 4 - Red (Poor) */}
+                  <div className="absolute top-[10%] left-[55%] w-3 h-3 bg-red-500 rounded-full pulse-glow animate-pulse" style={{ animationDelay: '1.5s' }} />
+                  <div className="absolute top-[10%] left-[55%] w-6 h-6 bg-red-500/30 rounded-full animate-ping" style={{ animationDelay: '1.5s' }} />
+                  
+                  {/* Sensor 5 - Green (Good) */}
+                  <div className="absolute top-[25%] left-[68%] w-3 h-3 bg-green-500 rounded-full pulse-glow animate-pulse" style={{ animationDelay: '2s' }} />
+                  <div className="absolute top-[25%] left-[68%] w-6 h-6 bg-green-500/30 rounded-full animate-ping" style={{ animationDelay: '2s' }} />
+                  
+                  {/* Sensor 6 - Yellow (Moderate) */}
+                  <div className="absolute top-[18%] left-[82%] w-3 h-3 bg-yellow-500 rounded-full pulse-glow animate-pulse" style={{ animationDelay: '2.5s' }} />
+                  <div className="absolute top-[18%] left-[82%] w-6 h-6 bg-yellow-500/30 rounded-full animate-ping" style={{ animationDelay: '2.5s' }} />
+                </div>
+              </div>
+
+              {/* Stats */}
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-6 relative z-10">
+                <div className="text-center">
+                  <div className="text-4xl font-bold text-green-400 mb-2 count-up">500+</div>
+                  <div className="text-gray-400">Planned Sensors</div>
+                </div>
+                <div className="text-center">
+                  <div className="text-4xl font-bold text-blue-400 mb-2 count-up">24/7</div>
+                  <div className="text-gray-400">Real-time Monitoring</div>
+                </div>
+                <div className="text-center">
+                  <div className="text-4xl font-bold text-purple-400 mb-2 count-up">∞</div>
+                  <div className="text-gray-400">Lives Protected</div>
+                </div>
+              </div>
+            </div>
+
+            {/* Feature Cards */}
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-12">
+              <div className="glass-card p-6 rounded-2xl card-lift">
+                <div className="flex items-start gap-4">
+                  <div className="w-12 h-12 rounded-xl bg-blue-500/10 flex items-center justify-center flex-shrink-0">
+                    <svg className="w-6 h-6 text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 20l-5.447-2.724A1 1 0 013 16.382V5.618a1 1 0 011.447-.894L9 7m0 13l6-3m-6 3V7m6 10l4.553 2.276A1 1 0 0021 18.382V7.618a1 1 0 00-.553-.894L15 4m0 13V4m0 0L9 7" />
+                    </svg>
+                  </div>
+                  <div>
+                    <h4 className="text-xl font-semibold mb-2">City-Wide Coverage</h4>
+                    <p className="text-gray-400">Comprehensive air quality mapping across entire metropolitan areas</p>
+                  </div>
+                </div>
+              </div>
+
+              <div className="glass-card p-6 rounded-2xl card-lift">
+                <div className="flex items-start gap-4">
+                  <div className="w-12 h-12 rounded-xl bg-purple-500/10 flex items-center justify-center flex-shrink-0">
+                    <svg className="w-6 h-6 text-purple-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
+                    </svg>
+                  </div>
+                  <div>
+                    <h4 className="text-xl font-semibold mb-2">Instant Alerts</h4>
+                    <p className="text-gray-400">Notify citizens when pollution levels exceed safe thresholds</p>
+                  </div>
+                </div>
+              </div>
+
+              <div className="glass-card p-6 rounded-2xl card-lift">
+                <div className="flex items-start gap-4">
+                  <div className="w-12 h-12 rounded-xl bg-green-500/10 flex items-center justify-center flex-shrink-0">
+                    <svg className="w-6 h-6 text-green-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
+                    </svg>
+                  </div>
+                  <div>
+                    <h4 className="text-xl font-semibold mb-2">Predictive Analytics</h4>
+                    <p className="text-gray-400">AI-powered forecasting of pollution patterns and trends</p>
+                  </div>
+                </div>
+              </div>
+
+              <div className="glass-card p-6 rounded-2xl card-lift">
+                <div className="flex items-start gap-4">
+                  <div className="w-12 h-12 rounded-xl bg-orange-500/10 flex items-center justify-center flex-shrink-0">
+                    <svg className="w-6 h-6 text-orange-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
+                    </svg>
+                  </div>
+                  <div>
+                    <h4 className="text-xl font-semibold mb-2">Community Driven</h4>
+                    <p className="text-gray-400">Empower citizens with transparent, accessible data</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
       {/* Contact Section */}
       <section id="contact" className="py-24 relative overflow-hidden">
         <div className="absolute inset-0 bg-gradient-to-t from-green-900/20 to-transparent pointer-events-none" />
