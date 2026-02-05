@@ -85,9 +85,6 @@ void loop() {
   delay(700);
 }
 
-  delay(700);
-}
-
 void uploadToVercel(int pm1, int pm25, int pm10) {
   if (WiFi.status() == WL_CONNECTED) {
     HTTPClient http;
