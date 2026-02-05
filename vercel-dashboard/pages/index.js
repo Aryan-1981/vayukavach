@@ -218,7 +218,7 @@ export default function Home() {
       setScrolled(window.scrollY > 50);
       
       // Determine active section
-      const sections = ['home', 'dashboard', 'about', 'team'];
+      const sections = ['home', 'problem', 'dashboard', 'impact', 'future', 'about', 'team', 'contact'];
       for (const section of sections) {
         const el = document.getElementById(section);
         if (el && window.scrollY >= el.offsetTop - 300) {
@@ -307,7 +307,7 @@ export default function Home() {
             <span className="text-xl font-bold tracking-tight">Vayu<span className="text-green-400">Kavach</span></span>
           </div>
           <div className="hidden md:flex gap-8 text-sm font-medium text-white/80">
-            {['Home', 'Dashboard', 'About', 'Team'].map((item) => (
+            {['Home', 'Problem', 'Dashboard', 'Impact', 'Future', 'About', 'Team', 'Contact'].map((item) => (
               <a 
                 key={item} 
                 href={`#${item.toLowerCase()}`}
