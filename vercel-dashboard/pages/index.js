@@ -722,18 +722,39 @@ export default function Home() {
               <div className="text-4xl font-bold text-green-400 count-up">24/7</div>
             </div>
 
-            {/* Impact 2: Passenger Safety */}
+            {/* Impact 2: Smart Urban Impact */}
             <div className="glass-card p-8 rounded-3xl text-center card-lift group">
-              <div className="w-20 h-20 rounded-full bg-blue-500/10 flex items-center justify-center mb-6 mx-auto group-hover:scale-110 transition-transform duration-300">
-                <svg className="w-10 h-10 text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <div className="w-20 h-20 rounded-full bg-blue-500/10 flex items-center justify-center mb-6 mx-auto group-hover:scale-110 transition-transform duration-300 relative">
+                {/* Animated air flow particles around icon */}
+                <svg className="absolute inset-0 w-full h-full" viewBox="0 0 80 80">
+                  <circle cx="10" cy="40" r="2" fill="#3b82f6" opacity="0.6">
+                    <animate attributeName="cx" values="10;70;10" dur="3s" repeatCount="indefinite"/>
+                    <animate attributeName="opacity" values="0.6;0.2;0.6" dur="3s" repeatCount="indefinite"/>
+                  </circle>
+                  <circle cx="70" cy="20" r="1.5" fill="#60a5fa" opacity="0.5">
+                    <animate attributeName="cx" values="70;10;70" dur="3.5s" repeatCount="indefinite"/>
+                    <animate attributeName="cy" values="20;60;20" dur="3.5s" repeatCount="indefinite"/>
+                    <animate attributeName="opacity" values="0.5;0.1;0.5" dur="3.5s" repeatCount="indefinite"/>
+                  </circle>
+                  <circle cx="40" cy="10" r="1.5" fill="#93c5fd" opacity="0.4">
+                    <animate attributeName="cy" values="10;70;10" dur="4s" repeatCount="indefinite"/>
+                    <animate attributeName="opacity" values="0.4;0.1;0.4" dur="4s" repeatCount="indefinite"/>
+                  </circle>
+                  <circle cx="15" cy="60" r="2" fill="#3b82f6" opacity="0.5">
+                    <animate attributeName="cx" values="15;65;15" dur="3.2s" repeatCount="indefinite"/>
+                    <animate attributeName="cy" values="60;25;60" dur="3.2s" repeatCount="indefinite"/>
+                    <animate attributeName="opacity" values="0.5;0.15;0.5" dur="3.2s" repeatCount="indefinite"/>
+                  </circle>
+                </svg>
+                <svg className="w-10 h-10 text-blue-400 relative z-10" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m5.018-3.018A9 9 0 1112 21a9 9 0 01-8.018-12.982" />
                 </svg>
               </div>
-              <h3 className="text-2xl font-bold mb-4 text-white">Passenger Safety</h3>
+              <h3 className="text-2xl font-bold mb-4 text-white">Smart Urban Impact</h3>
               <p className="text-gray-400 leading-relaxed mb-4">
-                Up to <span className="text-blue-400 font-bold">85% reduction</span> in harmful particulates inside the vehicle cabin
+                Each rooftop-mounted purifier <span className="text-blue-400 font-bold">actively cleans outdoor urban air</span> as the vehicle moves through the city
               </p>
-              <div className="text-4xl font-bold text-blue-400 count-up">+85%</div>
+              <div className="text-2xl font-bold text-blue-400">Moving Air Purifier</div>
             </div>
 
             {/* Impact 3: Verified Results */}
