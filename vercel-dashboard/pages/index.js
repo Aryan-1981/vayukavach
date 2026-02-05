@@ -192,6 +192,8 @@ export default function Home() {
   const [scrolled, setScrolled] = useState(false);
   const [activeSection, setActiveSection] = useState('home');
   const [aqiCount, setAqiCount] = useState(0);
+  const [formData, setFormData] = useState({ name: '', email: '', message: '' });
+  const [formStatus, setFormStatus] = useState('');
 
   // --- Data Fetching Logic (Preserved) ---
   useEffect(() => {
@@ -291,6 +293,18 @@ export default function Home() {
     if (pm25 <= 150) return { text: 'Unhealthy', color: 'text-red-400', bg: 'from-red-500/20 to-red-900/20', desc: 'Everyone may begin to experience health effects.' };
     return { text: 'Hazardous', color: 'text-purple-400', bg: 'from-purple-500/20 to-purple-900/20', desc: 'Health warnings of emergency conditions.' };
   }
+
+  const handleFormSubmit = async (e) => {
+    e.preventDefault();
+    setFormStatus('sending');
+    
+    // Simulate form submission (replace with actual API call)
+    setTimeout(() => {
+      setFormStatus('success');
+      setFormData({ name: '', email: '', message: '' });
+      setTimeout(() => setFormStatus(''), 3000);
+    }, 1500);
+  };
 
   const status = latestData ? getAQIStatus(latestData.pm2_5) : { text: '--', color: 'text-gray-400', bg: 'from-gray-800 to-gray-900', desc: 'Loading data...' };
 
@@ -581,7 +595,7 @@ export default function Home() {
             <div className="glass-card p-8 rounded-3xl text-center card-lift group">
               <div className="w-20 h-20 rounded-full bg-orange-500/10 flex items-center justify-center mb-6 mx-auto group-hover:scale-110 transition-transform duration-300">
                 <svg className="w-10 h-10 text-orange-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" />
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
                 </svg>
               </div>
               <h3 className="text-2xl font-bold mb-4 text-white">Smart City</h3>
@@ -850,22 +864,134 @@ export default function Home() {
       </section>
 
       {/* Contact Section */}
-      <section id="contact" className="py-24 relative overflow-hidden">
+      <section id="contact" className="py-24 relative overflow-hidden bg-[#0a0a0a]">
         <div className="absolute inset-0 bg-gradient-to-t from-green-900/20 to-transparent pointer-events-none" />
-        <div className="max-w-4xl mx-auto px-6 text-center relative z-10">
-          <h2 className="text-3xl md:text-5xl font-bold mb-8">Join the Movement</h2>
-          <p className="text-xl text-gray-400 mb-10 max-w-2xl mx-auto">
-            Interested in deploying VayuKavach in your community? We are looking for partners to expand our sensing network.
-          </p>
-          <div className="flex flex-col sm:flex-row gap-6 justify-center">
-             <a href="mailto:contact@vayukavach.io" className="px-8 py-4 bg-white text-black font-bold rounded-full hover:bg-gray-200 transition-colors flex items-center justify-center gap-2">
-               <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" /></svg>
-               Contact Team
-             </a>
-             <a href="#" className="px-8 py-4 glass-card rounded-full font-bold hover:bg-white/10 transition-colors flex items-center justify-center gap-2">
-               <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg>
-               GitHub
-             </a>
+        <div className="max-w-5xl mx-auto px-6 relative z-10">
+          <div className="text-center mb-12">
+            <h2 className="text-3xl md:text-5xl font-bold mb-6">Get In <span className="text-green-400">Touch</span></h2>
+            <p className="text-xl text-gray-400 max-w-2xl mx-auto">
+              Interested in deploying VayuKavach in your community? We'd love to hear from you.
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
+            {/* Contact Form */}
+            <div className="glass-card p-8 rounded-3xl card-lift">
+              <h3 className="text-2xl font-bold mb-6">Send us a message</h3>
+              <form onSubmit={handleFormSubmit} className="space-y-6">
+                <div>
+                  <label htmlFor="name" className="block text-sm font-medium text-gray-300 mb-2">
+                    Your Name
+                  </label>
+                  <input
+                    type="text"
+                    id="name"
+                    required
+                    value={formData.name}
+                    onChange={(e) => setFormData({...formData, name: e.target.value})}
+                    className="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-xl focus:outline-none focus:border-green-500 transition-colors text-white placeholder-gray-500"
+                    placeholder="John Doe"
+                  />
+                </div>
+                
+                <div>
+                  <label htmlFor="email" className="block text-sm font-medium text-gray-300 mb-2">
+                    Email Address
+                  </label>
+                  <input
+                    type="email"
+                    id="email"
+                    required
+                    value={formData.email}
+                    onChange={(e) => setFormData({...formData, email: e.target.value})}
+                    className="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-xl focus:outline-none focus:border-green-500 transition-colors text-white placeholder-gray-500"
+                    placeholder="john@example.com"
+                  />
+                </div>
+                
+                <div>
+                  <label htmlFor="message" className="block text-sm font-medium text-gray-300 mb-2">
+                    Message
+                  </label>
+                  <textarea
+                    id="message"
+                    required
+                    value={formData.message}
+                    onChange={(e) => setFormData({...formData, message: e.target.value})}
+                    rows={5}
+                    className="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-xl focus:outline-none focus:border-green-500 transition-colors text-white placeholder-gray-500 resize-none"
+                    placeholder="Tell us about your project or inquiry..."
+                  />
+                </div>
+
+                <button
+                  type="submit"
+                  disabled={formStatus === 'sending'}
+                  className="w-full px-8 py-4 bg-green-600 hover:bg-green-500 text-white rounded-xl font-medium transition-all duration-300 hover:shadow-[0_0_20px_rgba(34,197,94,0.4)] transform hover:-translate-y-1 btn-float disabled:opacity-50 disabled:cursor-not-allowed"
+                >
+                  {formStatus === 'sending' ? 'Sending...' : formStatus === 'success' ? '✓ Sent!' : 'Send Message'}
+                </button>
+              </form>
+            </div>
+
+            {/* Contact Info & Links */}
+            <div className="space-y-8">
+              <div className="glass-card p-8 rounded-3xl card-lift">
+                <h3 className="text-2xl font-bold mb-6">Connect With Us</h3>
+                <div className="space-y-4">
+                  <a href="mailto:contact@vayukavach.io" className="flex items-center gap-4 text-gray-300 hover:text-green-400 transition-colors group">
+                    <div className="w-12 h-12 rounded-xl bg-green-500/10 flex items-center justify-center group-hover:scale-110 transition-transform">
+                      <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+                      </svg>
+                    </div>
+                    <div>
+                      <div className="font-medium">Email</div>
+                      <div className="text-sm text-gray-500">contact@vayukavach.io</div>
+                    </div>
+                  </a>
+
+                  <a href="https://github.com/Aryan-1981/vayukavach" target="_blank" rel="noopener noreferrer" className="flex items-center gap-4 text-gray-300 hover:text-green-400 transition-colors group">
+                    <div className="w-12 h-12 rounded-xl bg-green-500/10 flex items-center justify-center group-hover:scale-110 transition-transform">
+                      <svg className="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
+                        <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/>
+                      </svg>
+                    </div>
+                    <div>
+                      <div className="font-medium">GitHub</div>
+                      <div className="text-sm text-gray-500">View source code</div>
+                    </div>
+                  </a>
+                </div>
+              </div>
+
+              <div className="glass-card p-8 rounded-3xl card-lift">
+                <h3 className="text-xl font-bold mb-4">Partnership Opportunities</h3>
+                <p className="text-gray-400 leading-relaxed mb-4">
+                  We're looking for municipalities, educational institutions, and environmental organizations to collaborate on expanding our air quality monitoring network.
+                </p>
+                <ul className="space-y-2 text-sm text-gray-400">
+                  <li className="flex items-center gap-2">
+                    <svg className="w-5 h-5 text-green-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                    </svg>
+                    City-wide deployment programs
+                  </li>
+                  <li className="flex items-center gap-2">
+                    <svg className="w-5 h-5 text-green-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                    </svg>
+                    Research collaborations
+                  </li>
+                  <li className="flex items-center gap-2">
+                    <svg className="w-5 h-5 text-green-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                    </svg>
+                    Educational initiatives
+                  </li>
+                </ul>
+              </div>
+            </div>
           </div>
         </div>
       </section>
