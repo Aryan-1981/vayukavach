@@ -53,6 +53,42 @@ const EarthIcon = ({ className, style }) => (
   </svg>
 );
 
+const VehicleIcon = ({ className, style }) => (
+  <svg viewBox="0 0 200 120" className={className} style={style}>
+    {/* Vehicle Body */}
+    <rect x="20" y="60" width="160" height="40" rx="8" fill="currentColor" opacity="0.3"/>
+    <rect x="40" y="50" width="120" height="30" rx="6" fill="currentColor" opacity="0.4"/>
+    {/* Windows */}
+    <rect x="50" y="55" width="35" height="20" rx="3" fill="currentColor" opacity="0.2"/>
+    <rect x="115" y="55" width="35" height="20" rx="3" fill="currentColor" opacity="0.2"/>
+    {/* Wheels */}
+    <circle cx="50" cy="100" r="12" fill="currentColor" opacity="0.5"/>
+    <circle cx="150" cy="100" r="12" fill="currentColor" opacity="0.5"/>
+    {/* Rooftop Purifier Unit */}
+    <rect x="70" y="35" width="60" height="20" rx="4" fill="#22c55e" opacity="0.6" className="pulse-glow"/>
+    <circle cx="100" cy="32" r="3" fill="#22c55e" className="animate-pulse"/>
+  </svg>
+);
+
+const AirFlowIcon = ({ className, direction = "in" }) => (
+  <svg viewBox="0 0 100 100" className={className}>
+    <g opacity={direction === "in" ? "0.4" : "0.8"}>
+      <circle cx="20" cy="50" r="3" fill={direction === "in" ? "#ef4444" : "#22c55e"}>
+        <animate attributeName="cx" from="20" to="80" dur="2s" repeatCount="indefinite"/>
+        <animate attributeName="opacity" from="1" to="0" dur="2s" repeatCount="indefinite"/>
+      </circle>
+      <circle cx="10" cy="50" r="3" fill={direction === "in" ? "#ef4444" : "#22c55e"}>
+        <animate attributeName="cx" from="10" to="70" dur="2s" repeatCount="indefinite" begin="0.3s"/>
+        <animate attributeName="opacity" from="1" to="0" dur="2s" repeatCount="indefinite" begin="0.3s"/>
+      </circle>
+      <circle cx="30" cy="50" r="3" fill={direction === "in" ? "#ef4444" : "#22c55e"}>
+        <animate attributeName="cx" from="30" to="90" dur="2s" repeatCount="indefinite" begin="0.6s"/>
+        <animate attributeName="opacity" from="1" to="0" dur="2s" repeatCount="indefinite" begin="0.6s"/>
+      </circle>
+    </g>
+  </svg>
+);
+
 // --- Particle Background Component ---
 const ParticleBackground = () => {
   return (
@@ -334,26 +370,42 @@ export default function Home() {
           <EarthIcon className="w-[600px] h-[600px] text-green-500 rotate-earth" />
         </div>
 
-        <div className="relative z-10 text-center px-4 max-w-4xl mx-auto">
+        <div className="relative z-10 text-center px-4 max-w-5xl mx-auto">
           <div className="reveal-up animation-delay-100 mb-6 flex justify-center">
             <span className="px-4 py-1.5 rounded-full border border-green-500/30 bg-green-500/10 text-green-400 text-sm font-medium tracking-wide backdrop-blur-sm">
-              LIVE AIR QUALITY MONITORING
+              SMART ROOFTOP AIR PURIFICATION
             </span>
           </div>
-          <h1 className="reveal-up animation-delay-200 text-5xl md:text-7xl lg:text-8xl font-bold tracking-tight mb-8">
-            Breathe <span className="text-transparent bg-clip-text bg-gradient-to-r from-green-400 to-emerald-600">Pure.</span> <br />
-            Live <span className="text-white">Better.</span>
+          <h1 className="reveal-up animation-delay-200 text-4xl md:text-6xl lg:text-7xl font-bold tracking-tight mb-8">
+            Purifying Air <span className="text-transparent bg-clip-text bg-gradient-to-r from-green-400 to-emerald-600">On The Move</span>
           </h1>
-          <p className="reveal-up animation-delay-300 text-lg md:text-xl text-gray-400 mb-10 max-w-2xl mx-auto leading-relaxed">
-            Advanced real-time environmental sensing powered by ESP32 technology. 
-            Invisible data made visible for a healthier tomorrow.
+          <p className="reveal-up animation-delay-300 text-lg md:text-xl text-gray-400 mb-10 max-w-3xl mx-auto leading-relaxed">
+            A rooftop-mounted air purification system for urban vehicles. 
+            Actively cleans polluted air while driving, verified by real-time PM7003 sensor readings.
           </p>
+          
+          {/* Vehicle with Purifier Visualization */}
+          <div className="reveal-up animation-delay-350 mb-10 relative">
+            <div className="flex items-center justify-center gap-8 max-w-2xl mx-auto">
+              <div className="text-center">
+                <AirFlowIcon className="w-20 h-20 mx-auto mb-2" direction="in" />
+                <span className="text-red-400 text-sm font-medium">Polluted Air In</span>
+              </div>
+              
+              <VehicleIcon className="w-64 h-40 text-white" />
+              
+              <div className="text-center">
+                <AirFlowIcon className="w-20 h-20 mx-auto mb-2" direction="out" />
+                <span className="text-green-400 text-sm font-medium">Clean Air Out</span>
+              </div>
+            </div>
+          </div>
           <div className="reveal-up animation-delay-400 flex flex-col sm:flex-row gap-4 justify-center">
             <a href="#dashboard" className="px-8 py-4 bg-green-600 hover:bg-green-500 text-white rounded-full font-medium transition-all duration-300 hover:shadow-[0_0_20px_rgba(34,197,94,0.4)] transform hover:-translate-y-1 btn-float">
-              View Live Dashboard
+              View Live Performance
             </a>
-            <a href="#about" className="px-8 py-4 bg-white/5 hover:bg-white/10 text-white border border-white/10 rounded-full font-medium transition-all backdrop-blur-md btn-float">
-              Learn More
+            <a href="#system" className="px-8 py-4 bg-white/5 hover:bg-white/10 text-white border border-white/10 rounded-full font-medium transition-all backdrop-blur-md btn-float">
+              How It Works
             </a>
           </div>
         </div>
@@ -581,7 +633,7 @@ export default function Home() {
             <div className="glass-card p-8 rounded-3xl text-center card-lift group">
               <div className="w-20 h-20 rounded-full bg-orange-500/10 flex items-center justify-center mb-6 mx-auto group-hover:scale-110 transition-transform duration-300">
                 <svg className="w-10 h-10 text-orange-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" />
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
                 </svg>
               </div>
               <h3 className="text-2xl font-bold mb-4 text-white">Smart City</h3>
