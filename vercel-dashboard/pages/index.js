@@ -254,7 +254,7 @@ export default function Home() {
       setScrolled(window.scrollY > 50);
       
       // Determine active section
-      const sections = ['home', 'problem', 'dashboard', 'impact', 'future', 'about', 'team', 'contact'];
+      const sections = ['home', 'problem', 'dashboard', 'system', 'impact', 'future', 'about', 'team', 'contact'];
       for (const section of sections) {
         const el = document.getElementById(section);
         if (el && window.scrollY >= el.offsetTop - 300) {
@@ -343,7 +343,7 @@ export default function Home() {
             <span className="text-xl font-bold tracking-tight">Vayu<span className="text-green-400">Kavach</span></span>
           </div>
           <div className="hidden md:flex gap-8 text-sm font-medium text-white/80">
-            {['Home', 'Problem', 'Dashboard', 'Impact', 'Future', 'About', 'Team', 'Contact'].map((item) => (
+            {['Home', 'Problem', 'Dashboard', 'System', 'Impact', 'Future', 'About', 'Team', 'Contact'].map((item) => (
               <a 
                 key={item} 
                 href={`#${item.toLowerCase()}`}
@@ -703,64 +703,63 @@ export default function Home() {
           <div className="text-center mb-16">
             <h2 className="text-4xl md:text-5xl font-bold mb-6">Why It <span className="text-green-400">Matters</span></h2>
             <p className="text-xl text-gray-400 max-w-2xl mx-auto">
-              Real-time air quality monitoring transforms communities and saves lives
+              Hardware-driven purification with real-time proof of performance
             </p>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-            {/* Impact 1: Reduced Pollution */}
+            {/* Impact 1: Active Purification */}
             <div className="glass-card p-8 rounded-3xl text-center card-lift group">
               <div className="w-20 h-20 rounded-full bg-green-500/10 flex items-center justify-center mb-6 mx-auto group-hover:scale-110 transition-transform duration-300">
                 <svg className="w-10 h-10 text-green-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
                 </svg>
               </div>
-              <h3 className="text-2xl font-bold mb-4 text-white">Reduced Pollution</h3>
+              <h3 className="text-2xl font-bold mb-4 text-white">Active Purification</h3>
               <p className="text-gray-400 leading-relaxed mb-4">
-                Data-driven insights help identify and reduce pollution sources by <span className="text-green-400 font-bold">40%</span>
+                HEPA filters running <span className="text-green-400 font-bold">24/7</span> actively cleaning air, not just monitoring it
               </p>
-              <div className="text-4xl font-bold text-green-400 count-up">-40%</div>
+              <div className="text-4xl font-bold text-green-400 count-up">24/7</div>
             </div>
 
-            {/* Impact 2: Improved Health */}
+            {/* Impact 2: Passenger Safety */}
             <div className="glass-card p-8 rounded-3xl text-center card-lift group">
               <div className="w-20 h-20 rounded-full bg-blue-500/10 flex items-center justify-center mb-6 mx-auto group-hover:scale-110 transition-transform duration-300">
                 <svg className="w-10 h-10 text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m5.018-3.018A9 9 0 1112 21a9 9 0 01-8.018-12.982" />
                 </svg>
               </div>
-              <h3 className="text-2xl font-bold mb-4 text-white">Improved Health</h3>
+              <h3 className="text-2xl font-bold mb-4 text-white">Passenger Safety</h3>
               <p className="text-gray-400 leading-relaxed mb-4">
-                Cleaner air reduces respiratory illnesses and saves <span className="text-blue-400 font-bold">thousands of lives</span>
+                Up to <span className="text-blue-400 font-bold">85% reduction</span> in harmful particulates inside the vehicle cabin
               </p>
-              <div className="text-4xl font-bold text-blue-400 count-up">+60%</div>
+              <div className="text-4xl font-bold text-blue-400 count-up">+85%</div>
             </div>
 
-            {/* Impact 3: Increased Awareness */}
+            {/* Impact 3: Verified Results */}
             <div className="glass-card p-8 rounded-3xl text-center card-lift group">
               <div className="w-20 h-20 rounded-full bg-purple-500/10 flex items-center justify-center mb-6 mx-auto group-hover:scale-110 transition-transform duration-300">
                 <svg className="w-10 h-10 text-purple-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
                 </svg>
               </div>
-              <h3 className="text-2xl font-bold mb-4 text-white">Increased Awareness</h3>
+              <h3 className="text-2xl font-bold mb-4 text-white">Verified Results</h3>
               <p className="text-gray-400 leading-relaxed mb-4">
-                Real-time data empowers <span className="text-purple-400 font-bold">communities</span> to take action
+                <span className="text-purple-400 font-bold">100% real-time proof</span> via PM7003 sensor—no guesswork, just data
               </p>
-              <div className="text-4xl font-bold text-purple-400 count-up">24/7</div>
+              <div className="text-4xl font-bold text-purple-400 count-up">100%</div>
             </div>
 
-            {/* Impact 4: Smart City */}
+            {/* Impact 4: Scalable Network */}
             <div className="glass-card p-8 rounded-3xl text-center card-lift group">
               <div className="w-20 h-20 rounded-full bg-orange-500/10 flex items-center justify-center mb-6 mx-auto group-hover:scale-110 transition-transform duration-300">
                 <svg className="w-10 h-10 text-orange-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7h12m0 0l-4-4m4 4l-4 4m0 6H4m0 0l4 4m-4-4l4-4" />
                 </svg>
               </div>
-              <h3 className="text-2xl font-bold mb-4 text-white">Smart City</h3>
+              <h3 className="text-2xl font-bold mb-4 text-white">Scalable Network</h3>
               <p className="text-gray-400 leading-relaxed mb-4">
-                Foundation for <span className="text-orange-400 font-bold">intelligent urban planning</span> and sustainability
+                Deployable across <span className="text-orange-400 font-bold">entire vehicle fleets</span> to create city-wide purification
               </p>
               <div className="text-4xl font-bold text-orange-400 count-up">∞</div>
             </div>
