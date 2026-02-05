@@ -523,6 +523,77 @@ export default function Home() {
         </div>
       </section>
 
+      {/* Why It Matters Section */}
+      <section id="impact" className="py-24 relative bg-[#0a0a0a]">
+        <div className="max-w-7xl mx-auto px-6">
+          <div className="text-center mb-16">
+            <h2 className="text-4xl md:text-5xl font-bold mb-6">Why It <span className="text-green-400">Matters</span></h2>
+            <p className="text-xl text-gray-400 max-w-2xl mx-auto">
+              Real-time air quality monitoring transforms communities and saves lives
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+            {/* Impact 1: Reduced Pollution */}
+            <div className="glass-card p-8 rounded-3xl text-center card-lift group">
+              <div className="w-20 h-20 rounded-full bg-green-500/10 flex items-center justify-center mb-6 mx-auto group-hover:scale-110 transition-transform duration-300">
+                <svg className="w-10 h-10 text-green-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                </svg>
+              </div>
+              <h3 className="text-2xl font-bold mb-4 text-white">Reduced Pollution</h3>
+              <p className="text-gray-400 leading-relaxed mb-4">
+                Data-driven insights help identify and reduce pollution sources by <span className="text-green-400 font-bold">40%</span>
+              </p>
+              <div className="text-4xl font-bold text-green-400 count-up">-40%</div>
+            </div>
+
+            {/* Impact 2: Improved Health */}
+            <div className="glass-card p-8 rounded-3xl text-center card-lift group">
+              <div className="w-20 h-20 rounded-full bg-blue-500/10 flex items-center justify-center mb-6 mx-auto group-hover:scale-110 transition-transform duration-300">
+                <svg className="w-10 h-10 text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
+                </svg>
+              </div>
+              <h3 className="text-2xl font-bold mb-4 text-white">Improved Health</h3>
+              <p className="text-gray-400 leading-relaxed mb-4">
+                Cleaner air reduces respiratory illnesses and saves <span className="text-blue-400 font-bold">thousands of lives</span>
+              </p>
+              <div className="text-4xl font-bold text-blue-400 count-up">+60%</div>
+            </div>
+
+            {/* Impact 3: Increased Awareness */}
+            <div className="glass-card p-8 rounded-3xl text-center card-lift group">
+              <div className="w-20 h-20 rounded-full bg-purple-500/10 flex items-center justify-center mb-6 mx-auto group-hover:scale-110 transition-transform duration-300">
+                <svg className="w-10 h-10 text-purple-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
+                </svg>
+              </div>
+              <h3 className="text-2xl font-bold mb-4 text-white">Increased Awareness</h3>
+              <p className="text-gray-400 leading-relaxed mb-4">
+                Real-time data empowers <span className="text-purple-400 font-bold">communities</span> to take action
+              </p>
+              <div className="text-4xl font-bold text-purple-400 count-up">24/7</div>
+            </div>
+
+            {/* Impact 4: Smart City */}
+            <div className="glass-card p-8 rounded-3xl text-center card-lift group">
+              <div className="w-20 h-20 rounded-full bg-orange-500/10 flex items-center justify-center mb-6 mx-auto group-hover:scale-110 transition-transform duration-300">
+                <svg className="w-10 h-10 text-orange-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" />
+                </svg>
+              </div>
+              <h3 className="text-2xl font-bold mb-4 text-white">Smart City</h3>
+              <p className="text-gray-400 leading-relaxed mb-4">
+                Foundation for <span className="text-orange-400 font-bold">intelligent urban planning</span> and sustainability
+              </p>
+              <div className="text-4xl font-bold text-orange-400 count-up">∞</div>
+            </div>
+          </div>
+        </div>
+      </section>
+
       {/* About / How it Works Section */}
       <section id="about" className="py-24 relative bg-[#0d0d0d]">
         <div className="max-w-7xl mx-auto px-6">
