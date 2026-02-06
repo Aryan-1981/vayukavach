@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Team Avatar Placeholder Generator</title>
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background: #0a0a0a;
+            color: white;
+            padding: 40px;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        .avatars {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 30px;
+            margin-top: 30px;
+        }
+        .avatar-card {
+            text-align: center;
+        }
+        h1 {
+            color: #22c55e;
+            margin-bottom: 10px;
+        }
+        p {
+            color: #888;
+            margin-bottom: 30px;
+        }
+        canvas {
+            border-radius: 50%;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.5);
+            border: 3px solid rgba(255,255,255,0.1);
+        }
+        .name {
+            margin-top: 15px;
+            font-weight: 600;
+        }
+        .role {
+            font-size: 12px;
+            color: #888;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        button {
+            background: #22c55e;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 8px;
+            cursor: pointer;
+            margin-top: 10px;
+            font-weight: 600;
+        }
+        button:hover {
+            background: #16a34a;
+        }
+        .instructions {
+            background: rgba(255,255,255,0.05);
+            padding: 20px;
+            border-radius: 12px;
+            margin-bottom: 30px;
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>VayuKavach Team Avatar Generator</h1>
+        <p>Generate placeholder avatars for team members until professional photos are ready</p>
+        
+        <div class="instructions">
+            <h3 style="margin-top: 0;">📸 Instructions:</h3>
+            <ol>
+                <li>Right-click on each avatar below</li>
+                <li>Select "Save image as..."</li>
+                <li>Save with the exact filename shown (e.g., aryan.png)</li>
+                <li>Place in <code>/public/team/</code> folder</li>
+                <li>Or replace with actual team photos using the same filenames</li>
+            </ol>
+        </div>
+
+        <div class="avatars" id="avatars"></div>
+    </div>
+
+    <script>
+        const teamMembers = [
+            { name: 'Aryan Kumar Bhargava', filename: 'aryan.png', initials: 'AKB', gradient: ['#166534', '#22c55e'], role: 'Web & ESP32 Lead' },
+            { name: 'Tejaswa Singh Rana', filename: 'tejaswa.png', initials: 'TSR', gradient: ['#1e3a8a', '#3b82f6'], role: 'Hardware Specialist' },
+            { name: 'Vansh Shrivastava', filename: 'vansh-s.png', initials: 'VS', gradient: ['#581c87', '#a855f7'], role: 'Innovation Lead' },
+            { name: 'Yuvraj Yadav', filename: 'yuvraj.png', initials: 'YY', gradient: ['#9a3412', '#f97316'], role: 'Design Expert' },
+            { name: 'Vansh Trivedi', filename: 'vansh-t.png', initials: 'VT', gradient: ['#831843', '#ec4899'], role: 'Comm & Hardware' }
+        ];
+
+        const avatarsContainer = document.getElementById('avatars');
+
+        teamMembers.forEach(member => {
+            const card = document.createElement('div');
+            card.className = 'avatar-card';
+
+            const canvas = document.createElement('canvas');
+            canvas.width = 400;
+            canvas.height = 400;
+            const ctx = canvas.getContext('2d');
+
+            // Create gradient
+            const gradient = ctx.createLinearGradient(0, 0, 400, 400);
+            gradient.addColorStop(0, member.gradient[0]);
+            gradient.addColorStop(1, member.gradient[1]);
+
+            // Fill background
+            ctx.fillStyle = gradient;
+            ctx.fillRect(0, 0, 400, 400);
+
+            // Add subtle pattern
+            ctx.globalAlpha = 0.1;
+            for (let i = 0; i < 50; i++) {
+                ctx.fillStyle = 'white';
+                ctx.beginPath();
+                ctx.arc(Math.random() * 400, Math.random() * 400, Math.random() * 3, 0, Math.PI * 2);
+                ctx.fill();
+            }
+            ctx.globalAlpha = 1;
+
+            // Add initials
+            ctx.fillStyle = 'rgba(255, 255, 255, 0.9)';
+            ctx.font = 'bold 120px Inter, sans-serif';
+            ctx.textAlign = 'center';
+            ctx.textBaseline = 'middle';
+            ctx.fillText(member.initials, 200, 200);
+
+            // Add subtle shadow to text
+            ctx.shadowColor = 'rgba(0, 0, 0, 0.3)';
+            ctx.shadowBlur = 10;
+            ctx.fillText(member.initials, 200, 200);
+
+            const name = document.createElement('div');
+            name.className = 'name';
+            name.textContent = member.name;
+
+            const role = document.createElement('div');
+            role.className = 'role';
+            role.textContent = member.role;
+
+            const downloadBtn = document.createElement('button');
+            downloadBtn.textContent = `Download ${member.filename}`;
+            downloadBtn.onclick = () => {
+                const link = document.createElement('a');
+                link.download = member.filename;
+                link.href = canvas.toDataURL('image/png');
+                link.click();
+            };
+
+            card.appendChild(canvas);
+            card.appendChild(name);
+            card.appendChild(role);
+            card.appendChild(downloadBtn);
+            avatarsContainer.appendChild(card);
+        });
+    </script>
+</body>
+</html>

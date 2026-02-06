@@ -1,0 +1,16 @@
+# Team Images Directory
+
+Place team member profile photos here with the following naming convention:
+- aryan.jpg (or .png)
+- tejaswa.jpg
+- vansh-s.jpg
+- yuvraj.jpg
+- vansh-t.jpg
+
+Recommended image specifications:
+- Size: 400x400px minimum
+- Format: JPG or PNG
+- Aspect ratio: 1:1 (square)
+- File size: Under 500KB for optimal performance
+
+For now, the component will use gradient placeholders if images are not found.
