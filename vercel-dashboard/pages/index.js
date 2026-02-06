@@ -228,6 +228,32 @@ export default function Home() {
   const [scrolled, setScrolled] = useState(false);
   const [activeSection, setActiveSection] = useState('home');
   const [aqiCount, setAqiCount] = useState(0);
+  const [visibleSections, setVisibleSections] = useState({});
+
+  // Intersection Observer for scroll animations
+  useEffect(() => {
+    const observerOptions = {
+      threshold: 0.1,
+      rootMargin: '0px 0px -100px 0px'
+    };
+
+    const observerCallback = (entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          setVisibleSections(prev => ({
+            ...prev,
+            [entry.target.id]: true
+          }));
+        }
+      });
+    };
+
+    const observer = new IntersectionObserver(observerCallback, observerOptions);
+    const sections = document.querySelectorAll('section[id]');
+    sections.forEach(section => observer.observe(section));
+
+    return () => sections.forEach(section => observer.unobserve(section));
+  }, []);
 
   // --- Data Fetching Logic (Preserved) ---
   useEffect(() => {
@@ -418,10 +444,33 @@ export default function Home() {
         </div>
       </section>
 
+      {/* USP Banner Section */}
+      <section className={`py-20 relative bg-[#0a0a0a] border-y border-white/5 ${visibleSections.usp ? 'scroll-reveal-fast' : ''}`} id="usp">
+        <div className="max-w-6xl mx-auto px-6">
+          <div className="usp-banner bg-gradient-to-r from-black/60 via-green-950/20 to-black/60 backdrop-blur-xl rounded-2xl p-8 md:p-12 border border-green-500/20">
+            <div className="flex items-start gap-6">
+              <div className="hidden md:block flex-shrink-0">
+                <div className="w-16 h-16 rounded-full bg-green-500/10 flex items-center justify-center">
+                  <svg className="w-8 h-8 text-green-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
+                  </svg>
+                </div>
+              </div>
+              <div className="flex-1">
+                <div className="text-xs uppercase tracking-widest text-green-400 mb-3 font-semibold">What Makes Us Different</div>
+                <p className="usp-text text-gray-200">
+                  Unlike traditional air monitoring systems, VayuKavach <span className="usp-highlight">actively purifies outdoor air</span> in real-time as vehicles move through the city, and <span className="usp-highlight">verifies performance</span> using PM7003 sensor data—delivering proven results, not just observations.
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
       {/* The Problem Section - Urban Vehicle Pollution */}
-      <section id="problem" className="min-h-screen py-24 relative bg-gradient-to-b from-[#0a0a0a] to-[#0d0d0d]">
+      <section id="problem" className={`min-h-screen py-24 relative bg-gradient-to-b from-[#0a0a0a] to-[#0d0d0d] ${visibleSections.problem ? 'scroll-reveal' : ''}`}>
         <div className="max-w-7xl mx-auto px-6">
-          <div className="text-center mb-16">
+          <div className={`text-center mb-16 ${visibleSections.problem ? 'scroll-reveal-fast' : ''}`}>
             <span className="px-4 py-1.5 rounded-full border border-red-500/30 bg-red-500/10 text-red-400 text-sm font-medium tracking-wide backdrop-blur-sm inline-block mb-6">
               THE URBAN CHALLENGE
             </span>
@@ -436,7 +485,7 @@ export default function Home() {
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             {/* Problem Card 1 */}
-            <div className="glass-card p-8 rounded-3xl card-lift">
+            <div className={`glass-card p-8 rounded-3xl card-lift ${visibleSections.problem ? 'scroll-reveal-delay-1' : ''}`}>
               <div className="w-16 h-16 rounded-2xl bg-red-500/10 flex items-center justify-center mb-6 mx-auto pulse-glow">
                 <svg className="w-8 h-8 text-red-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7h12m0 0l-4-4m4 4l-4 4m0 6H4m0 0l4 4m-4-4l4-4" />
@@ -449,7 +498,7 @@ export default function Home() {
             </div>
 
             {/* Problem Card 2 */}
-            <div className="glass-card p-8 rounded-3xl card-lift" style={{ animationDelay: '0.1s' }}>
+            <div className={`glass-card p-8 rounded-3xl card-lift ${visibleSections.problem ? 'scroll-reveal-delay-2' : ''}`}>
               <div className="w-16 h-16 rounded-2xl bg-orange-500/10 flex items-center justify-center mb-6 mx-auto pulse-glow">
                 <svg className="w-8 h-8 text-orange-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
@@ -462,7 +511,7 @@ export default function Home() {
             </div>
 
             {/* Problem Card 3 */}
-            <div className="glass-card p-8 rounded-3xl card-lift" style={{ animationDelay: '0.2s' }}>
+            <div className={`glass-card p-8 rounded-3xl card-lift ${visibleSections.problem ? 'scroll-reveal-delay-3' : ''}`}>
               <div className="w-16 h-16 rounded-2xl bg-yellow-500/10 flex items-center justify-center mb-6 mx-auto pulse-glow">
                 <svg className="w-8 h-8 text-yellow-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
@@ -478,9 +527,9 @@ export default function Home() {
       </section>
 
       {/* Purification Performance Section */}
-      <section id="dashboard" className="min-h-screen py-24 relative">
+      <section id="dashboard" className={`min-h-screen py-24 relative dashboard-calm-bg data-section-calm ${visibleSections.dashboard ? 'scroll-reveal' : ''}`}>
         <div className="max-w-7xl mx-auto px-6">
-          <div className="flex flex-col md:flex-row justify-between items-end mb-12">
+          <div className={`flex flex-col md:flex-row justify-between items-end mb-12 ${visibleSections.dashboard ? 'scroll-reveal-fast' : ''}`}>
             <div>
               <span className="px-4 py-1.5 rounded-full border border-green-500/30 bg-green-500/10 text-green-400 text-sm font-medium tracking-wide backdrop-blur-sm inline-block mb-4">
                 LIVE FROM PM7003 SENSOR
@@ -496,10 +545,10 @@ export default function Home() {
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-12">
             {/* Status Card - Large with Animated Counter */}
-            <div className={`col-span-1 md:col-span-2 lg:col-span-2 glass-card rounded-3xl p-8 relative overflow-hidden bg-gradient-to-br ${status.bg} border-0 card-lift`}>
+            <div className={`col-span-1 md:col-span-2 lg:col-span-2 data-card-calm rounded-3xl p-8 relative overflow-hidden bg-gradient-to-br ${status.bg} border-0 card-lift ${visibleSections.dashboard ? 'scroll-reveal-delay-1' : ''}`}>
               <div className="relative z-10">
                 <div className="text-sm uppercase tracking-wider opacity-70 mb-1">Output Air Quality (After Purification)</div>
-                <div className={`text-6xl md:text-7xl font-bold mb-2 ${status.color} text-glow count-up`}>
+                <div className={`text-6xl md:text-7xl font-bold mb-2 ${status.color} text-glow-calm count-up`}>
                   {aqiCount}
                 </div>
                 <div className={`text-3xl md:text-4xl font-bold mb-4 ${status.color}`}>{status.text}</div>
@@ -512,7 +561,7 @@ export default function Home() {
             </div>
 
             {/* PM2.5 Card - After Purification */}
-            <div className="glass-card rounded-3xl p-6 flex flex-col justify-between group card-lift">
+            <div className={`data-card-calm rounded-3xl p-6 flex flex-col justify-between group card-lift ${visibleSections.dashboard ? 'scroll-reveal-delay-2' : ''}`}>
               <div className="flex justify-between items-start">
                 <div className="text-sm text-gray-400">PM2.5 (After)</div>
                 <div className="p-2 rounded-full bg-green-500/10 text-green-400 group-hover:scale-110 transition-transform">
@@ -530,7 +579,7 @@ export default function Home() {
             </div>
 
             {/* PM10 Card - After Purification */}
-            <div className="glass-card rounded-3xl p-6 flex flex-col justify-between group card-lift">
+            <div className={`data-card-calm rounded-3xl p-6 flex flex-col justify-between group card-lift ${visibleSections.dashboard ? 'scroll-reveal-delay-3' : ''}`}>
               <div className="flex justify-between items-start">
                 <div className="text-sm text-gray-400">PM10 (After)</div>
                 <div className="p-2 rounded-full bg-cyan-500/10 text-cyan-400 group-hover:scale-110 transition-transform">
@@ -549,7 +598,7 @@ export default function Home() {
           </div>
 
           {/* Chart Section */}
-          <div className="glass-panel rounded-3xl p-6 md:p-8">
+          <div className={`data-card-calm rounded-3xl p-6 md:p-8 ${visibleSections.dashboard ? 'scroll-reveal-delay-4' : ''}`}>
             <h3 className="text-xl font-semibold mb-6 flex items-center gap-2">
               <span className="w-1 h-6 bg-green-500 rounded-full" />
               Purification Trends (Output Air Quality Over Time)
@@ -567,11 +616,11 @@ export default function Home() {
                       <stop offset="95%" stopColor="#22c55e" stopOpacity={0}/>
                     </linearGradient>
                   </defs>
-                  <CartesianGrid strokeDasharray="3 3" stroke="#333" vertical={false} />
+                  <CartesianGrid strokeDasharray="3 3" stroke="#222" vertical={false} opacity={0.3} />
                   <XAxis dataKey="time" stroke="#666" tick={{fill: '#666', fontSize: 12}} tickLine={false} axisLine={false} dy={10} />
                   <YAxis stroke="#666" tick={{fill: '#666', fontSize: 12}} tickLine={false} axisLine={false} dx={-10} />
                   <Tooltip 
-                    contentStyle={{ backgroundColor: 'rgba(0,0,0,0.8)', backdropFilter: 'blur(10px)', border: '1px solid #333', borderRadius: '12px' }}
+                    contentStyle={{ backgroundColor: 'rgba(0,0,0,0.9)', backdropFilter: 'blur(10px)', border: '1px solid #222', borderRadius: '12px' }}
                     itemStyle={{ color: '#fff' }}
                   />
                   <Area type="monotone" dataKey="PM2_5" stroke="#f97316" strokeWidth={3} fillOpacity={1} fill="url(#colorPM25)" />
@@ -584,7 +633,7 @@ export default function Home() {
       </section>
 
       {/* How The System Works Section */}
-      <section id="system" className="py-24 relative bg-[#0d0d0d]">
+      <section id="system" className={`py-24 relative bg-[#0d0d0d] ${visibleSections.system ? 'scroll-reveal' : ''}`}>
         <div className="max-w-7xl mx-auto px-6">
           <div className="text-center mb-16">
             <span className="px-4 py-1.5 rounded-full border border-cyan-500/30 bg-cyan-500/10 text-cyan-400 text-sm font-medium tracking-wide backdrop-blur-sm inline-block mb-6">
@@ -698,9 +747,9 @@ export default function Home() {
       </section>
 
       {/* Why It Matters Section */}
-      <section id="impact" className="py-24 relative bg-[#0a0a0a]">
+      <section id="impact" className={`py-24 relative bg-[#0a0a0a] ${visibleSections.impact ? 'scroll-reveal' : ''}`}>
         <div className="max-w-7xl mx-auto px-6">
-          <div className="text-center mb-16">
+          <div className={`text-center mb-16 ${visibleSections.impact ? 'scroll-reveal-fast' : ''}`}>
             <h2 className="text-4xl md:text-5xl font-bold mb-6">Why It <span className="text-green-400">Matters</span></h2>
             <p className="text-xl text-gray-400 max-w-2xl mx-auto">
               Hardware-driven purification with real-time proof of performance
