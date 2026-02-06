@@ -468,7 +468,13 @@ export default function Home() {
       </section>
 
       {/* The Problem Section - Urban Vehicle Pollution */}
-      <section id="problem" className={`min-h-screen py-24 relative bg-gradient-to-b from-[#0a0a0a] to-[#0d0d0d] ${visibleSections.problem ? 'scroll-reveal' : ''}`}>
+      <section id="problem" className={`min-h-screen py-24 relative problem-bg ${visibleSections.problem ? 'scroll-reveal' : ''}`}>
+        {/* Animated Floating Shapes */}
+        <div className="abstract-shapes">
+          <div className="shape shape-1"></div>
+          <div className="shape shape-2"></div>
+          <div className="shape shape-3"></div>
+        </div>
         <div className="max-w-7xl mx-auto px-6">
           <div className={`text-center mb-16 ${visibleSections.problem ? 'scroll-reveal-fast' : ''}`}>
             <span className="px-4 py-1.5 rounded-full border border-red-500/30 bg-red-500/10 text-red-400 text-sm font-medium tracking-wide backdrop-blur-sm inline-block mb-6">
@@ -527,7 +533,14 @@ export default function Home() {
       </section>
 
       {/* Purification Performance Section */}
-      <section id="dashboard" className={`min-h-screen py-24 relative dashboard-calm-bg data-section-calm ${visibleSections.dashboard ? 'scroll-reveal' : ''}`}>
+      <section id="dashboard" className={`min-h-screen py-24 relative dashboard-enhanced-bg data-section-calm ${visibleSections.dashboard ? 'scroll-reveal' : ''}`}>
+        {/* Airflow Wave Lines */}
+        <div className="airflow-waves">
+          <div className="wave wave-1"></div>
+          <div className="wave wave-2"></div>
+          <div className="wave wave-3"></div>
+        </div>
+        <div className="mesh-gradient"></div>
         <div className="max-w-7xl mx-auto px-6">
           <div className={`flex flex-col md:flex-row justify-between items-end mb-12 ${visibleSections.dashboard ? 'scroll-reveal-fast' : ''}`}>
             <div>
@@ -633,7 +646,13 @@ export default function Home() {
       </section>
 
       {/* How The System Works Section */}
-      <section id="system" className={`py-24 relative bg-[#0d0d0d] ${visibleSections.system ? 'scroll-reveal' : ''}`}>
+      <section id="system" className={`py-24 relative system-bg ${visibleSections.system ? 'scroll-reveal' : ''}`}>
+        {/* Animated Floating Shapes */}
+        <div className="abstract-shapes">
+          <div className="shape shape-1"></div>
+          <div className="shape shape-2"></div>
+        </div>
+        <div className="mesh-gradient"></div>
         <div className="max-w-7xl mx-auto px-6">
           <div className="text-center mb-16">
             <span className="px-4 py-1.5 rounded-full border border-cyan-500/30 bg-cyan-500/10 text-cyan-400 text-sm font-medium tracking-wide backdrop-blur-sm inline-block mb-6">
@@ -747,7 +766,13 @@ export default function Home() {
       </section>
 
       {/* Why It Matters Section */}
-      <section id="impact" className={`py-24 relative bg-[#0a0a0a] ${visibleSections.impact ? 'scroll-reveal' : ''}`}>
+      <section id="impact" className={`py-24 relative impact-bg ${visibleSections.impact ? 'scroll-reveal' : ''}`}>
+        {/* Airflow Wave Lines */}
+        <div className="airflow-waves">
+          <div className="wave wave-1"></div>
+          <div className="wave wave-2"></div>
+        </div>
+        <div className="mesh-gradient"></div>
         <div className="max-w-7xl mx-auto px-6">
           <div className={`text-center mb-16 ${visibleSections.impact ? 'scroll-reveal-fast' : ''}`}>
             <h2 className="text-4xl md:text-5xl font-bold mb-6">Why It <span className="text-green-400">Matters</span></h2>
@@ -1002,7 +1027,14 @@ export default function Home() {
       </section>
 
       {/* Smart City Vision Section */}
-      <section id="future" className="py-24 relative bg-gradient-to-b from-[#0d0d0d] to-[#0a0a0a] overflow-hidden">
+      <section id="future" className="py-24 relative future-bg overflow-hidden">
+        {/* Animated Floating Shapes */}
+        <div className="abstract-shapes">
+          <div className="shape shape-1"></div>
+          <div className="shape shape-2"></div>
+          <div className="shape shape-3"></div>
+        </div>
+        <div className="mesh-gradient"></div>
         <div className="max-w-7xl mx-auto px-6">
           <div className="text-center mb-16">
             <span className="px-4 py-1.5 rounded-full border border-cyan-500/30 bg-cyan-500/10 text-cyan-400 text-sm font-medium tracking-wide backdrop-blur-sm inline-block mb-6">
