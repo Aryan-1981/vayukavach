@@ -463,6 +463,10 @@ export default function Home() {
       }
       
       if (data && data.length > 0) {
+        console.log('📊 Latest sensor data received:', data[0]);
+        console.log('PM1.0 value:', data[0].pm1_0);
+        console.log('PM2.5 value:', data[0].pm2_5);
+        console.log('PM10 value:', data[0].pm10);
         setLatestData(data[0]);
         setError(null); // Clear any previous errors
       }
@@ -837,7 +841,15 @@ export default function Home() {
                 </div>
               </div>
               <div>
-                <div className="text-5xl font-bold mb-2">{latestData?.pm1_0 != null ? latestData.pm1_0.toFixed(1) : '--'}</div>
+                <div className="text-5xl font-bold mb-2">
+                  {latestData?.pm1_0 != null ? latestData.pm1_0.toFixed(1) : '--'}
+                  {/* Debug info - remove after testing */}
+                  {latestData && (
+                    <div className="text-xs text-gray-600 mt-1">
+                      Debug: {JSON.stringify({ pm1_0: latestData.pm1_0, type: typeof latestData.pm1_0 })}
+                    </div>
+                  )}
+                </div>
                 <div className="text-sm text-gray-500">Ultra-Fine Particles (µg/m³)</div>
                 <div className="text-sm text-purple-400 mt-2 font-medium">✓ Purified</div>
               </div>
