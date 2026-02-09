@@ -1278,23 +1278,7 @@ export default function Home() {
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto">
-              {/* Mentor 1 - Dr. Aftab Ahmed Ansari */}
-              <TeamMemberCard
-                name="Dr. Aftab Ahmed Ansari"
-                role="Mentor & Project Guide"
-                roleColor="text-cyan-400"
-                description="Assistant Professor, Centre for Internet of Things (CIoT), MITS Gwalior. Providing technical guidance, system architecture direction, and research-oriented mentoring."
-                imagePath="/team/dr-aftab.jpg"
-                gradientFrom="from-cyan-700"
-                gradientTo="to-cyan-600"
-                social={{
-                  linkedin: "https://linkedin.com/in/dr-aftab-ansari",
-                }}
-                delay="team-card-reveal-delay-1"
-                isVisible={visibleSections.team}
-              />
-
-              {/* Mentor 2 - Dr. Praveen Bansal */}
+              {/* Mentor 1 - Dr. Praveen Bansal */}
               <TeamMemberCard
                 name="Dr. Praveen Bansal"
                 role="Head, CIoT"
@@ -1305,6 +1289,22 @@ export default function Home() {
                 gradientTo="to-indigo-600"
                 social={{
                   linkedin: "https://linkedin.com/in/dr-praveen-bansal",
+                }}
+                delay="team-card-reveal-delay-1"
+                isVisible={visibleSections.team}
+              />
+
+              {/* Mentor 2 - Dr. Aftab Ahmed Ansari */}
+              <TeamMemberCard
+                name="Dr. Aftab Ahmed Ansari"
+                role="Mentor & Project Guide"
+                roleColor="text-cyan-400"
+                description="Assistant Professor, Centre for Internet of Things (CIoT), MITS Gwalior. Providing technical guidance, system architecture direction, and research-oriented mentoring."
+                imagePath="/team/dr-aftab.jpg"
+                gradientFrom="from-cyan-700"
+                gradientTo="to-cyan-600"
+                social={{
+                  linkedin: "https://linkedin.com/in/dr-aftab-ansari",
                 }}
                 delay="team-card-reveal-delay-2"
                 isVisible={visibleSections.team}
