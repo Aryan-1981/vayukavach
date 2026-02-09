@@ -837,12 +837,12 @@ export default function Home() {
                 </div>
               </div>
               <div>
-                <div className="text-5xl font-bold mb-2">{latestData?.pm1 != null ? latestData.pm1.toFixed(1) : '--'}</div>
+                <div className="text-5xl font-bold mb-2">{latestData?.pm1_0 != null ? latestData.pm1_0.toFixed(1) : '--'}</div>
                 <div className="text-sm text-gray-500">Ultra-Fine Particles (µg/m³)</div>
                 <div className="text-sm text-purple-400 mt-2 font-medium">✓ Purified</div>
               </div>
               <div className="mt-4 h-1 bg-gray-800 rounded-full overflow-hidden">
-                <div className="h-full bg-purple-500 transition-all duration-1000" style={{ width: `${Math.min(((latestData?.pm1 || 0) / 100) * 100, 100)}%` }}></div>
+                <div className="h-full bg-purple-500 transition-all duration-1000" style={{ width: `${Math.min(((latestData?.pm1_0 || 0) / 100) * 100, 100)}%` }}></div>
               </div>
             </div>
           </div>
