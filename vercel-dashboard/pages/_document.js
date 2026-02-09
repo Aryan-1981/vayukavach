@@ -4,7 +4,6 @@ export default function Document() {
   return (
     <Html lang="en" className="scroll-smooth">
       <Head>
-        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes" />
         <meta name="description" content="VayuKavach - Real-time Air Quality Monitor with PM2.5, PM10 sensor data" />
         <meta name="theme-color" content="#0a0a0a" />
         <meta name="apple-mobile-web-app-capable" content="yes" />
