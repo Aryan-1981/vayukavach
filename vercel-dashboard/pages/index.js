@@ -1288,7 +1288,7 @@ export default function Home() {
                 gradientFrom="from-indigo-700"
                 gradientTo="to-indigo-600"
                 social={{
-                  linkedin: "https://linkedin.com/in/dr-praveen-bansal",
+                  linkedin: "https://www.linkedin.com/in/dr-praveen-bansal-7711a51b2/",
                 }}
                 delay="team-card-reveal-delay-1"
                 isVisible={visibleSections.team}
@@ -1304,7 +1304,7 @@ export default function Home() {
                 gradientFrom="from-cyan-700"
                 gradientTo="to-cyan-600"
                 social={{
-                  linkedin: "https://linkedin.com/in/dr-aftab-ansari",
+                  linkedin: "https://www.linkedin.com/in/dr-aftab-ahmed-ansari-8b5361a4/",
                 }}
                 delay="team-card-reveal-delay-2"
                 isVisible={visibleSections.team}
@@ -1333,9 +1333,8 @@ export default function Home() {
                gradientFrom="from-green-700"
                gradientTo="to-green-600"
                social={{
-                 github: "https://github.com/aryan",
-                 linkedin: "https://linkedin.com/in/aryan",
-                 twitter: "https://twitter.com/aryan"
+                 github: "https://github.com/Aryan-1981",
+                 linkedin: "https://www.linkedin.com/in/aryan-bhargava-a1aba9385/",
                }}
                delay="team-card-reveal-delay-3"
                isVisible={visibleSections.team}
@@ -1351,9 +1350,8 @@ export default function Home() {
                gradientFrom="from-blue-700"
                gradientTo="to-blue-600"
                social={{
-                 github: "https://github.com/tejaswa",
-                 linkedin: "https://linkedin.com/in/tejaswa",
-                 twitter: "https://twitter.com/tejaswa"
+                 github: "https://github.com/Tejaswa-Singh-Rana",
+                 linkedin: "https://www.linkedin.com/in/tejaswa-singh-rana-6b74a4381/",
                }}
                delay="team-card-reveal-delay-4"
                isVisible={visibleSections.team}
@@ -1369,9 +1367,8 @@ export default function Home() {
                gradientFrom="from-purple-700"
                gradientTo="to-purple-600"
                social={{
-                 github: "https://github.com/vansh-s",
-                 linkedin: "https://linkedin.com/in/vansh-s",
-                 twitter: "https://twitter.com/vansh-s"
+                 github: "https://github.com/vanshshri2007-sudo",
+                 linkedin: "https://www.linkedin.com/in/vansh-shrivastava-b1b8403a1/",
                }}
                delay="team-card-reveal-delay-5"
                isVisible={visibleSections.team}
@@ -1389,7 +1386,7 @@ export default function Home() {
                social={{
                  github: "https://github.com/yuvraj",
                  linkedin: "https://linkedin.com/in/yuvraj",
-                 twitter: "https://twitter.com/yuvraj"
+                 
                }}
                delay="team-card-reveal-delay-6"
                isVisible={visibleSections.team}
@@ -1405,9 +1402,8 @@ export default function Home() {
                gradientFrom="from-pink-700"
                gradientTo="to-pink-600"
                social={{
-                 github: "https://github.com/vansh-t",
-                 linkedin: "https://linkedin.com/in/vansh-t",
-                 twitter: "https://twitter.com/vansh-t"
+                 github: "https://github.com/vansh-1140",
+                 linkedin: "https://www.linkedin.com/in/vansh-trivedi-011244235/",
                }}
                delay="team-card-reveal-delay-7"
                isVisible={visibleSections.team}
