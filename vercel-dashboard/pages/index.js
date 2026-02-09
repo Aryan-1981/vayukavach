@@ -731,7 +731,7 @@ export default function Home() {
             </div>
             <div className="flex items-center gap-2 text-xs sm:text-sm text-gray-400 glass-panel px-3 py-1 rounded-full">
               <span className="w-2 h-2 rounded-full bg-green-500 animate-pulse" />
-              Live sensor data • Updates every 30s
+              Live sensor data • Updates every 10s
             </div>
           </div>
 
