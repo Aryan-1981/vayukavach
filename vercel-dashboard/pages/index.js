@@ -372,6 +372,7 @@ export default function Home() {
   const [activeSection, setActiveSection] = useState('home');
   const [aqiCount, setAqiCount] = useState(0);
   const [visibleSections, setVisibleSections] = useState({});
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   // Intersection Observer for scroll animations
   useEffect(() => {
@@ -506,11 +507,13 @@ export default function Home() {
       
       {/* Navigation */}
       <nav className={`fixed w-full z-50 transition-all duration-500 ${scrolled ? 'bg-black/80 backdrop-blur-lg border-b border-white/10 py-4' : 'bg-transparent py-6'}`}>
-        <div className="max-w-7xl mx-auto px-6 flex justify-between items-center">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 flex justify-between items-center">
           <div className="flex items-center gap-2">
             <LeafIcon className="w-6 h-6 text-green-400 animate-sway" />
             <span className="text-xl font-bold tracking-tight">Vayu<span className="text-green-400">Kavach</span></span>
           </div>
+          
+          {/* Desktop Navigation */}
           <div className="hidden md:flex gap-8 text-sm font-medium text-white/80">
             {['Home', 'Problem', 'Dashboard', 'System', 'Impact', 'Future', 'About', 'Team', 'Contact'].map((item) => (
               <a 
@@ -522,65 +525,98 @@ export default function Home() {
               </a>
             ))}
           </div>
+
+          {/* Mobile Menu Button */}
+          <button
+            onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+            className="md:hidden p-2 text-white/80 hover:text-green-400 transition-colors"
+            aria-label="Toggle menu"
+          >
+            <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              {mobileMenuOpen ? (
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+              ) : (
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
+              )}
+            </svg>
+          </button>
         </div>
+
+        {/* Mobile Menu */}
+        {mobileMenuOpen && (
+          <div className="md:hidden absolute top-full left-0 w-full bg-black/95 backdrop-blur-lg border-b border-white/10">
+            <div className="px-4 py-6 space-y-4">
+              {['Home', 'Problem', 'Dashboard', 'System', 'Impact', 'Future', 'About', 'Team', 'Contact'].map((item) => (
+                <a 
+                  key={item} 
+                  href={`#${item.toLowerCase()}`}
+                  onClick={() => setMobileMenuOpen(false)}
+                  className={`block py-2 text-base font-medium transition-colors hover:text-green-400 ${activeSection === item.toLowerCase() ? 'text-green-400' : 'text-white/80'}`}
+                >
+                  {item}
+                </a>
+              ))}
+            </div>
+          </div>
+        )}
       </nav>
 
       {/* Hero Section */}
-      <section id="home" className="relative h-screen flex items-center justify-center overflow-hidden">
+      <section id="home" className="relative min-h-screen flex items-center justify-center overflow-hidden">
         {/* Background Gradient */}
         <div className="absolute inset-0 bg-gradient-to-b from-[#0a0a0a] via-[#112211] to-[#0a0a0a] z-0" />
         
         {/* Animated Orbs */}
-        <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-green-500/20 rounded-full blur-[100px] animate-pulse" />
-        <div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-blue-500/20 rounded-full blur-[100px] animate-pulse delay-1000" />
+        <div className="absolute top-1/4 left-1/4 w-64 h-64 md:w-96 md:h-96 bg-green-500/20 rounded-full blur-[100px] animate-pulse" />
+        <div className="absolute bottom-1/4 right-1/4 w-64 h-64 md:w-96 md:h-96 bg-blue-500/20 rounded-full blur-[100px] animate-pulse delay-1000" />
 
         {/* Rotating Earth */}
         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 opacity-10">
-          <EarthIcon className="w-[600px] h-[600px] text-green-500 rotate-earth" />
+          <EarthIcon className="w-[300px] h-[300px] md:w-[600px] md:h-[600px] text-green-500 rotate-earth" />
         </div>
 
-        <div className="relative z-10 text-center px-4 max-w-5xl mx-auto">
+        <div className="relative z-10 text-center px-4 sm:px-6 max-w-5xl mx-auto py-20">
           <div className="reveal-up animation-delay-100 mb-6 flex justify-center">
-            <span className="px-4 py-1.5 rounded-full border border-green-500/30 bg-green-500/10 text-green-400 text-sm font-medium tracking-wide backdrop-blur-sm">
+            <span className="px-3 sm:px-4 py-1.5 rounded-full border border-green-500/30 bg-green-500/10 text-green-400 text-xs sm:text-sm font-medium tracking-wide backdrop-blur-sm">
               SMART ROOFTOP AIR PURIFICATION
             </span>
           </div>
-          <h1 className="reveal-up animation-delay-200 text-4xl md:text-6xl lg:text-7xl font-bold tracking-tight mb-8">
+          <h1 className="reveal-up animation-delay-200 text-3xl sm:text-4xl md:text-6xl lg:text-7xl font-bold tracking-tight mb-6 sm:mb-8">
             Purifying Air <span className="text-transparent bg-clip-text bg-gradient-to-r from-green-400 to-emerald-600">On The Move</span>
           </h1>
-          <p className="reveal-up animation-delay-300 text-lg md:text-xl text-gray-400 mb-10 max-w-3xl mx-auto leading-relaxed">
+          <p className="reveal-up animation-delay-300 text-base sm:text-lg md:text-xl text-gray-400 mb-8 sm:mb-10 max-w-3xl mx-auto leading-relaxed px-2">
             A rooftop-mounted air purification system for urban vehicles. 
             Actively cleans polluted air while driving, verified by real-time PM7003 sensor readings.
           </p>
           
           {/* Vehicle with Purifier Visualization */}
-          <div className="reveal-up animation-delay-350 mb-10 relative">
-            <div className="flex items-center justify-center gap-8 max-w-2xl mx-auto">
-              <div className="text-center">
-                <AirFlowIcon className="w-20 h-20 mx-auto mb-2" direction="in" />
-                <span className="text-red-400 text-sm font-medium">Polluted Air In</span>
+          <div className="reveal-up animation-delay-350 mb-8 sm:mb-10 relative">
+            <div className="flex flex-col sm:flex-row items-center justify-center gap-4 sm:gap-8 max-w-2xl mx-auto">
+              <div className="text-center order-1 sm:order-none">
+                <AirFlowIcon className="w-16 h-16 sm:w-20 sm:h-20 mx-auto mb-2" direction="in" />
+                <span className="text-red-400 text-xs sm:text-sm font-medium">Polluted Air In</span>
               </div>
               
-              <VehicleIcon className="w-64 h-40 text-white" />
+              <VehicleIcon className="w-48 h-32 sm:w-64 sm:h-40 text-white order-2 sm:order-none" />
               
-              <div className="text-center">
-                <AirFlowIcon className="w-20 h-20 mx-auto mb-2" direction="out" />
-                <span className="text-green-400 text-sm font-medium">Clean Air Out</span>
+              <div className="text-center order-3 sm:order-none">
+                <AirFlowIcon className="w-16 h-16 sm:w-20 sm:h-20 mx-auto mb-2" direction="out" />
+                <span className="text-green-400 text-xs sm:text-sm font-medium">Clean Air Out</span>
               </div>
             </div>
           </div>
-          <div className="reveal-up animation-delay-400 flex flex-col sm:flex-row gap-4 justify-center">
-            <a href="#dashboard" className="px-8 py-4 bg-green-600 hover:bg-green-500 text-white rounded-full font-medium transition-all duration-300 hover:shadow-[0_0_20px_rgba(34,197,94,0.4)] transform hover:-translate-y-1 btn-float">
+          <div className="reveal-up animation-delay-400 flex flex-col sm:flex-row gap-4 justify-center px-4">
+            <a href="#dashboard" className="px-6 sm:px-8 py-3 sm:py-4 bg-green-600 hover:bg-green-500 text-white rounded-full font-medium text-sm sm:text-base transition-all duration-300 hover:shadow-[0_0_20px_rgba(34,197,94,0.4)] transform hover:-translate-y-1 btn-float">
               View Live Performance
             </a>
-            <a href="#system" className="px-8 py-4 bg-white/5 hover:bg-white/10 text-white border border-white/10 rounded-full font-medium transition-all backdrop-blur-md btn-float">
+            <a href="#system" className="px-6 sm:px-8 py-3 sm:py-4 bg-white/5 hover:bg-white/10 text-white border border-white/10 rounded-full font-medium text-sm sm:text-base transition-all backdrop-blur-md btn-float">
               How It Works
             </a>
           </div>
         </div>
 
         {/* Scroll Indicator */}
-        <div className="absolute bottom-10 left-1/2 -translate-x-1/2 animate-bounce">
+        <div className="absolute bottom-10 left-1/2 -translate-x-1/2 animate-bounce hidden sm:block">
           <svg className="w-6 h-6 text-white/50" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 14l-7 7m0 0l-7-7m7 7V3" />
           </svg>
@@ -588,20 +624,20 @@ export default function Home() {
       </section>
 
       {/* USP Banner Section */}
-      <section className={`py-20 relative bg-[#0a0a0a] border-y border-white/5 ${visibleSections.usp ? 'scroll-reveal-fast' : ''}`} id="usp">
-        <div className="max-w-6xl mx-auto px-6">
-          <div className="usp-banner bg-gradient-to-r from-black/60 via-green-950/20 to-black/60 backdrop-blur-xl rounded-2xl p-8 md:p-12 border border-green-500/20">
-            <div className="flex items-start gap-6">
-              <div className="hidden md:block flex-shrink-0">
-                <div className="w-16 h-16 rounded-full bg-green-500/10 flex items-center justify-center">
-                  <svg className="w-8 h-8 text-green-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      <section className={`py-12 sm:py-20 relative bg-[#0a0a0a] border-y border-white/5 ${visibleSections.usp ? 'scroll-reveal-fast' : ''}`} id="usp">
+        <div className="max-w-6xl mx-auto px-4 sm:px-6">
+          <div className="usp-banner bg-gradient-to-r from-black/60 via-green-950/20 to-black/60 backdrop-blur-xl rounded-2xl p-6 sm:p-8 md:p-12 border border-green-500/20">
+            <div className="flex flex-col sm:flex-row items-start gap-4 sm:gap-6">
+              <div className="hidden sm:block flex-shrink-0">
+                <div className="w-12 h-12 md:w-16 md:h-16 rounded-full bg-green-500/10 flex items-center justify-center">
+                  <svg className="w-6 h-6 md:w-8 md:h-8 text-green-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
                   </svg>
                 </div>
               </div>
               <div className="flex-1">
-                <div className="text-xs uppercase tracking-widest text-green-400 mb-3 font-semibold">What Makes Us Different</div>
-                <p className="usp-text text-gray-200">
+                <div className="text-xs uppercase tracking-widest text-green-400 mb-2 sm:mb-3 font-semibold">What Makes Us Different</div>
+                <p className="usp-text text-sm sm:text-base text-gray-200 leading-relaxed">
                   Unlike traditional air monitoring systems, VayuKavach <span className="usp-highlight">actively purifies outdoor air</span> in real-time as vehicles move through the city, and <span className="usp-highlight">verifies performance</span> using PM7003 sensor data—delivering proven results, not just observations.
                 </p>
               </div>
@@ -611,63 +647,63 @@ export default function Home() {
       </section>
 
       {/* The Problem Section - Urban Vehicle Pollution */}
-      <section id="problem" className={`min-h-screen py-24 relative problem-bg ${visibleSections.problem ? 'scroll-reveal' : ''}`}>
+      <section id="problem" className={`min-h-screen py-16 sm:py-24 relative problem-bg ${visibleSections.problem ? 'scroll-reveal' : ''}`}>
         {/* Animated Floating Shapes */}
         <div className="abstract-shapes">
           <div className="shape shape-1"></div>
           <div className="shape shape-2"></div>
           <div className="shape shape-3"></div>
         </div>
-        <div className="max-w-7xl mx-auto px-6">
-          <div className={`text-center mb-16 ${visibleSections.problem ? 'scroll-reveal-fast' : ''}`}>
-            <span className="px-4 py-1.5 rounded-full border border-red-500/30 bg-red-500/10 text-red-400 text-sm font-medium tracking-wide backdrop-blur-sm inline-block mb-6">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6">
+          <div className={`text-center mb-12 sm:mb-16 ${visibleSections.problem ? 'scroll-reveal-fast' : ''}`}>
+            <span className="px-3 sm:px-4 py-1.5 rounded-full border border-red-500/30 bg-red-500/10 text-red-400 text-xs sm:text-sm font-medium tracking-wide backdrop-blur-sm inline-block mb-4 sm:mb-6">
               THE URBAN CHALLENGE
             </span>
-            <h2 className="text-4xl md:text-6xl font-bold mb-6 text-white">
+            <h2 className="text-3xl sm:text-4xl md:text-6xl font-bold mb-4 sm:mb-6 text-white px-4">
               Vehicles: From <span className="text-red-400">Polluters</span> to <span className="text-green-400">Purifiers</span>
             </h2>
-            <p className="text-xl text-gray-400 max-w-3xl mx-auto leading-relaxed">
+            <p className="text-base sm:text-xl text-gray-400 max-w-3xl mx-auto leading-relaxed px-4">
               Urban vehicles contribute <span className="text-red-400 font-bold">72%</span> of city air pollution. 
               What if every vehicle could actively clean the air instead of just polluting it?
             </p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 sm:gap-8">
             {/* Problem Card 1 */}
-            <div className={`glass-card p-8 rounded-3xl card-lift ${visibleSections.problem ? 'scroll-reveal-delay-1' : ''}`}>
-              <div className="w-16 h-16 rounded-2xl bg-red-500/10 flex items-center justify-center mb-6 mx-auto pulse-glow">
-                <svg className="w-8 h-8 text-red-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <div className={`glass-card p-6 sm:p-8 rounded-3xl card-lift ${visibleSections.problem ? 'scroll-reveal-delay-1' : ''}`}>
+              <div className="w-12 h-12 sm:w-16 sm:h-16 rounded-2xl bg-red-500/10 flex items-center justify-center mb-4 sm:mb-6 mx-auto pulse-glow">
+                <svg className="w-6 h-6 sm:w-8 sm:h-8 text-red-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7h12m0 0l-4-4m4 4l-4 4m0 6H4m0 0l4 4m-4-4l4-4" />
                 </svg>
               </div>
-              <h3 className="text-2xl font-bold text-center mb-4">Traffic Exhaust Zones</h3>
-              <p className="text-gray-400 text-center leading-relaxed">
+              <h3 className="text-xl sm:text-2xl font-bold text-center mb-3 sm:mb-4">Traffic Exhaust Zones</h3>
+              <p className="text-sm sm:text-base text-gray-400 text-center leading-relaxed">
                 Drivers and passengers breathe concentrated pollution directly from surrounding vehicles and traffic jams.
               </p>
             </div>
 
             {/* Problem Card 2 */}
-            <div className={`glass-card p-8 rounded-3xl card-lift ${visibleSections.problem ? 'scroll-reveal-delay-2' : ''}`}>
-              <div className="w-16 h-16 rounded-2xl bg-orange-500/10 flex items-center justify-center mb-6 mx-auto pulse-glow">
-                <svg className="w-8 h-8 text-orange-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <div className={`glass-card p-6 sm:p-8 rounded-3xl card-lift ${visibleSections.problem ? 'scroll-reveal-delay-2' : ''}`}>
+              <div className="w-12 h-12 sm:w-16 sm:h-16 rounded-2xl bg-orange-500/10 flex items-center justify-center mb-4 sm:mb-6 mx-auto pulse-glow">
+                <svg className="w-6 h-6 sm:w-8 sm:h-8 text-orange-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
                 </svg>
               </div>
-              <h3 className="text-2xl font-bold text-center mb-4">Passive Air Intake</h3>
-              <p className="text-gray-400 text-center leading-relaxed">
+              <h3 className="text-xl sm:text-2xl font-bold text-center mb-3 sm:mb-4">Passive Air Intake</h3>
+              <p className="text-sm sm:text-base text-gray-400 text-center leading-relaxed">
                 Standard vehicle ventilation systems simply circulate polluted air without any filtration or purification.
               </p>
             </div>
 
             {/* Problem Card 3 */}
-            <div className={`glass-card p-8 rounded-3xl card-lift ${visibleSections.problem ? 'scroll-reveal-delay-3' : ''}`}>
-              <div className="w-16 h-16 rounded-2xl bg-yellow-500/10 flex items-center justify-center mb-6 mx-auto pulse-glow">
-                <svg className="w-8 h-8 text-yellow-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <div className={`glass-card p-6 sm:p-8 rounded-3xl card-lift ${visibleSections.problem ? 'scroll-reveal-delay-3' : ''}`}>
+              <div className="w-12 h-12 sm:w-16 sm:h-16 rounded-2xl bg-yellow-500/10 flex items-center justify-center mb-4 sm:mb-6 mx-auto pulse-glow">
+                <svg className="w-6 h-6 sm:w-8 sm:h-8 text-yellow-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
                 </svg>
               </div>
-              <h3 className="text-2xl font-bold text-center mb-4">Wasted Rooftop Space</h3>
-              <p className="text-gray-400 text-center leading-relaxed">
+              <h3 className="text-xl sm:text-2xl font-bold text-center mb-3 sm:mb-4">Wasted Rooftop Space</h3>
+              <p className="text-sm sm:text-base text-gray-400 text-center leading-relaxed">
                 Vehicle rooftops remain unused—perfect real estate for active air purification technology.
               </p>
             </div>
@@ -676,7 +712,7 @@ export default function Home() {
       </section>
 
       {/* Purification Performance Section */}
-      <section id="dashboard" className={`min-h-screen py-24 relative dashboard-enhanced-bg data-section-calm ${visibleSections.dashboard ? 'scroll-reveal' : ''}`}>
+      <section id="dashboard" className={`min-h-screen py-16 sm:py-24 relative dashboard-enhanced-bg data-section-calm ${visibleSections.dashboard ? 'scroll-reveal' : ''}`}>
         {/* Airflow Wave Lines */}
         <div className="airflow-waves">
           <div className="wave wave-1"></div>
@@ -684,16 +720,16 @@ export default function Home() {
           <div className="wave wave-3"></div>
         </div>
         <div className="mesh-gradient"></div>
-        <div className="max-w-7xl mx-auto px-6">
-          <div className={`flex flex-col md:flex-row justify-between items-end mb-12 ${visibleSections.dashboard ? 'scroll-reveal-fast' : ''}`}>
+        <div className="max-w-7xl mx-auto px-4 sm:px-6">
+          <div className={`flex flex-col md:flex-row justify-between items-start md:items-end mb-8 sm:mb-12 gap-4 ${visibleSections.dashboard ? 'scroll-reveal-fast' : ''}`}>
             <div>
-              <span className="px-4 py-1.5 rounded-full border border-green-500/30 bg-green-500/10 text-green-400 text-sm font-medium tracking-wide backdrop-blur-sm inline-block mb-4">
+              <span className="px-3 sm:px-4 py-1.5 rounded-full border border-green-500/30 bg-green-500/10 text-green-400 text-xs sm:text-sm font-medium tracking-wide backdrop-blur-sm inline-block mb-3 sm:mb-4">
                 LIVE FROM PM7003 SENSOR
               </span>
-              <h2 className="text-3xl md:text-4xl font-bold mb-2">Purification Performance</h2>
-              <p className="text-gray-400">Real-time measurement from sensor at purifier outlet showing cleaned air quality.</p>
+              <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold mb-2">Purification Performance</h2>
+              <p className="text-sm sm:text-base text-gray-400">Real-time measurement from sensor at purifier outlet showing cleaned air quality.</p>
             </div>
-            <div className="flex items-center gap-2 text-sm text-gray-400 mt-4 md:mt-0 glass-panel px-3 py-1 rounded-full">
+            <div className="flex items-center gap-2 text-xs sm:text-sm text-gray-400 glass-panel px-3 py-1 rounded-full">
               <span className="w-2 h-2 rounded-full bg-green-500 animate-pulse" />
               Live sensor data • Updates every 30s
             </div>
@@ -789,22 +825,22 @@ export default function Home() {
       </section>
 
       {/* How The System Works Section */}
-      <section id="system" className={`py-24 relative system-bg ${visibleSections.system ? 'scroll-reveal' : ''}`}>
+      <section id="system" className={`py-16 sm:py-24 relative system-bg ${visibleSections.system ? 'scroll-reveal' : ''}`}>
         {/* Animated Floating Shapes */}
         <div className="abstract-shapes">
           <div className="shape shape-1"></div>
           <div className="shape shape-2"></div>
         </div>
         <div className="mesh-gradient"></div>
-        <div className="max-w-7xl mx-auto px-6">
-          <div className="text-center mb-16">
-            <span className="px-4 py-1.5 rounded-full border border-cyan-500/30 bg-cyan-500/10 text-cyan-400 text-sm font-medium tracking-wide backdrop-blur-sm inline-block mb-6">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6">
+          <div className="text-center mb-12 sm:mb-16">
+            <span className="px-3 sm:px-4 py-1.5 rounded-full border border-cyan-500/30 bg-cyan-500/10 text-cyan-400 text-xs sm:text-sm font-medium tracking-wide backdrop-blur-sm inline-block mb-4 sm:mb-6">
               SYSTEM ARCHITECTURE
             </span>
-            <h2 className="text-4xl md:text-6xl font-bold mb-6">
+            <h2 className="text-3xl sm:text-4xl md:text-6xl font-bold mb-4 sm:mb-6 px-4">
               How It <span className="text-cyan-400">Works</span>
             </h2>
-            <p className="text-xl text-gray-400 max-w-3xl mx-auto">
+            <p className="text-base sm:text-xl text-gray-400 max-w-3xl mx-auto px-4">
               A complete air purification cycle from intake to verified clean output
             </p>
           </div>
@@ -816,16 +852,16 @@ export default function Home() {
 
             {/* Step 1 - Polluted Air In */}
             <div className="relative mb-8">
-              <div className="glass-card p-10 rounded-3xl card-lift group">
-                <div className="flex items-center gap-8">
-                  <div className="w-24 h-24 rounded-full bg-red-500/10 flex items-center justify-center flex-shrink-0 group-hover:scale-110 transition-transform relative z-10">
-                    <svg className="w-12 h-12 text-red-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <div className="glass-card p-6 sm:p-8 md:p-10 rounded-3xl card-lift group">
+                <div className="flex flex-col sm:flex-row items-center gap-4 sm:gap-6 md:gap-8">
+                  <div className="w-20 h-20 sm:w-24 sm:h-24 rounded-full bg-red-500/10 flex items-center justify-center flex-shrink-0 group-hover:scale-110 transition-transform relative z-10">
+                    <svg className="w-10 h-10 sm:w-12 sm:h-12 text-red-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 14l-7 7m0 0l-7-7m7 7V3" />
                     </svg>
                   </div>
-                  <div className="flex-1">
-                    <h4 className="text-4xl font-bold text-white mb-3">1. Polluted Air In</h4>
-                    <p className="text-gray-400 text-lg">Rooftop intake pulls surrounding urban air with PM2.5 and PM10 particles</p>
+                  <div className="flex-1 text-center sm:text-left">
+                    <h4 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-2 sm:mb-3">1. Polluted Air In</h4>
+                    <p className="text-gray-400 text-sm sm:text-base md:text-lg">Rooftop intake pulls surrounding urban air with PM2.5 and PM10 particles</p>
                   </div>
                 </div>
               </div>
@@ -839,16 +875,16 @@ export default function Home() {
 
             {/* Step 2 - Filtration */}
             <div className="relative mb-8">
-              <div className="glass-card p-10 rounded-3xl card-lift group">
-                <div className="flex items-center gap-8">
-                  <div className="w-24 h-24 rounded-full bg-blue-500/10 flex items-center justify-center flex-shrink-0 group-hover:scale-110 transition-transform relative z-10">
-                    <svg className="w-12 h-12 text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <div className="glass-card p-6 sm:p-8 md:p-10 rounded-3xl card-lift group">
+                <div className="flex flex-col sm:flex-row items-center gap-4 sm:gap-6 md:gap-8">
+                  <div className="w-20 h-20 sm:w-24 sm:h-24 rounded-full bg-blue-500/10 flex items-center justify-center flex-shrink-0 group-hover:scale-110 transition-transform relative z-10">
+                    <svg className="w-10 h-10 sm:w-12 sm:h-12 text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
                     </svg>
                   </div>
-                  <div className="flex-1">
-                    <h4 className="text-4xl font-bold text-white mb-3">2. Filtration</h4>
-                    <p className="text-gray-400 text-lg">Multi-layer HEPA filters + activated carbon remove harmful particles</p>
+                  <div className="flex-1 text-center sm:text-left">
+                    <h4 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-2 sm:mb-3">2. Filtration</h4>
+                    <p className="text-gray-400 text-sm sm:text-base md:text-lg">Multi-layer HEPA filters + activated carbon remove harmful particles</p>
                   </div>
                 </div>
               </div>
@@ -862,16 +898,16 @@ export default function Home() {
 
             {/* Step 3 - PM7003 Sensor */}
             <div className="relative mb-8">
-              <div className="glass-card p-10 rounded-3xl card-lift group">
-                <div className="flex items-center gap-8">
-                  <div className="w-24 h-24 rounded-full bg-cyan-500/10 flex items-center justify-center flex-shrink-0 group-hover:scale-110 transition-transform relative z-10">
-                    <svg className="w-12 h-12 text-cyan-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <div className="glass-card p-6 sm:p-8 md:p-10 rounded-3xl card-lift group">
+                <div className="flex flex-col sm:flex-row items-center gap-4 sm:gap-6 md:gap-8">
+                  <div className="w-20 h-20 sm:w-24 sm:h-24 rounded-full bg-cyan-500/10 flex items-center justify-center flex-shrink-0 group-hover:scale-110 transition-transform relative z-10">
+                    <svg className="w-10 h-10 sm:w-12 sm:h-12 text-cyan-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
                     </svg>
                   </div>
-                  <div className="flex-1">
-                    <h4 className="text-4xl font-bold text-white mb-3">3. PM7003 Sensor</h4>
-                    <p className="text-gray-400 text-lg">Laser sensor verifies output air quality and measures purification effectiveness</p>
+                  <div className="flex-1 text-center sm:text-left">
+                    <h4 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-2 sm:mb-3">3. PM7003 Sensor</h4>
+                    <p className="text-gray-400 text-sm sm:text-base md:text-lg">Laser sensor verifies output air quality and measures purification effectiveness</p>
                   </div>
                 </div>
               </div>
@@ -885,16 +921,16 @@ export default function Home() {
 
             {/* Step 4 - Blower Fan */}
             <div className="relative mb-8">
-              <div className="glass-card p-10 rounded-3xl card-lift group">
-                <div className="flex items-center gap-8">
-                  <div className="w-24 h-24 rounded-full bg-purple-500/10 flex items-center justify-center flex-shrink-0 group-hover:scale-110 transition-transform relative z-10">
-                    <svg className="w-12 h-12 text-purple-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <div className="glass-card p-6 sm:p-8 md:p-10 rounded-3xl card-lift group">
+                <div className="flex flex-col sm:flex-row items-center gap-4 sm:gap-6 md:gap-8">
+                  <div className="w-20 h-20 sm:w-24 sm:h-24 rounded-full bg-purple-500/10 flex items-center justify-center flex-shrink-0 group-hover:scale-110 transition-transform relative z-10">
+                    <svg className="w-10 h-10 sm:w-12 sm:h-12 text-purple-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
                     </svg>
                   </div>
-                  <div className="flex-1">
-                    <h4 className="text-4xl font-bold text-white mb-3">4. Blower Fan</h4>
-                    <p className="text-gray-400 text-lg">12V DC motor maintains continuous airflow through the system</p>
+                  <div className="flex-1 text-center sm:text-left">
+                    <h4 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-2 sm:mb-3">4. Blower Fan</h4>
+                    <p className="text-gray-400 text-sm sm:text-base md:text-lg">12V DC motor maintains continuous airflow through the system</p>
                   </div>
                 </div>
               </div>
@@ -908,16 +944,16 @@ export default function Home() {
 
             {/* Step 5 - Clean Air Out */}
             <div className="relative mb-8">
-              <div className="glass-card p-10 rounded-3xl card-lift group">
-                <div className="flex items-center gap-8">
-                  <div className="w-24 h-24 rounded-full bg-green-500/10 flex items-center justify-center flex-shrink-0 group-hover:scale-110 transition-transform pulse-glow relative z-10">
-                    <svg className="w-12 h-12 text-green-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <div className="glass-card p-6 sm:p-8 md:p-10 rounded-3xl card-lift group">
+                <div className="flex flex-col sm:flex-row items-center gap-4 sm:gap-6 md:gap-8">
+                  <div className="w-20 h-20 sm:w-24 sm:h-24 rounded-full bg-green-500/10 flex items-center justify-center flex-shrink-0 group-hover:scale-110 transition-transform pulse-glow relative z-10">
+                    <svg className="w-10 h-10 sm:w-12 sm:h-12 text-green-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
                     </svg>
                   </div>
-                  <div className="flex-1">
-                    <h4 className="text-4xl font-bold text-white mb-3">5. Clean Air Out</h4>
-                    <p className="text-gray-400 text-lg">Purified air exits through the outlet, significantly cleaner</p>
+                  <div className="flex-1 text-center sm:text-left">
+                    <h4 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-2 sm:mb-3">5. Clean Air Out</h4>
+                    <p className="text-gray-400 text-sm sm:text-base md:text-lg">Purified air exits through the outlet, significantly cleaner</p>
                   </div>
                 </div>
               </div>
