@@ -736,20 +736,22 @@ export default function Home() {
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-12">
-            {/* Status Card - Large with Animated Counter */}
-            <div className={`col-span-1 md:col-span-2 lg:col-span-2 data-card-calm rounded-3xl p-8 relative overflow-hidden bg-gradient-to-br ${status.bg} border-0 card-lift ${visibleSections.dashboard ? 'scroll-reveal-delay-1' : ''}`}>
-              <div className="relative z-10">
-                <div className="text-sm uppercase tracking-wider opacity-70 mb-1">Output Air Quality (After Purification)</div>
-                <div className={`text-6xl md:text-7xl font-bold mb-2 ${status.color} text-glow-calm count-up`}>
-                  {aqiCount}
-                </div>
-                <div className={`text-3xl md:text-4xl font-bold mb-4 ${status.color}`}>{status.text}</div>
-                <p className="text-lg opacity-90 max-w-md">{status.desc}</p>
-                <div className="mt-4 text-xs text-gray-500">
-                  📍 Measured by PM7003 at purifier outlet
+            {/* PM1 Card - Inlet (Before Purification) */}
+            <div className={`data-card-calm rounded-3xl p-6 flex flex-col justify-between group card-lift ${visibleSections.dashboard ? 'scroll-reveal-delay-1' : ''}`}>
+              <div className="flex justify-between items-start">
+                <div className="text-sm text-gray-400">PM1 (Inlet)</div>
+                <div className="p-2 rounded-full bg-red-500/10 text-red-400 group-hover:scale-110 transition-transform">
+                  <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" /></svg>
                 </div>
               </div>
-              <CloudIcon className="absolute top-0 right-0 w-64 h-64 text-white/5 -translate-y-12 translate-x-12 animate-float" />
+              <div>
+                <div className="text-4xl font-bold mb-1">{latestData ? latestData.pm1.toFixed(1) : '--'}</div>
+                <div className="text-xs text-gray-500">Ultra-Fine Particles (µg/m³)</div>
+                <div className="text-xs text-red-400 mt-1">⚠ Before Filtration</div>
+              </div>
+              <div className="mt-4 h-1 bg-gray-800 rounded-full overflow-hidden">
+                <div className="h-full bg-red-500 transition-all duration-1000" style={{ width: `${Math.min(((latestData?.pm1 || 0) / 100) * 100, 100)}%` }}></div>
+              </div>
             </div>
 
             {/* PM2.5 Card - After Purification */}
@@ -785,6 +787,24 @@ export default function Home() {
               </div>
               <div className="mt-4 h-1 bg-gray-800 rounded-full overflow-hidden">
                 <div className="h-full bg-cyan-500 transition-all duration-1000" style={{ width: `${Math.min(((latestData?.pm10 || 0) / 100) * 100, 100)}%` }}></div>
+              </div>
+            </div>
+
+            {/* PM1 Card - After Purification */}
+            <div className={`data-card-calm rounded-3xl p-6 flex flex-col justify-between group card-lift ${visibleSections.dashboard ? 'scroll-reveal-delay-4' : ''}`}>
+              <div className="flex justify-between items-start">
+                <div className="text-sm text-gray-400">PM1 (After)</div>
+                <div className="p-2 rounded-full bg-purple-500/10 text-purple-400 group-hover:scale-110 transition-transform">
+                  <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+                </div>
+              </div>
+              <div>
+                <div className="text-4xl font-bold mb-1">{latestData ? latestData.pm1.toFixed(1) : '--'}</div>
+                <div className="text-xs text-gray-500">Ultra-Fine Particles (µg/m³)</div>
+                <div className="text-xs text-purple-400 mt-1">✓ Purified</div>
+              </div>
+              <div className="mt-4 h-1 bg-gray-800 rounded-full overflow-hidden">
+                <div className="h-full bg-purple-500 transition-all duration-1000" style={{ width: `${Math.min(((latestData?.pm1 || 0) / 100) * 100, 100)}%` }}></div>
               </div>
             </div>
           </div>
