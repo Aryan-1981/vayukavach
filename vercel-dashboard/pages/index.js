@@ -1322,7 +1322,8 @@ export default function Home() {
             </p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-5 gap-8">
+          {/* First Row - 2 Students */}
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto mb-8">
              {/* Team Member 1 - Aryan */}
              <TeamMemberCard
                name="Aryan Kumar Bhargava"
@@ -1345,7 +1346,7 @@ export default function Home() {
                name="Tejaswa Singh Rana"
                role="Hardware Specialist"
                roleColor="text-blue-400"
-               description="Expert in sensor calibration, hardware configuration, and circuit design."
+               description="UG Student, CIoT, MITS Gwalior. Expert in sensor calibration, hardware configuration, and circuit design."
                imagePath="/team/tejaswa.jpg"
                gradientFrom="from-blue-700"
                gradientTo="to-blue-600"
@@ -1356,13 +1357,16 @@ export default function Home() {
                delay="team-card-reveal-delay-4"
                isVisible={visibleSections.team}
              />
+          </div>
 
+          {/* Second Row - 3 Students */}
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-5xl mx-auto">
              {/* Team Member 3 - Vansh S */}
              <TeamMemberCard
                name="Vansh Shrivastava"
                role="Innovation Lead"
                roleColor="text-purple-400"
-               description="Driving project ideation and overseeing practical hardware implementation."
+               description="UG Student, CIoT, MITS Gwalior. Driving project ideation and overseeing practical hardware implementation."
                imagePath="/team/vansh-s.jpg"
                gradientFrom="from-purple-700"
                gradientTo="to-purple-600"
@@ -1379,7 +1383,7 @@ export default function Home() {
                name="Yuvraj Yadav"
                role="Design Expert"
                roleColor="text-orange-400"
-               description="Crafting the visual identity and ensuring an intuitive user experience."
+               description="UG Student, CIoT, MITS Gwalior. Crafting the visual identity and ensuring an intuitive user experience."
                imagePath="/team/yuvraj.jpg"
                gradientFrom="from-orange-700"
                gradientTo="to-orange-600"
@@ -1397,7 +1401,7 @@ export default function Home() {
                name="Vansh Trivedi"
                role="Comm & Hardware"
                roleColor="text-pink-400"
-               description="Managing communications and assisting with hardware assembly."
+               description="UG Student, CIoT, MITS Gwalior. Managing communications and assisting with hardware assembly."
                imagePath="/team/vansh-t.jpg"
                gradientFrom="from-pink-700"
                gradientTo="to-pink-600"
