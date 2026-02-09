@@ -361,8 +361,8 @@ const TeamMemberCard = ({
 };
 
 const supabase = createClient(
-  process.env.NEXT_PUBLIC_SUPABASE_URL,
-  process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY
+  process.env.NEXT_PUBLIC_SUPABASE_URL || '',
+  process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || ''
 );
 
 export default function Home() {
@@ -373,6 +373,7 @@ export default function Home() {
   const [aqiCount, setAqiCount] = useState(0);
   const [visibleSections, setVisibleSections] = useState({});
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [error, setError] = useState(null);
 
   // Intersection Observer for scroll animations
   useEffect(() => {
@@ -401,54 +402,74 @@ export default function Home() {
 
   // --- Data Fetching Logic (Preserved) ---
   useEffect(() => {
-    fetchLatestData();
-    fetchHistoricalData();
-
-    const subscription = supabase
-      .channel('sensor_data_changes')
-      .on('postgres_changes', 
-        { event: 'INSERT', schema: 'public', table: 'sensor_data' },
-        (payload) => {
-          setLatestData(payload.new);
-          fetchHistoricalData();
-        }
-      )
-      .subscribe();
-
-    const interval = setInterval(() => {
+    try {
       fetchLatestData();
       fetchHistoricalData();
-    }, 30000);
 
-    const handleScroll = () => {
-      setScrolled(window.scrollY > 50);
-      
-      // Determine active section
-      const sections = ['home', 'problem', 'dashboard', 'system', 'impact', 'future', 'about', 'team', 'contact'];
-      for (const section of sections) {
-        const el = document.getElementById(section);
-        if (el && window.scrollY >= el.offsetTop - 300) {
-          setActiveSection(section);
+      const subscription = supabase
+        .channel('sensor_data_changes')
+        .on('postgres_changes', 
+          { event: 'INSERT', schema: 'public', table: 'sensor_data' },
+          (payload) => {
+            setLatestData(payload.new);
+            fetchHistoricalData();
+          }
+        )
+        .subscribe();
+
+      const interval = setInterval(() => {
+        fetchLatestData();
+        fetchHistoricalData();
+      }, 10000); // Changed to 10 seconds
+
+      const handleScroll = () => {
+        setScrolled(window.scrollY > 50);
+        
+        // Determine active section
+        const sections = ['home', 'problem', 'dashboard', 'system', 'impact', 'future', 'about', 'team', 'contact'];
+        for (const section of sections) {
+          const el = document.getElementById(section);
+          if (el && window.scrollY >= el.offsetTop - 300) {
+            setActiveSection(section);
+          }
         }
-      }
-    };
+      };
 
-    window.addEventListener('scroll', handleScroll);
+      window.addEventListener('scroll', handleScroll);
 
-    return () => {
-      subscription.unsubscribe();
-      clearInterval(interval);
-      window.removeEventListener('scroll', handleScroll);
-    };
+      return () => {
+        subscription.unsubscribe();
+        clearInterval(interval);
+        window.removeEventListener('scroll', handleScroll);
+      };
+    } catch (err) {
+      console.error('Error in useEffect:', err);
+      setError(err.message);
+    }
   }, []);
 
   async function fetchLatestData() {
-    const { data } = await supabase
-      .from('sensor_data')
-      .select('*')
-      .order('created_at', { ascending: false })
-      .limit(1);
-    if (data && data.length > 0) setLatestData(data[0]);
+    try {
+      const { data, error } = await supabase
+        .from('sensor_data')
+        .select('*')
+        .order('created_at', { ascending: false })
+        .limit(1);
+      
+      if (error) {
+        console.error('Supabase error fetching latest data:', error);
+        setError(error.message);
+        return;
+      }
+      
+      if (data && data.length > 0) {
+        setLatestData(data[0]);
+        setError(null); // Clear any previous errors
+      }
+    } catch (err) {
+      console.error('Error fetching latest data:', err);
+      setError(err.message);
+    }
   }
 
   // Smooth counter animation for AQI
@@ -474,23 +495,37 @@ export default function Home() {
   }, [latestData]);
 
   async function fetchHistoricalData() {
-    const { data } = await supabase
-      .from('sensor_data')
-      .select('*')
-      .order('created_at', { ascending: false })
-      .limit(20); // Reduced for cleaner chart
-    if (data) {
-      const formattedData = data.reverse().map(item => ({
-        time: new Date(item.created_at).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
-        PM1: item.pm1_0,
-        PM2_5: item.pm2_5,
-        PM10: item.pm10
-      }));
-      setHistoricalData(formattedData);
+    try {
+      const { data, error } = await supabase
+        .from('sensor_data')
+        .select('*')
+        .order('created_at', { ascending: false })
+        .limit(20); // Reduced for cleaner chart
+      
+      if (error) {
+        console.error('Supabase error fetching historical data:', error);
+        setError(error.message);
+        return;
+      }
+      
+      if (data) {
+        const formattedData = data.reverse().map(item => ({
+          time: new Date(item.created_at).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
+          PM1: item.pm1_0 || 0,
+          PM2_5: item.pm2_5 || 0,
+          PM10: item.pm10 || 0
+        }));
+        setHistoricalData(formattedData);
+        setError(null); // Clear any previous errors
+      }
+    } catch (err) {
+      console.error('Error fetching historical data:', err);
+      setError(err.message);
     }
   }
 
   function getAQIStatus(pm25) {
+    if (pm25 == null || pm25 === undefined) return { text: 'Loading', color: 'text-gray-400', bg: 'from-gray-800 to-gray-900', desc: 'Waiting for sensor data...' };
     if (pm25 <= 12) return { text: 'Pristine', color: 'text-green-400', bg: 'from-green-500/20 to-green-900/20', desc: 'Perfect for outdoor activities.' };
     if (pm25 <= 35) return { text: 'Moderate', color: 'text-yellow-400', bg: 'from-yellow-500/20 to-yellow-900/20', desc: 'Acceptable air quality.' };
     if (pm25 <= 55) return { text: 'Unhealthy for Sensitive', color: 'text-orange-400', bg: 'from-orange-500/20 to-orange-900/20', desc: 'Sensitive groups should reduce outdoor exertion.' };
@@ -504,6 +539,27 @@ export default function Home() {
     <div className="bg-[#0a0a0a] text-white font-sans min-h-screen selection:bg-green-500/30 overflow-x-hidden">
       <ParticleBackground />
       <ParallaxNature />
+      
+      {/* Error Banner */}
+      {error && (
+        <div className="fixed top-0 left-0 right-0 z-[100] bg-red-500/90 backdrop-blur-sm text-white px-4 py-3 flex items-center justify-between shadow-lg">
+          <div className="flex items-center gap-3">
+            <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
+            </svg>
+            <span className="text-sm font-medium">Unable to load sensor data. Please check your connection.</span>
+          </div>
+          <button 
+            onClick={() => setError(null)}
+            className="p-1 hover:bg-white/20 rounded transition-colors"
+            aria-label="Dismiss error"
+          >
+            <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+            </svg>
+          </button>
+        </div>
+      )}
       
       {/* Navigation */}
       <nav className={`fixed w-full z-50 transition-all duration-500 ${scrolled ? 'bg-black/80 backdrop-blur-lg border-b border-white/10 py-4' : 'bg-transparent py-6'}`}>
@@ -745,7 +801,7 @@ export default function Home() {
                 </div>
               </div>
               <div>
-                <div className="text-4xl font-bold mb-1">{latestData ? latestData.pm1.toFixed(1) : '--'}</div>
+                <div className="text-4xl font-bold mb-1">{latestData?.pm1 != null ? latestData.pm1.toFixed(1) : '--'}</div>
                 <div className="text-xs text-gray-500">Ultra-Fine Particles (µg/m³)</div>
                 <div className="text-xs text-red-400 mt-1">⚠ Before Filtration</div>
               </div>
@@ -763,7 +819,7 @@ export default function Home() {
                 </div>
               </div>
               <div>
-                <div className="text-4xl font-bold mb-1">{latestData ? latestData.pm2_5.toFixed(1) : '--'}</div>
+                <div className="text-4xl font-bold mb-1">{latestData?.pm2_5 != null ? latestData.pm2_5.toFixed(1) : '--'}</div>
                 <div className="text-xs text-gray-500">Fine Particles (µg/m³)</div>
                 <div className="text-xs text-green-400 mt-1">✓ Purified</div>
               </div>
@@ -781,7 +837,7 @@ export default function Home() {
                 </div>
               </div>
               <div>
-                <div className="text-4xl font-bold mb-1">{latestData ? latestData.pm10.toFixed(1) : '--'}</div>
+                <div className="text-4xl font-bold mb-1">{latestData?.pm10 != null ? latestData.pm10.toFixed(1) : '--'}</div>
                 <div className="text-xs text-gray-500">Coarse Particles (µg/m³)</div>
                 <div className="text-xs text-cyan-400 mt-1">✓ Purified</div>
               </div>
@@ -799,7 +855,7 @@ export default function Home() {
                 </div>
               </div>
               <div>
-                <div className="text-4xl font-bold mb-1">{latestData ? latestData.pm1.toFixed(1) : '--'}</div>
+                <div className="text-4xl font-bold mb-1">{latestData?.pm1 != null ? latestData.pm1.toFixed(1) : '--'}</div>
                 <div className="text-xs text-gray-500">Ultra-Fine Particles (µg/m³)</div>
                 <div className="text-xs text-purple-400 mt-1">✓ Purified</div>
               </div>
