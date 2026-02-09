@@ -791,27 +791,9 @@ export default function Home() {
             </div>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-12">
-            {/* PM1 Card - Inlet (Before Purification) */}
-            <div className={`data-card-calm rounded-3xl p-6 flex flex-col justify-between group card-lift ${visibleSections.dashboard ? 'scroll-reveal-delay-1' : ''}`}>
-              <div className="flex justify-between items-start">
-                <div className="text-sm text-gray-400">PM1 (Inlet)</div>
-                <div className="p-2 rounded-full bg-red-500/10 text-red-400 group-hover:scale-110 transition-transform">
-                  <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" /></svg>
-                </div>
-              </div>
-              <div>
-                <div className="text-4xl font-bold mb-1">{latestData?.pm1 != null ? latestData.pm1.toFixed(1) : '--'}</div>
-                <div className="text-xs text-gray-500">Ultra-Fine Particles (µg/m³)</div>
-                <div className="text-xs text-red-400 mt-1">⚠ Before Filtration</div>
-              </div>
-              <div className="mt-4 h-1 bg-gray-800 rounded-full overflow-hidden">
-                <div className="h-full bg-red-500 transition-all duration-1000" style={{ width: `${Math.min(((latestData?.pm1 || 0) / 100) * 100, 100)}%` }}></div>
-              </div>
-            </div>
-
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-12">
             {/* PM2.5 Card - After Purification */}
-            <div className={`data-card-calm rounded-3xl p-6 flex flex-col justify-between group card-lift ${visibleSections.dashboard ? 'scroll-reveal-delay-2' : ''}`}>
+            <div className={`data-card-calm rounded-3xl p-8 flex flex-col justify-between group card-lift ${visibleSections.dashboard ? 'scroll-reveal-delay-1' : ''}`}>
               <div className="flex justify-between items-start">
                 <div className="text-sm text-gray-400">PM2.5 (After)</div>
                 <div className="p-2 rounded-full bg-green-500/10 text-green-400 group-hover:scale-110 transition-transform">
@@ -819,9 +801,9 @@ export default function Home() {
                 </div>
               </div>
               <div>
-                <div className="text-4xl font-bold mb-1">{latestData?.pm2_5 != null ? latestData.pm2_5.toFixed(1) : '--'}</div>
-                <div className="text-xs text-gray-500">Fine Particles (µg/m³)</div>
-                <div className="text-xs text-green-400 mt-1">✓ Purified</div>
+                <div className="text-5xl font-bold mb-2">{latestData?.pm2_5 != null ? latestData.pm2_5.toFixed(1) : '--'}</div>
+                <div className="text-sm text-gray-500">Fine Particles (µg/m³)</div>
+                <div className="text-sm text-green-400 mt-2 font-medium">✓ Purified</div>
               </div>
               <div className="mt-4 h-1 bg-gray-800 rounded-full overflow-hidden">
                 <div className="h-full bg-green-500 transition-all duration-1000" style={{ width: `${Math.min(((latestData?.pm2_5 || 0) / 100) * 100, 100)}%` }}></div>
@@ -829,7 +811,7 @@ export default function Home() {
             </div>
 
             {/* PM10 Card - After Purification */}
-            <div className={`data-card-calm rounded-3xl p-6 flex flex-col justify-between group card-lift ${visibleSections.dashboard ? 'scroll-reveal-delay-3' : ''}`}>
+            <div className={`data-card-calm rounded-3xl p-8 flex flex-col justify-between group card-lift ${visibleSections.dashboard ? 'scroll-reveal-delay-2' : ''}`}>
               <div className="flex justify-between items-start">
                 <div className="text-sm text-gray-400">PM10 (After)</div>
                 <div className="p-2 rounded-full bg-cyan-500/10 text-cyan-400 group-hover:scale-110 transition-transform">
@@ -837,9 +819,9 @@ export default function Home() {
                 </div>
               </div>
               <div>
-                <div className="text-4xl font-bold mb-1">{latestData?.pm10 != null ? latestData.pm10.toFixed(1) : '--'}</div>
-                <div className="text-xs text-gray-500">Coarse Particles (µg/m³)</div>
-                <div className="text-xs text-cyan-400 mt-1">✓ Purified</div>
+                <div className="text-5xl font-bold mb-2">{latestData?.pm10 != null ? latestData.pm10.toFixed(1) : '--'}</div>
+                <div className="text-sm text-gray-500">Coarse Particles (µg/m³)</div>
+                <div className="text-sm text-cyan-400 mt-2 font-medium">✓ Purified</div>
               </div>
               <div className="mt-4 h-1 bg-gray-800 rounded-full overflow-hidden">
                 <div className="h-full bg-cyan-500 transition-all duration-1000" style={{ width: `${Math.min(((latestData?.pm10 || 0) / 100) * 100, 100)}%` }}></div>
@@ -847,7 +829,7 @@ export default function Home() {
             </div>
 
             {/* PM1 Card - After Purification */}
-            <div className={`data-card-calm rounded-3xl p-6 flex flex-col justify-between group card-lift ${visibleSections.dashboard ? 'scroll-reveal-delay-4' : ''}`}>
+            <div className={`data-card-calm rounded-3xl p-8 flex flex-col justify-between group card-lift ${visibleSections.dashboard ? 'scroll-reveal-delay-3' : ''}`}>
               <div className="flex justify-between items-start">
                 <div className="text-sm text-gray-400">PM1 (After)</div>
                 <div className="p-2 rounded-full bg-purple-500/10 text-purple-400 group-hover:scale-110 transition-transform">
@@ -855,9 +837,9 @@ export default function Home() {
                 </div>
               </div>
               <div>
-                <div className="text-4xl font-bold mb-1">{latestData?.pm1 != null ? latestData.pm1.toFixed(1) : '--'}</div>
-                <div className="text-xs text-gray-500">Ultra-Fine Particles (µg/m³)</div>
-                <div className="text-xs text-purple-400 mt-1">✓ Purified</div>
+                <div className="text-5xl font-bold mb-2">{latestData?.pm1 != null ? latestData.pm1.toFixed(1) : '--'}</div>
+                <div className="text-sm text-gray-500">Ultra-Fine Particles (µg/m³)</div>
+                <div className="text-sm text-purple-400 mt-2 font-medium">✓ Purified</div>
               </div>
               <div className="mt-4 h-1 bg-gray-800 rounded-full overflow-hidden">
                 <div className="h-full bg-purple-500 transition-all duration-1000" style={{ width: `${Math.min(((latestData?.pm1 || 0) / 100) * 100, 100)}%` }}></div>
