@@ -326,7 +326,33 @@ const TeamMemberCard = ({
       <div className={`role-badge inline-block px-3 py-1 rounded-full ${roleColor} text-xs uppercase tracking-wider mb-3 font-bold bg-white/5`}>
         {role}
       </div>
-      <p className="text-gray-400 text-sm leading-relaxed">{description}</p>
+      <p className="text-gray-400 text-sm leading-relaxed">
+        {/* Highlight institutional affiliation */}
+        {description.split('.').map((sentence, index) => {
+          const trimmed = sentence.trim();
+          if (!trimmed) return null;
+          
+          // Check if this sentence contains institutional info
+          const isInstitutional = trimmed.includes('UG Student') || 
+                                   trimmed.includes('Assistant Professor') || 
+                                   trimmed.includes('Associate Professor') ||
+                                   trimmed.includes('CIoT') ||
+                                   trimmed.includes('MITS Gwalior');
+          
+          return (
+            <span key={index}>
+              {isInstitutional ? (
+                <span className="text-white font-semibold bg-gradient-to-r from-green-400/10 to-cyan-400/10 px-1.5 py-0.5 rounded">
+                  {trimmed}
+                </span>
+              ) : (
+                trimmed
+              )}
+              {index < description.split('.').length - 2 && '. '}
+            </span>
+          );
+        })}
+      </p>
 
       {/* Decorative Gradient Border Effect on Hover */}
       <div className="absolute inset-0 rounded-3xl bg-gradient-to-br from-green-500/0 via-green-500/0 to-green-500/0 group-hover:from-green-500/10 group-hover:via-transparent group-hover:to-green-500/5 transition-all duration-500 pointer-events-none" />
