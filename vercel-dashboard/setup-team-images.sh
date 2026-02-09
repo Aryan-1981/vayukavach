@@ -34,6 +34,13 @@ check_image() {
 echo "🔍 Checking for team member photos..."
 echo ""
 
+# Mentors
+echo "📚 MENTORS:"
+check_image "dr-aftab" "Dr. Aftab Ahmed Ansari"
+check_image "dr-praveen" "Dr. Praveen Bansal"
+
+echo ""
+echo "👥 STUDENT TEAM:"
 check_image "aryan" "Aryan Kumar Bhargava"
 check_image "tejaswa" "Tejaswa Singh Rana"
 check_image "vansh-s" "Vansh Shrivastava"
@@ -46,7 +53,7 @@ echo ""
 
 # Count missing images
 missing=0
-for img in aryan tejaswa vansh-s yuvraj vansh-t; do
+for img in dr-aftab dr-praveen aryan tejaswa vansh-s yuvraj vansh-t; do
     if [ ! -f "public/team/$img.jpg" ] && [ ! -f "public/team/$img.png" ]; then
         ((missing++))
     fi
@@ -67,6 +74,10 @@ else
     echo "Option 1: Manual Copy"
     echo "  1. Prepare your team photos (512x512px, JPG/PNG)"
     echo "  2. Rename them exactly as:"
+    echo "     Mentors:"
+    echo "     - dr-aftab.jpg"
+    echo "     - dr-praveen.jpg"
+    echo "     Student Team:"
     echo "     - aryan.jpg"
     echo "     - tejaswa.jpg"
     echo "     - vansh-s.jpg"
@@ -118,6 +129,8 @@ if [ -n "$1" ]; then
         }
         
         # Try to find and copy images
+        copy_if_found "$1" "dr_aftab dr-aftab aftab Aftab DR_AFTAB" "dr-aftab" "Dr. Aftab"
+        copy_if_found "$1" "dr_praveen dr-praveen praveen Praveen DR_PRAVEEN" "dr-praveen" "Dr. Praveen"
         copy_if_found "$1" "aryan Aryan ARYAN aryan_kumar" "aryan" "Aryan"
         copy_if_found "$1" "tejaswa Tejaswa TEJASWA tejaswa_singh" "tejaswa" "Tejaswa"
         copy_if_found "$1" "vansh_s vansh-s vansh_shrivastava Vansh_S" "vansh-s" "Vansh S"

@@ -936,6 +936,8 @@ html {
 .team-card-reveal-delay-3 { animation-delay: 0.3s; }
 .team-card-reveal-delay-4 { animation-delay: 0.4s; }
 .team-card-reveal-delay-5 { animation-delay: 0.5s; }
+.team-card-reveal-delay-6 { animation-delay: 0.6s; }
+.team-card-reveal-delay-7 { animation-delay: 0.7s; }
 
 /* Profile Image Hover Effects */
 .team-profile-image {

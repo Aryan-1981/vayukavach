@@ -1266,6 +1266,62 @@ export default function Home() {
             </p>
           </div>
 
+          {/* Mentors Section */}
+          <div className="mb-20">
+            <div className="text-center mb-12">
+              <h3 className="text-2xl md:text-3xl font-bold mb-3 text-white">
+                Academic <span className="text-cyan-400">Mentors</span>
+              </h3>
+              <p className="text-gray-400 max-w-2xl mx-auto">
+                Providing expert guidance and institutional support
+              </p>
+            </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto">
+              {/* Mentor 1 - Dr. Aftab Ahmed Ansari */}
+              <TeamMemberCard
+                name="Dr. Aftab Ahmed Ansari"
+                role="Mentor & Project Guide"
+                roleColor="text-cyan-400"
+                description="Assistant Professor, Centre for Internet of Things (CIoT), MITS Gwalior. Providing technical guidance, system architecture direction, and research-oriented mentoring."
+                imagePath="/team/dr-aftab.jpg"
+                gradientFrom="from-cyan-700"
+                gradientTo="to-cyan-600"
+                social={{
+                  linkedin: "https://linkedin.com/in/dr-aftab-ansari",
+                }}
+                delay="team-card-reveal-delay-1"
+                isVisible={visibleSections.team}
+              />
+
+              {/* Mentor 2 - Dr. Praveen Bansal */}
+              <TeamMemberCard
+                name="Dr. Praveen Bansal"
+                role="Head, CIoT"
+                roleColor="text-indigo-400"
+                description="Associate Professor, Centre for Internet of Things (CIoT), MITS Gwalior. Academic leadership and institutional guidance supporting the VayuKavach initiative."
+                imagePath="/team/dr-praveen.jpg"
+                gradientFrom="from-indigo-700"
+                gradientTo="to-indigo-600"
+                social={{
+                  linkedin: "https://linkedin.com/in/dr-praveen-bansal",
+                }}
+                delay="team-card-reveal-delay-2"
+                isVisible={visibleSections.team}
+              />
+            </div>
+          </div>
+
+          {/* Student Team Section */}
+          <div className="text-center mb-12">
+            <h3 className="text-2xl md:text-3xl font-bold mb-3 text-white">
+              Student <span className="text-green-400">Development Team</span>
+            </h3>
+            <p className="text-gray-400 max-w-2xl mx-auto">
+              The core team building VayuKavach from concept to reality
+            </p>
+          </div>
+
           <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-5 gap-8">
              {/* Team Member 1 - Aryan */}
              <TeamMemberCard
@@ -1281,7 +1337,7 @@ export default function Home() {
                  linkedin: "https://linkedin.com/in/aryan",
                  twitter: "https://twitter.com/aryan"
                }}
-               delay="team-card-reveal-delay-1"
+               delay="team-card-reveal-delay-3"
                isVisible={visibleSections.team}
              />
              
@@ -1299,7 +1355,7 @@ export default function Home() {
                  linkedin: "https://linkedin.com/in/tejaswa",
                  twitter: "https://twitter.com/tejaswa"
                }}
-               delay="team-card-reveal-delay-2"
+               delay="team-card-reveal-delay-4"
                isVisible={visibleSections.team}
              />
 
@@ -1317,7 +1373,7 @@ export default function Home() {
                  linkedin: "https://linkedin.com/in/vansh-s",
                  twitter: "https://twitter.com/vansh-s"
                }}
-               delay="team-card-reveal-delay-3"
+               delay="team-card-reveal-delay-5"
                isVisible={visibleSections.team}
              />
 
@@ -1335,7 +1391,7 @@ export default function Home() {
                  linkedin: "https://linkedin.com/in/yuvraj",
                  twitter: "https://twitter.com/yuvraj"
                }}
-               delay="team-card-reveal-delay-4"
+               delay="team-card-reveal-delay-6"
                isVisible={visibleSections.team}
              />
 
@@ -1353,7 +1409,7 @@ export default function Home() {
                  linkedin: "https://linkedin.com/in/vansh-t",
                  twitter: "https://twitter.com/vansh-t"
                }}
-               delay="team-card-reveal-delay-5"
+               delay="team-card-reveal-delay-7"
                isVisible={visibleSections.team}
              />
           </div>

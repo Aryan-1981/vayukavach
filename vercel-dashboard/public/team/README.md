@@ -5,6 +5,12 @@
 Place your team member profile photos in this folder with the following naming convention:
 
 ### Required Filenames:
+
+**Mentors:**
+- `dr-aftab.jpg` - Dr. Aftab Ahmed Ansari
+- `dr-praveen.jpg` - Dr. Praveen Bansal
+
+**Student Development Team:**
 - `aryan.jpg` - Aryan Kumar Bhargava
 - `tejaswa.jpg` - Tejaswa Singh Rana
 - `vansh-s.jpg` - Vansh Shrivastava
