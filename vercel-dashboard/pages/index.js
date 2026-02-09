@@ -1326,9 +1326,9 @@ export default function Home() {
              {/* Team Member 1 - Aryan */}
              <TeamMemberCard
                name="Aryan Kumar Bhargava"
-               role="Web & ESP32 Lead"
+               role="WEB & ESP32 LEAD"
                roleColor="text-green-400"
-               description="Handling full-stack website development and ESP32 firmware integration."
+               description="UG Student, CIoT, MITS Gwalior. Handling full-stack web development and ESP32 firmware integration."
                imagePath="/team/aryan.jpg"
                gradientFrom="from-green-700"
                gradientTo="to-green-600"
