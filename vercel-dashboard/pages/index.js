@@ -809,99 +809,129 @@ export default function Home() {
             </p>
           </div>
 
-          {/* Animated Flow Diagram */}
-          <div className="grid grid-cols-1 md:grid-cols-5 gap-6 items-center mb-12">
-            {/* Step 1 */}
-            <div className="glass-card p-6 rounded-3xl text-center card-lift group">
-              <div className="w-16 h-16 rounded-full bg-red-500/10 flex items-center justify-center mb-4 mx-auto group-hover:scale-110 transition-transform">
-                <svg className="w-8 h-8 text-red-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 14l-7 7m0 0l-7-7m7 7V3" />
+          {/* Vertical Flow Diagram */}
+          <div className="max-w-2xl mx-auto relative">
+            {/* Connecting Line */}
+            <div className="absolute left-1/2 top-0 bottom-0 w-0.5 bg-gradient-to-b from-red-500 via-blue-500 via-purple-500 via-green-500 to-cyan-500 opacity-30 hidden md:block" style={{ transform: 'translateX(-50%)' }}></div>
+
+            {/* Step 1 - Polluted Air In */}
+            <div className="relative mb-8">
+              <div className="glass-card p-8 rounded-3xl card-lift group">
+                <div className="flex items-center gap-6">
+                  <div className="w-20 h-20 rounded-full bg-red-500/10 flex items-center justify-center flex-shrink-0 group-hover:scale-110 transition-transform relative z-10">
+                    <svg className="w-10 h-10 text-red-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 14l-7 7m0 0l-7-7m7 7V3" />
+                    </svg>
+                  </div>
+                  <div className="flex-1">
+                    <h4 className="text-2xl font-bold text-white mb-2">1. Polluted Air In</h4>
+                    <p className="text-gray-400">Rooftop intake pulls surrounding urban air with PM2.5 and PM10 particles</p>
+                  </div>
+                </div>
+              </div>
+              {/* Downward Arrow */}
+              <div className="flex justify-center my-4">
+                <svg className="w-8 h-8 text-green-400 animate-bounce" fill="none" viewBox="0 0 24 24">
+                  <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 14l-7 7m0 0l-7-7m7 7V3" />
                 </svg>
               </div>
-              <h4 className="font-bold text-white mb-2">1. Polluted Air In</h4>
-              <p className="text-sm text-gray-400">Rooftop intake pulls surrounding urban air</p>
             </div>
 
-            <div className="hidden md:flex justify-center">
-              <svg className="w-12 h-12 text-green-400" fill="none" viewBox="0 0 24 24">
-                <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7l5 5m0 0l-5 5m5-5H6" />
-              </svg>
-            </div>
-
-            {/* Step 2 */}
-            <div className="glass-card p-6 rounded-3xl text-center card-lift group">
-              <div className="w-16 h-16 rounded-full bg-blue-500/10 flex items-center justify-center mb-4 mx-auto group-hover:scale-110 transition-transform">
-                <svg className="w-8 h-8 text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
+            {/* Step 2 - Filtration */}
+            <div className="relative mb-8">
+              <div className="glass-card p-8 rounded-3xl card-lift group">
+                <div className="flex items-center gap-6">
+                  <div className="w-20 h-20 rounded-full bg-blue-500/10 flex items-center justify-center flex-shrink-0 group-hover:scale-110 transition-transform relative z-10">
+                    <svg className="w-10 h-10 text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
+                    </svg>
+                  </div>
+                  <div className="flex-1">
+                    <h4 className="text-2xl font-bold text-white mb-2">2. Filtration</h4>
+                    <p className="text-gray-400">Multi-layer HEPA filters + activated carbon remove harmful particles</p>
+                  </div>
+                </div>
+              </div>
+              {/* Downward Arrow */}
+              <div className="flex justify-center my-4">
+                <svg className="w-8 h-8 text-green-400 animate-bounce" fill="none" viewBox="0 0 24 24" style={{ animationDelay: '0.1s' }}>
+                  <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 14l-7 7m0 0l-7-7m7 7V3" />
                 </svg>
               </div>
-              <h4 className="font-bold text-white mb-2">2. Filtration</h4>
-              <p className="text-sm text-gray-400">Multi-layer HEPA + activated carbon filters</p>
             </div>
 
-            <div className="hidden md:flex justify-center">
-              <svg className="w-12 h-12 text-green-400" fill="none" viewBox="0 0 24 24">
-                <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7l5 5m0 0l-5 5m5-5H6" />
-              </svg>
-            </div>
-
-            {/* Step 3 */}
-            <div className="glass-card p-6 rounded-3xl text-center card-lift group">
-              <div className="w-16 h-16 rounded-full bg-purple-500/10 flex items-center justify-center mb-4 mx-auto group-hover:scale-110 transition-transform">
-                <svg className="w-8 h-8 text-purple-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
+            {/* Step 3 - Blower Fan */}
+            <div className="relative mb-8">
+              <div className="glass-card p-8 rounded-3xl card-lift group">
+                <div className="flex items-center gap-6">
+                  <div className="w-20 h-20 rounded-full bg-purple-500/10 flex items-center justify-center flex-shrink-0 group-hover:scale-110 transition-transform relative z-10">
+                    <svg className="w-10 h-10 text-purple-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
+                    </svg>
+                  </div>
+                  <div className="flex-1">
+                    <h4 className="text-2xl font-bold text-white mb-2">3. Blower Fan</h4>
+                    <p className="text-gray-400">12V DC motor maintains continuous airflow through the system</p>
+                  </div>
+                </div>
+              </div>
+              {/* Downward Arrow */}
+              <div className="flex justify-center my-4">
+                <svg className="w-8 h-8 text-green-400 animate-bounce" fill="none" viewBox="0 0 24 24" style={{ animationDelay: '0.2s' }}>
+                  <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 14l-7 7m0 0l-7-7m7 7V3" />
                 </svg>
               </div>
-              <h4 className="font-bold text-white mb-2">3. Blower Fan</h4>
-              <p className="text-sm text-gray-400">12V DC motor maintains airflow</p>
-            </div>
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-5 gap-6 items-center">
-            <div className="hidden md:block"></div>
-
-            <div className="hidden md:flex justify-center">
-              <svg className="w-12 h-12 text-green-400" fill="none" viewBox="0 0 24 24">
-                <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7l5 5m0 0l-5 5m5-5H6" />
-              </svg>
             </div>
 
-            {/* Step 4 */}
-            <div className="glass-card p-6 rounded-3xl text-center card-lift group">
-              <div className="w-16 h-16 rounded-full bg-green-500/10 flex items-center justify-center mb-4 mx-auto group-hover:scale-110 transition-transform pulse-glow">
-                <svg className="w-8 h-8 text-green-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+            {/* Step 4 - Clean Air Out */}
+            <div className="relative mb-8">
+              <div className="glass-card p-8 rounded-3xl card-lift group">
+                <div className="flex items-center gap-6">
+                  <div className="w-20 h-20 rounded-full bg-green-500/10 flex items-center justify-center flex-shrink-0 group-hover:scale-110 transition-transform pulse-glow relative z-10">
+                    <svg className="w-10 h-10 text-green-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                    </svg>
+                  </div>
+                  <div className="flex-1">
+                    <h4 className="text-2xl font-bold text-white mb-2">4. Clean Air Out</h4>
+                    <p className="text-gray-400">Purified air exits through the outlet, significantly cleaner</p>
+                  </div>
+                </div>
+              </div>
+              {/* Downward Arrow */}
+              <div className="flex justify-center my-4">
+                <svg className="w-8 h-8 text-green-400 animate-bounce" fill="none" viewBox="0 0 24 24" style={{ animationDelay: '0.3s' }}>
+                  <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 14l-7 7m0 0l-7-7m7 7V3" />
                 </svg>
               </div>
-              <h4 className="font-bold text-white mb-2">4. Clean Air Out</h4>
-              <p className="text-sm text-gray-400">Purified air exits through outlet</p>
             </div>
 
-            <div className="hidden md:flex justify-center">
-              <svg className="w-12 h-12 text-green-400" fill="none" viewBox="0 0 24 24">
-                <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7l5 5m0 0l-5 5m5-5H6" />
-              </svg>
-            </div>
-
-            {/* Step 5 */}
-            <div className="glass-card p-6 rounded-3xl text-center card-lift group">
-              <div className="w-16 h-16 rounded-full bg-cyan-500/10 flex items-center justify-center mb-4 mx-auto group-hover:scale-110 transition-transform">
-                <svg className="w-8 h-8 text-cyan-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
-                </svg>
+            {/* Step 5 - PM7003 Sensor */}
+            <div className="relative mb-8">
+              <div className="glass-card p-8 rounded-3xl card-lift group">
+                <div className="flex items-center gap-6">
+                  <div className="w-20 h-20 rounded-full bg-cyan-500/10 flex items-center justify-center flex-shrink-0 group-hover:scale-110 transition-transform relative z-10">
+                    <svg className="w-10 h-10 text-cyan-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
+                    </svg>
+                  </div>
+                  <div className="flex-1">
+                    <h4 className="text-2xl font-bold text-white mb-2">5. PM7003 Sensor</h4>
+                    <p className="text-gray-400">Laser sensor verifies output air quality and measures purification effectiveness</p>
+                  </div>
+                </div>
               </div>
-              <h4 className="font-bold text-white mb-2">5. PM7003 Sensor</h4>
-              <p className="text-sm text-gray-400">Laser sensor verifies output quality</p>
             </div>
-          </div>
 
-          <div className="mt-12 text-center">
-            <div className="glass-card p-6 rounded-2xl inline-block">
-              <div className="flex items-center gap-3">
-                <svg className="w-6 h-6 text-green-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9a9 9 0 01-9-9m9 9c1.657 0 3-4.03 3-9s-1.343-9-3-9m0 18c-1.657 0-3-4.03-3-9s1.343-9 3-9m-9 9a9 9 0 019-9" />
-                </svg>
-                <span className="text-sm font-medium">ESP32 sends verified data to cloud (Supabase) → <span className="text-cyan-400">Live Website Dashboard</span></span>
+            {/* ESP32 & Cloud Connection */}
+            <div className="mt-12 text-center">
+              <div className="glass-card p-6 rounded-2xl inline-block">
+                <div className="flex items-center gap-3">
+                  <svg className="w-6 h-6 text-green-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9a9 9 0 01-9-9m9 9c1.657 0 3-4.03 3-9s-1.343-9-3-9m0 18c-1.657 0-3-4.03-3-9s1.343-9 3-9m-9 9a9 9 0 019-9" />
+                  </svg>
+                  <span className="text-sm font-medium">ESP32 sends verified data to cloud (Supabase) → <span className="text-cyan-400">Live Website Dashboard</span></span>
+                </div>
               </div>
             </div>
           </div>
