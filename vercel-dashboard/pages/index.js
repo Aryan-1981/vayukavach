@@ -860,18 +860,18 @@ export default function Home() {
               </div>
             </div>
 
-            {/* Step 3 - Blower Fan */}
+            {/* Step 3 - PM7003 Sensor */}
             <div className="relative mb-8">
               <div className="glass-card p-8 rounded-3xl card-lift group">
                 <div className="flex items-center gap-6">
-                  <div className="w-20 h-20 rounded-full bg-purple-500/10 flex items-center justify-center flex-shrink-0 group-hover:scale-110 transition-transform relative z-10">
-                    <svg className="w-10 h-10 text-purple-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
+                  <div className="w-20 h-20 rounded-full bg-cyan-500/10 flex items-center justify-center flex-shrink-0 group-hover:scale-110 transition-transform relative z-10">
+                    <svg className="w-10 h-10 text-cyan-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
                     </svg>
                   </div>
                   <div className="flex-1">
-                    <h4 className="text-2xl font-bold text-white mb-2">3. Blower Fan</h4>
-                    <p className="text-gray-400">12V DC motor maintains continuous airflow through the system</p>
+                    <h4 className="text-2xl font-bold text-white mb-2">3. PM7003 Sensor</h4>
+                    <p className="text-gray-400">Laser sensor verifies output air quality and measures purification effectiveness</p>
                   </div>
                 </div>
               </div>
@@ -883,18 +883,18 @@ export default function Home() {
               </div>
             </div>
 
-            {/* Step 4 - Clean Air Out */}
+            {/* Step 4 - Blower Fan */}
             <div className="relative mb-8">
               <div className="glass-card p-8 rounded-3xl card-lift group">
                 <div className="flex items-center gap-6">
-                  <div className="w-20 h-20 rounded-full bg-green-500/10 flex items-center justify-center flex-shrink-0 group-hover:scale-110 transition-transform pulse-glow relative z-10">
-                    <svg className="w-10 h-10 text-green-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                  <div className="w-20 h-20 rounded-full bg-purple-500/10 flex items-center justify-center flex-shrink-0 group-hover:scale-110 transition-transform relative z-10">
+                    <svg className="w-10 h-10 text-purple-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
                     </svg>
                   </div>
                   <div className="flex-1">
-                    <h4 className="text-2xl font-bold text-white mb-2">4. Clean Air Out</h4>
-                    <p className="text-gray-400">Purified air exits through the outlet, significantly cleaner</p>
+                    <h4 className="text-2xl font-bold text-white mb-2">4. Blower Fan</h4>
+                    <p className="text-gray-400">12V DC motor maintains continuous airflow through the system</p>
                   </div>
                 </div>
               </div>
@@ -906,18 +906,18 @@ export default function Home() {
               </div>
             </div>
 
-            {/* Step 5 - PM7003 Sensor */}
+            {/* Step 5 - Clean Air Out */}
             <div className="relative mb-8">
               <div className="glass-card p-8 rounded-3xl card-lift group">
                 <div className="flex items-center gap-6">
-                  <div className="w-20 h-20 rounded-full bg-cyan-500/10 flex items-center justify-center flex-shrink-0 group-hover:scale-110 transition-transform relative z-10">
-                    <svg className="w-10 h-10 text-cyan-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
+                  <div className="w-20 h-20 rounded-full bg-green-500/10 flex items-center justify-center flex-shrink-0 group-hover:scale-110 transition-transform pulse-glow relative z-10">
+                    <svg className="w-10 h-10 text-green-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
                     </svg>
                   </div>
                   <div className="flex-1">
-                    <h4 className="text-2xl font-bold text-white mb-2">5. PM7003 Sensor</h4>
-                    <p className="text-gray-400">Laser sensor verifies output air quality and measures purification effectiveness</p>
+                    <h4 className="text-2xl font-bold text-white mb-2">5. Clean Air Out</h4>
+                    <p className="text-gray-400">Purified air exits through the outlet, significantly cleaner</p>
                   </div>
                 </div>
               </div>
